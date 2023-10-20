@@ -1,0 +1,1 @@
+export const SONG_NOT_FOUND_ERROR = 'Песня с таким ID не найдена';

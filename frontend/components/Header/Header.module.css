@@ -1,0 +1,8 @@
+.header{
+    width: 100%;
+    background: var(--header);
+    height: 50px;
+    display:flex;
+    align-items:center;
+}
+.wrapper{display:flex;}

@@ -1,0 +1,22 @@
+.admin_link { 
+    box-sizing: border-box;
+    text-decoration: none;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid #bfbcbc;
+    color:#000;
+    border-radius: 5px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.wrapper{
+    box-sizing: border-box;
+    text-align: center;
+}

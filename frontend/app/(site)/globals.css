@@ -1,0 +1,48 @@
+:root {
+  --header:rgb(44,44,46);
+  --body-color:rgb(255,255,255);
+  --secondary-color:#eee;
+  --primary-font:#000;
+  --alert-color:rgb(255,45,85);
+}
+
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--body-color);
+}
+main{
+  height: calc(100vh - 150px);
+  overflow: auto;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container{
+  width: calc(100% - 48vw);
+  margin: 0 auto;
+}
+
+.wrapper{
+  display: grid;
+  align-items: normal;
+  min-height: 100vh;
+}
+.wrapper{
+  width: calc(100% - 48vw);
+  margin: 0px 24vw;
+}

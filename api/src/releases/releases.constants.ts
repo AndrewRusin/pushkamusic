@@ -1,0 +1,1 @@
+export const RELEASE_NOT_FOUND_ERROR = 'Релиз с таким ID не найдена';

@@ -1,0 +1,15 @@
+.login{
+    display: flex;
+    height: 100vh;
+} 
+.container{
+    width:100%;
+    max-width:680px;
+    margin:auto;
+    text-align: center;
+}
+.login_button{
+    margin-top: 10px;
+    width: 200px;
+    margin: 10px auto;
+}

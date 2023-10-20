@@ -1,0 +1,18 @@
+.select_items{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.select_items li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.select_items li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}

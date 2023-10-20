@@ -1,0 +1,12 @@
+.nav {
+    display:flex;
+    color:var(--secondary-color);
+    width: 45%;
+    justify-content: space-around;
+    /* gap: 30px;*/
+}
+.links{
+    font-weight: normal;
+    font-weight: 300;
+    font-size: 19px;
+}

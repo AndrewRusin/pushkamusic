@@ -1,0 +1,26 @@
+.button {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    border:none;
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 10px;
+    background:none;
+}
+
+.primary {
+    color: #000;
+    background-color: #eee;
+}
+
+.ghost {
+   border: 1px solid #000; 
+}
+
+.alert {
+    color: rgb(255,255,255);
+    background-color: rgb(255,45,85);
+}

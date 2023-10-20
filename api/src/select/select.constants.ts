@@ -1,0 +1,1 @@
+export const SELECT_NOT_FOUND_ERROR = 'Подборка с таким ID не найдена';
