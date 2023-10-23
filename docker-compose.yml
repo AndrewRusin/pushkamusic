@@ -25,6 +25,7 @@ services:
       - mongo
     volumes:
       - ./api/.env:/opt/app/.env # Укажите ту директорию которую вы выбрали в Dockerfile, в данном случае (WORKDIR /app)
+      - ./api/uploads:/opt/app/uploads
  
   mongo:
     image:  mongo:4.4.4
