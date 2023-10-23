@@ -12,6 +12,7 @@ server {
     proxy_pass http://api:3001;
      client_max_body_size 20M; # Максимальный размер тела запроса для корневой директории.
   }
-      location /static/ {
-        alias ../api/uploads/;     }
+  location /static/ {
+    alias /etc/nginx/../api/uploads/;       
+  }
 }
