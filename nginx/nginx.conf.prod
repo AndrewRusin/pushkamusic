@@ -13,6 +13,6 @@ server {
      client_max_body_size 20M; # Максимальный размер тела запроса для корневой директории.
   }
   location /static/ {
-    proxy_pass http://pushkamusic-api/opt/api/uploads/;      
+    proxy_pass http://api:3001/uploads/;      
   }
 }
