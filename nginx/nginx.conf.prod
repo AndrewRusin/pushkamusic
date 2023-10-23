@@ -13,5 +13,5 @@ server {
      client_max_body_size 20M; # Максимальный размер тела запроса для корневой директории.
   }
       location /static/ {
-        alias api/uploads;     }
+        alias api/uploads/;     }
 }
