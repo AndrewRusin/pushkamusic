@@ -21,7 +21,7 @@ export async function uploadFile( file: FormData): Promise<IUploadFile[]> {
 }
 
 export async function deleteFile (fileName:string):Promise<void> {
-	await fetch(API.deleteFile, {
+	await fetch(API.deleteFile + fileName, {
 		method:'DELETE',
 		headers,
 	})
