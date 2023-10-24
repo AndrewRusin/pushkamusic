@@ -13,9 +13,21 @@ export class SongService {
 
     }
 
+    async getLastSongOrder(): Promise<number> {
+        const lastSong = await this.songModel
+            .findOne({}, {}, { sort: { order: -1 } })
+            .exec();
+
+        if (lastSong) {
+            return lastSong.order + 1;
+        } else {
+            return 1; // Если коллекция пуста, начнем с 1
+        }
+    }
+
     async create(dto:createProductDto) {
-        
-        const songData = { ...dto, createdAt: new Date() }; // Добавляем поле createdAt с текущим временем
+        const order = await this.getLastSongOrder();
+        const songData = { ...dto, createdAt: new Date(), order }; // Добавляем поле createdAt с текущим временем
         return this.songModel.create(songData);
     }
 
