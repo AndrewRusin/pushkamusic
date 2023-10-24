@@ -20,6 +20,12 @@ export class SongModel extends Document {
 
 	@Prop()
     createdAt: Date;
+	
+	@Prop({ default: 1 }) // Поле для порядкового номера, начальное значение - 0
+    order: number;
+
+	@Prop()
+	isHidden:boolean;
 }
 
 export const SongShema = SchemaFactory.createForClass(SongModel)  

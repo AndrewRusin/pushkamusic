@@ -31,7 +31,7 @@ export class SongService {
 	}
 
     async findAllSongs() {
-        return this.songModel.find({}).sort({createdAt:-1}).exec()
+        return this.songModel.find({}).sort({ order: 1 }).exec();
     }
 
     async findByParameters(param:string[]) {
@@ -43,4 +43,9 @@ export class SongService {
     async findSongsByIds(idArray: string[]) {
         return this.songModel.find({ _id: { $in: idArray } }).exec();
       }
+
+      async updateSongOrder(id: string, newOrder: number){
+        return this.songModel.findByIdAndUpdate(id, { order: newOrder }, { new: true }).exec();
+        // Изменение порядкового номера песни по её ID
+    }  
 }

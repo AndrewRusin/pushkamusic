@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseArrayPipe, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseArrayPipe, Patch, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { SongModel } from './song.model/song.model';
 import { createProductDto } from './dto/create-product.dto';
 import { SongService } from './song.service';
@@ -70,4 +70,12 @@ export class SongController {
 		return updateSong;
 	}
 	
+	@UseGuards(JwtAuthGuard)
+    @UsePipes(new ValidationPipe())
+	@Put('updateOrder/:id')
+    async updateSongOrder(@Param('id') id: string, @Body('order') newOrder: number) {
+        return this.songService.updateSongOrder(id, newOrder);
+    }
 }
+
+

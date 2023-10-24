@@ -5,7 +5,7 @@ export interface ISongForm{
 	songsText:string;
 	track_link:string;
 	params:string[];
-    
+    isHidden:boolean;
 }
 
 
@@ -13,5 +13,6 @@ export  interface ISongCategoriesResponse extends ISongForm {
     _id: string;
     createdAt: Date;
 	updatedAt: Date;
+	order:number;
 	isSelected?:boolean;
 }

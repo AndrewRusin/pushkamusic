@@ -19,6 +19,7 @@ export  function SongForm({idItem = '', ...props}:SongFormProps ):JSX.Element {
     const [redirectTo, setRedirectTo] = useState<boolean>(false);
     const [valueForm, setValueForm] = useState<ISongCategoriesResponse>();
     const [checkboxes, setCheckboxes] = useState<IModernFilter | null>(null);
+    const [isChecked, setIsChecked] = useState(false);
     const [file, setFile] = useState<File | null>(null);
 	const [error, setError] = useState<string>();
   
@@ -74,7 +75,7 @@ export  function SongForm({idItem = '', ...props}:SongFormProps ):JSX.Element {
       try {
          const resFile = await uploadFile(formData);
         const resultFile = [...resFile][0]
-        const totalData = {...data,title:resultFile.name, track_link:resultFile.url}
+        const totalData = {...data,title:resultFile.name, track_link:resultFile.url, isHidden:isChecked}
         console.log(totalData)
         const  resData   = idItem ? await patchSongItems(totalData,idItem) : await createSongItems(totalData)
        
@@ -101,8 +102,12 @@ export  function SongForm({idItem = '', ...props}:SongFormProps ):JSX.Element {
       <div {...props}>
         <form onSubmit={handleSubmit(onSubmit)}>
         <input type="file" name="songFile" id="songFile" onChange={handleFileChange} />
-        <textarea  {...register('songsText')} placeholder='Текст' defaultValue={valueForm?.songsText}></textarea>
-         <FilterCheckbox {...register('params')} filterItems={checkboxes}/>   
+        <textarea  {...register('songsText')} placeholder='Текст' defaultValue={valueForm?.songsText} className = {styles.textarea}></textarea>
+         <FilterCheckbox {...register('params')} filterItems={checkboxes}/> 
+         <label >
+            <input type="checkbox" name="hidden" id="" checked={isChecked} onChange={() => setIsChecked((prev) => !prev)}/>  
+             <span>скрыть песню</span>
+         </label>
             <Button appearance='primary' className={styles.button}>{idItem?'Изменить':'Создать'}</Button>
         </form> 
       </div>
