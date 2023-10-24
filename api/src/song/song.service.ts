@@ -14,7 +14,9 @@ export class SongService {
     }
 
     async create(dto:createProductDto) {
-        return this.songModel.create(dto);
+        
+        const songData = { ...dto, createdAt: new Date() }; // Добавляем поле createdAt с текущим временем
+        return this.songModel.create(songData);
     }
 
     async findById(id: string) {

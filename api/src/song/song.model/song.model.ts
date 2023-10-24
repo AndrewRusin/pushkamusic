@@ -18,7 +18,7 @@ export class SongModel extends Document {
 	@Prop([String])
 	params: string[];
 
-	@Prop({default: now()})
+	@Prop()
     createdAt: Date;
 }
 
