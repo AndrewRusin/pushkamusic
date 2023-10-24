@@ -63,8 +63,7 @@ export class SongService {
 
       async updateSongOrder(id: string, newOrder: number) {
         const songToUpdate = await this.songModel.findById(id).exec();
-        const oldOrder = songToUpdate.order;
-    
+        const oldOrder = songToUpdate.order;  
        
         const change = newOrder - oldOrder;
 
