@@ -29,7 +29,7 @@ export class SongService {
 	}
 
     async findAllSongs() {
-        return this.songModel.find({}).exec()
+        return this.songModel.find({}).sort({createdAt:-1}).exec()
     }
 
     async findByParameters(param:string[]) {
