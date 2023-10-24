@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import {now, HydratedDocument } from "mongoose";
+import {now, HydratedDocument, Document } from "mongoose";
 
 export type SongDocument = HydratedDocument<SongModel>
 
 @Schema({ timestamps: true })
-export class SongModel {
+export class SongModel extends Document {
 
 	@Prop()
 	title: string;
