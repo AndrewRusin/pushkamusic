@@ -14,9 +14,7 @@ export class SongService {
     }
 
     async getLastSongOrder(): Promise<number> {
-        const lastSong = await this.songModel
-            .findOne({}, {}, { sort: { order: -1 } })
-            .exec();
+        const lastSong = await this.songModel.findOne({}, {}, { sort: { order: -1 } }).exec();
 
         if (lastSong) {
             return lastSong.order + 1;
@@ -27,7 +25,7 @@ export class SongService {
 
     async create(dto:createProductDto) {
         const order = await this.getLastSongOrder();
-        const songData = { ...dto, createdAt: new Date(), order }; // Добавляем поле createdAt с текущим временем
+        const songData = { ...dto, createdAt: new Date(), order }; 
         return this.songModel.create(songData);
     }
 
