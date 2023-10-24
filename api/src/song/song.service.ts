@@ -19,7 +19,7 @@ export class SongService {
         if (lastSong) {
             return lastSong.order + 1;
         } else {
-            return 1; // Если коллекция пуста, начнем с 1
+            return 1; 
         }
     }
 
@@ -34,7 +34,14 @@ export class SongService {
     }
 
     async deleteById(id: string) {
-        return this.songModel.findByIdAndDelete(id).exec()
+        const deletedSong = await this.songModel.findByIdAndDelete(id).exec();
+        if (deletedSong) {
+            await this.songModel.updateMany(
+                { order: { $gt: deletedSong.order } },
+                { $inc: { order: -1 } }
+            ).exec();
+        }
+        return deletedSong;
     }
     async updateById(id: string, dto: createProductDto) {
 		return this.songModel.findByIdAndUpdate(id, dto, { new: true }).exec();
@@ -54,8 +61,18 @@ export class SongService {
         return this.songModel.find({ _id: { $in: idArray } }).exec();
       }
 
-      async updateSongOrder(id: string, newOrder: number){
-        return this.songModel.findByIdAndUpdate(id, { order: newOrder }, { new: true }).exec();
-        // Изменение порядкового номера песни по её ID
-    }  
+      async updateSongOrder(id: string, newOrder: number) {
+        const songToUpdate = await this.songModel.findById(id).exec();
+        const oldOrder = songToUpdate.order;
+    
+       
+        const change = newOrder - oldOrder;
+
+        await this.songModel.updateMany(
+            { order: { $gte: Math.min(oldOrder, newOrder), $lte: Math.max(oldOrder, newOrder) } },
+            { $inc: { order: change } }
+        ).exec();
+        const updatedSong = await this.songModel.findByIdAndUpdate(id, { order: newOrder }, { new: true }).exec();
+        return updatedSong;
+    }
 }
