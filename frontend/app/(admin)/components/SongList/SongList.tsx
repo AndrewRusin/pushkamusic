@@ -89,8 +89,8 @@ export const  SongList =() => {
                                               + select</Button>}
                         <span onClick={()=>setTrackID(idx)}>{item.title}</span>
                       </span>
-                      <span> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>
-                ))} }     
+                      <span> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>})
+                ))}      
             </ul>
            
             <div className={styles.player}>
