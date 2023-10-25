@@ -81,8 +81,8 @@ export const  SongList =() => {
                  <ul className={styles.song_list}>
                 {SongItems.map((item,idx) => (
                  !item.isHidden && (<li key ={item._id} >
-                      <span className={styles.order}>{item.order}</span>
                       <span>
+                      <span className={styles.order}>{item.order}</span>
                         {!item.isSelected && <Button  appearance={"primary"} onClick={()=>{
                                                                                             setSelectItem({id:item._id, name:item.title})
                                                                                             item.isSelected = true}}> 
