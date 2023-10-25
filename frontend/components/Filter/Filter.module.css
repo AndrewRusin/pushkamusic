@@ -9,6 +9,8 @@
     padding: 0 20px;
     min-width: 320px;
     list-style-type: none;
+    height: calc(100vh - 120px);
+    overflow: auto;
 }
 .filter label{
     width: 100%;

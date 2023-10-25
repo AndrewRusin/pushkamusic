@@ -29,3 +29,7 @@
     justify-content: space-between;
     margin-bottom: 20px;
 }
+
+.order {
+    display: inline-block;
+}
