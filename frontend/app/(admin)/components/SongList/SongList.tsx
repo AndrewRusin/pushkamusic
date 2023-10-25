@@ -80,7 +80,7 @@ export const  SongList =() => {
             
                  <ul className={styles.song_list}>
                 {SongItems.map((item,idx) => (
-                   { item.isHidden && <li key ={item._id} >
+                 !item.isHidden && (<li key ={item._id} >
                       <span className={styles.order}>{item.order}</span>
                       <span>
                         {!item.isSelected && <Button  appearance={"primary"} onClick={()=>{
@@ -89,7 +89,7 @@ export const  SongList =() => {
                                               + select</Button>}
                         <span onClick={()=>setTrackID(idx)}>{item.title}</span>
                       </span>
-                      <span> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>})
+                      <span> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>)
                 ))}      
             </ul>
            
