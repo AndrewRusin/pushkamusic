@@ -62,13 +62,13 @@ export class SongController {
 	@UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())
 	@Patch(':id')
-	async patch(@Param('id') id: string, @Body() dto: SongModel) {
-		const updateSong = await this.songService.updateById(id, dto)
-		if (!updateSong) {
-			throw new NotFoundException(SONG_NOT_FOUND_ERROR)
-		}
-		return updateSong;
-	}
+	async patch(@Param('id') id: string, @Body() dto: createProductDto) {
+    const updatedSong = await this.songService.updateById(id, dto);
+    if (!updatedSong) {
+        throw new NotFoundException(SONG_NOT_FOUND_ERROR);
+    }
+    return updatedSong;
+}
 	
 	@UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())

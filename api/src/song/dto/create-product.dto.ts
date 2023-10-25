@@ -16,8 +16,8 @@ export class createProductDto {
 
     createdAt:Date;
 
-    // @IsNumber()
-    // order:number
+    @IsNumber()
+    order:number
     
     @IsBoolean()
     isHidden:boolean

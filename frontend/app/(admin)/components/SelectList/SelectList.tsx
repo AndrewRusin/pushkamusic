@@ -49,7 +49,7 @@ export  function SelectList({selectItem, deleteSelected, ...props}:selectItemPro
             {showList && (<ul className={styles.select_list}>
                 
                 {selectItems.map((item,idx) => (
-                    <li key ={idx} ><span>{item.name+' '+ item.id}</span>  <Button appearance="alert" onClick={ ()=>deleteItem(item.id)}>удалить</Button></li>
+                    <li key ={idx} ><span>{item.name}</span>  <Button appearance="alert" onClick={ ()=>deleteItem(item.id)}>удалить</Button></li>
                 ))}
                  <Button appearance={"primary"} onClick={createSelected}>Создать коллекцию</Button>   
                  {selectLink && <Link href={`/select/${selectLink}`}>Ссылка на коллекцию {selectLink}</Link>}
