@@ -48,7 +48,7 @@ export class SongService {
 	}
 
     async findAllSongs() {
-        return this.songModel.find({}).sort({ order: 1 }).exec();
+        return this.songModel.find({}).sort({ order: -1 }).exec();
     }
 
     async findByParameters(param:string[]) {
