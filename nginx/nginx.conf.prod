@@ -5,12 +5,12 @@ server {
 
   location / {
     proxy_pass http://frontend:3000;
-     client_max_body_size 20M; # Максимальный размер тела запроса для корневой директории.
+     client_max_body_size 25M; # Максимальный размер тела запроса для корневой директории.
   }
 
   location /api {
     proxy_pass http://api:3001;
-     client_max_body_size 20M; # Максимальный размер тела запроса для корневой директории.
+     client_max_body_size 25M; # Максимальный размер тела запроса для корневой директории.
   }
   location /static/ {
     proxy_pass http://pushkamusic-api:3001/static/;    
