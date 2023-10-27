@@ -21,7 +21,7 @@ export class SongModel extends Document {
 	@Prop()
     createdAt: Date;
 	
-	@Prop() // Поле для порядкового номера, начальное значение - 0
+	@Prop({default:0}) // Поле для порядкового номера, начальное значение - 0
     order: number;
 
 	@Prop()

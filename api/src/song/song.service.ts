@@ -26,6 +26,7 @@ export class SongService {
     async create(dto:createProductDto) {
         const order = await this.getLastSongOrder();
         const songData = { ...dto, createdAt: new Date(), order }; 
+        console.log('songData')
         return this.songModel.create(songData);
     }
 

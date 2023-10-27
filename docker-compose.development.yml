@@ -1,16 +1,65 @@
-version: '3'
-
+version: '3.1'
 services:
   frontend:
     build:
       dockerfile: Dockerfile.dev
       context: ./frontend
+    container_name: pushkamusic-docker-frontend
+    restart: always
+    # ports:
+    #   - 3000:3000
     command: npm run dev
-    stdin_open: true
-    tty: true
+    networks:
+      - pushkamusic-docker-network
     volumes:
-      - ./frontend/src:/usr/src/app/src
+      - ./frontend:/app  # Монтирование локальной папки в контейнер
+      - ./frontend/.env.dev:/app/.env.local
+
+  api:
+    build: ./api
+    container_name: pushkamusic-api
+    restart: always
+    networks:
+      - pushkamusic-docker-network
+    command: npm run start:prod
+    # ports:
+    #   - 3001:3001
+    depends_on:
+      - mongo
+    volumes:
+      - ./api/.env:/opt/app/.env # Укажите ту директорию которую вы выбрали в Dockerfile, в данном случае (WORKDIR /app)
+      - ./api/uploads:/opt/app/uploads
+ 
+  mongo:
+    image:  mongo:4.4.4
+    container_name: mongosh 
+    restart: always
+    networks:
+      - pushkamusic-docker-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27019:27017 # Левый порт это порт на котором монго будет доступна на нашей машине, правый порт монги в контейнере, его и нужно использовать в .env файле как port
+    volumes:
+      - ./mongo-data:/data/db
 
   nginx:
+    image: nginx:stable-alpine
+    container_name: pushkamusic-docker-nginx
+    ports:
+      - "80:80"
     volumes:
       - ./nginx/nginx.conf.dev:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - pushkamusic-docker-network   
+
+volumes:
+  mongo-data:
+
+networks:
+  pushkamusic-docker-network:
+    driver: bridge      

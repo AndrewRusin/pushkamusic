@@ -11,6 +11,8 @@ services:
     command: npm run start
     networks:
       - pushkamusic-docker-network
+    volumes:
+      - ./frontend/.env.prod:/app/.env.local
 
   api:
     build: ./api

@@ -15,9 +15,6 @@ export class createProductDto {
 	params: string[];
 
     createdAt:Date;
-
-    @IsNumber()
-    order:number
     
     @IsBoolean()
     isHidden:boolean

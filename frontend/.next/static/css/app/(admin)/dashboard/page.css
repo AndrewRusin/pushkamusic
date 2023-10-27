@@ -1,0 +1,602 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/Sidebar/Sidebar.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+.Sidebar_wrapper__iFZgA {
+    border: 1px solid #eee; 
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 350px;
+}
+.Sidebar_link__ULgYG {
+    text-decoration: none;
+    color:#000;
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.Sidebar_active__uF_e9 {
+    background: #eee;
+    
+}
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/AdminButtons/AdminButton.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+.AdminButton_admin_link__wQxwK { 
+    box-sizing: border-box;
+    text-decoration: none;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid #bfbcbc;
+    color:#000;
+    border-radius: 5px;
+}
+
+.AdminButton_container__P0hLF{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.AdminButton_wrapper__mpBvm{
+    box-sizing: border-box;
+    text-align: center;
+}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Button/Button.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Button_button__mg_cR {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    border:none;
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 10px;
+    background:none;
+}
+
+.Button_primary__PFIP8 {
+    color: #000;
+    background-color: #eee;
+}
+
+.Button_ghost__VE_C_ {
+   border: 1px solid #000; 
+}
+
+.Button_alert__Zsy1r {
+    color: rgb(255,255,255);
+    background-color: rgb(255,45,85);
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Menu/Menu.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+.Menu_nav__TKjBv {
+    display:flex;
+    color:var(--secondary-color);
+    width: 45%;
+    justify-content: space-around;
+    /* gap: 30px;*/
+}
+.Menu_links__wOrsj{
+    font-weight: normal;
+    font-weight: 300;
+    font-size: 19px;
+}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Header/Header.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Header_header__pXml_{
+    width: 100%;
+    background: var(--header);
+    height: 50px;
+    display:flex;
+    align-items:center;
+}
+.Header_wrapper__Gvcid{display:flex;}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Footer/Footer.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Footer_footer__o4_Ec {
+    height: 100px;
+    border:1px solid #000;
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Input/Input.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+ .Input_input__MPP3N{
+   line-height: 20px;
+    height: 60px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: 0;
+    outline: 0;
+    box-shadow: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+ }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Filter/Filter.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Filter_filter__9SuaG {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+    padding: 0 20px;
+    min-width: 320px;
+    list-style-type: none;
+    height: calc(100vh - 120px);
+    overflow: auto;
+}
+.Filter_filter__9SuaG label{
+    width: 100%;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+.Filter_filter__9SuaG p{
+    font-weight: bold;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/FilterList/FilterList.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+.FilterList_filter_list__wJQZR{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.FilterList_filter_list__wJQZR li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.FilterList_filter_list__wJQZR li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/FilterForm/FIlterForm.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+.FIlterForm_button__ulCjO {
+    width: 250px;
+    margin-top: 15px;
+}
+.FIlterForm_select__BCBhs {
+    margin-top: 10px;
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/ReleaseForm/ReleaseForm.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+.ReleaseForm_button__FKWlC {
+    width: 250px;
+    margin-top: 15px;
+}
+.ReleaseForm_select__xy1yP {
+    margin-top: 10px;
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/ReleaseList/ReleaseList.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+.ReleaseList_release_list__Jd_H3{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.ReleaseList_release_list__Jd_H3 li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ReleaseList_release_list__Jd_H3 li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[12].use[3]!./node_modules/react-h5-audio-player/lib/styles.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+.rhap_container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  font-family: inherit;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #fff;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+.rhap_container:focus:not(:focus-visible) {
+  outline: 0;
+}
+.rhap_container svg {
+  vertical-align: initial;
+}
+
+.rhap_header {
+  margin-bottom: 10px;
+}
+
+.rhap_footer {
+  margin-top: 5px;
+}
+
+.rhap_main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.rhap_stacked .rhap_controls-section {
+  margin-top: 8px;
+}
+
+.rhap_horizontal {
+  flex-direction: row;
+}
+.rhap_horizontal .rhap_controls-section {
+  margin-left: 8px;
+}
+
+.rhap_horizontal-reverse {
+  flex-direction: row-reverse;
+}
+.rhap_horizontal-reverse .rhap_controls-section {
+  margin-right: 8px;
+}
+
+.rhap_stacked-reverse {
+  flex-direction: column-reverse;
+}
+.rhap_stacked-reverse .rhap_controls-section {
+  margin-bottom: 8px;
+}
+
+.rhap_progress-section {
+  display: flex;
+  flex: 3 1 auto;
+  align-items: center;
+}
+
+.rhap_progress-container {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  flex: 1 0 auto;
+  align-self: center;
+  margin: 0 calc(10px + 1%);
+  cursor: pointer;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+}
+.rhap_progress-container:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.rhap_time {
+  color: #333;
+  font-size: 16px;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+}
+
+.rhap_progress-bar {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 5px;
+  background-color: #dddddd;
+  border-radius: 2px;
+}
+
+.rhap_progress-filled {
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  background-color: #868686;
+  border-radius: 2px;
+}
+
+.rhap_progress-bar-show-download {
+  background-color: rgba(221, 221, 221, 0.5);
+}
+
+.rhap_download-progress {
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  background-color: #dddddd;
+  border-radius: 2px;
+}
+
+.rhap_progress-indicator {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 3;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  top: -8px;
+  background: #868686;
+  border-radius: 50px;
+  box-shadow: rgba(134, 134, 134, 0.5) 0 0 5px;
+}
+
+.rhap_controls-section {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rhap_additional-controls {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+}
+
+.rhap_repeat-button {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+  color: #868686;
+  margin-right: 6px;
+}
+
+.rhap_main-controls {
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rhap_main-controls-button {
+  margin: 0 3px;
+  color: #868686;
+  font-size: 35px;
+  width: 35px;
+  height: 35px;
+}
+
+.rhap_play-pause-button {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.rhap_volume-controls {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.rhap_volume-button {
+  flex: 0 0 26px;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+  color: #868686;
+  margin-right: 6px;
+}
+
+.rhap_volume-container {
+  display: flex;
+  align-items: center;
+  flex: 0 1 100px;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+}
+
+.rhap_volume-bar-area {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 14px;
+  cursor: pointer;
+}
+.rhap_volume-bar-area:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.rhap_volume-bar {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: #dddddd;
+  border-radius: 2px;
+}
+
+.rhap_volume-indicator {
+  box-sizing: border-box;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  left: 0;
+  top: -4px;
+  background: #868686;
+  opacity: 0.9;
+  border-radius: 50px;
+  box-shadow: rgba(134, 134, 134, 0.5) 0 0 3px;
+  cursor: pointer;
+}
+.rhap_volume-indicator:hover {
+  opacity: 0.9;
+}
+
+.rhap_volume-filled {
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  background-color: #868686;
+  border-radius: 2px;
+}
+
+/* Utils */
+.rhap_button-clear {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+.rhap_button-clear:hover {
+  opacity: 0.9;
+  transition-duration: 0.2s;
+}
+.rhap_button-clear:active {
+  opacity: 0.95;
+}
+.rhap_button-clear:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./components/Player/Player.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Player_custom__wMIcY{
+    box-shadow: none;
+    padding: 0;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/SelectList/SelectList.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+.SelectList_select_list__3eyTi{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  
+}
+.SelectList_select_list_button__V2kUb{
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+.SelectList_select_list__3eyTi li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.SelectList_select_list__3eyTi li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}
+.SelectList_select_list_wrapper__M4mvm{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    padding: 30px;
+    background: #fff;
+    box-sizing: border-box;
+    height: 100%;
+    align-items: center;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/SongList/SongList.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+.SongList_song_list__jXYIJ{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.SongList_song_list__jXYIJ li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.SongList_song_list__jXYIJ li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}
+.SongList_player__63Ow2{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.SongList_top_bar__tBDYA{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.SongList_order__sp8w9 {
+    display: inline-block;
+}
+.SongList_search_input__UlAWt {
+    border:1px solid #e3e3e3;
+    border-radius: 3px;
+    height: 30px;
+    width: 200px;
+
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/components/SelectItems/SelectItems.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+.SelectItems_select_items__YUUaS{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.SelectItems_select_items__YUUaS li{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.SelectItems_select_items__YUUaS li a{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #a1a1a1;
+}
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./app/(admin)/dashboard/page.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.page_wrapper__FldjG {
+    display: flex;
+    justify-content: space-between;
+}

@@ -69,12 +69,22 @@ export const  SongList =() => {
       return song
     }))
    }  
-
-    if (SongItems.length) {
+ 
+  async function searchSong(song:string) {
+  if (song.length) {
+    const searchArr = SongItems.filter(el=>el.title.toLowerCase().includes(song.toLowerCase()))
+    setSongItems(searchArr)
+  } else {
+    const data = await getSongItems()
+    setSongItems( data )
+  }
+}
+ 
         return (
             <div>           
             <div className={styles.top_bar}>
               <Filter onChange={handleChange}/>
+              <input type="text" className={styles.search_input} placeholder="Поиск" onChange={e=>searchSong(e.target.value)}/>
               {selectItem && (<SelectList selectItem={selectItem} deleteSelected={deleteSelected}/>)} 
             </div>
             
@@ -99,14 +109,6 @@ export const  SongList =() => {
             </div>
             
         )
-    } else {
-        
-        return (
-        <div>
-            <Filter onChange={handleChange}/>
-            <p>Здесь еще нет элементов</p>
-        </div>
-        )
-    }
+ 
 
   }

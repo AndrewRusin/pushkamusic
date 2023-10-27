@@ -20,11 +20,6 @@ export const items: IAdminNav[] = [
     },
     {
       id: 4,
-      title: 'Контакты',
-      href: '/dashboard/contacts',
-    },
-    {
-      id: 5,
       title: 'Список подборок',
       href: '/dashboard/select_items',
     },

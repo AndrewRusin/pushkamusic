@@ -12,7 +12,7 @@ export default function Home() {
       <Button appearance='ghost'>Кнопка</Button>
       <Button appearance='alert'>Кнопка</Button>
       <Logo />
-      <Input placeholder='Name'/>
+      <span>sdsd44p</span>
       
       </div>
       

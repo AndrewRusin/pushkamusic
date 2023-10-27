@@ -62,7 +62,7 @@ export class SongController {
 	@UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())
 	@Patch(':id')
-	async patch(@Param('id') id: string, @Body() dto: createProductDto) {
+	 async patch(@Param('id') id: string, @Body() dto: createProductDto) {
     const updatedSong = await this.songService.updateById(id, dto);
     if (!updatedSong) {
         throw new NotFoundException(SONG_NOT_FOUND_ERROR);
