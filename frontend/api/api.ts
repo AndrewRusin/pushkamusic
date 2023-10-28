@@ -1,4 +1,5 @@
 export const API = {
+	process:process.env,
 	topPage: {
 		all: process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/findAll'
 	},
