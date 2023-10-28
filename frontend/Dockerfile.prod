@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
 WORKDIR /app
-ENV NEXT_PUBLIC_DOMAIN http://pushkamusic.online/app
+ENV NEXT_PUBLIC_DOMAIN http://pushkamusic.online
 COPY package*.json ./
 
 RUN npm install

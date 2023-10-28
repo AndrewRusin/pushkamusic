@@ -10,10 +10,6 @@ services:
     #   - 3000:3000
     networks:
       - pushkamusic-docker-network
-    environment:
-      - NEXT_PUBLIC_DOMAIN=http://pushkamusic.online
-    volumes:
-      - ./frontend/.env.prod:/app/.env
     depends_on:
       - api  
 
