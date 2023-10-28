@@ -13,7 +13,7 @@ services:
       - pushkamusic-docker-network
     volumes:
       - ./frontend:/app  # Монтирование локальной папки в контейнер
-      - ./frontend/.env.dev:/app/.env.local
+      - ./frontend/.env.dev:/app/.env.dev
 
   api:
     build: ./api

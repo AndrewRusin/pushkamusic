@@ -11,7 +11,7 @@ services:
     networks:
       - pushkamusic-docker-network
     volumes:
-      - ./frontend/.env.prod:/app/.env.local
+      - ./frontend/.env.prod:/app/.env.prod
 
   api:
     build: ./api
