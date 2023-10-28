@@ -27,6 +27,7 @@ export async function patchFilterItems(data: ICreateFilter, id: string): Promise
 }
 
 export async function findFilterItem( id: string): Promise<IFilterCategoriesResponse> {
+	console.log(API.filter)
 	const res = await fetch(API.filter.deleteOrPatch + id, {
 		method: 'GET',
 		headers: new Headers({ 'content-type': 'application/json' }),
