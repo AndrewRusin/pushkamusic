@@ -9,8 +9,6 @@ const headers = {
 }
 
 export async function uploadFile( file: FormData): Promise<IUploadFile[]> {
-
-  
 	const res = await fetch(API.uploadFile, {
 		method: 'POST',
 		headers,

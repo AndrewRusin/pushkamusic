@@ -75,6 +75,7 @@ export  function SongForm({idItem = '', ...props}:SongFormProps ):JSX.Element {
         formData.append('files', file, encodeFile)
       try {
          const resFile = await uploadFile(formData);
+         console.log(resFile)
         const resultFile = [...resFile][0]
         const totalData = {...data,title:resultFile.name, track_link:resultFile.url, isHidden:isChecked,songsText:textAreaValue}
         console.log(totalData)
