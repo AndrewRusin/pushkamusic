@@ -21,6 +21,10 @@ export class FilterModel {
 
     @Prop()
     category: categoryOptions ;
+    
+    @Prop({default:0}) // Поле для порядкового номера, начальное значение - 0
+    order: number;
+
 }
 
 export const FilterShema = SchemaFactory.createForClass(FilterModel)

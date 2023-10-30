@@ -12,9 +12,20 @@ export class FilterService {
     ) {
      
     }
+    async getLastFilterOrder(): Promise<number> {
+        const lastSong = await this.filterModel.findOne({}, {}, { sort: { order: -1 } }).exec();
+
+        if (lastSong) {
+            return lastSong.order + 1;
+        } else {
+            return 1; 
+        }
+    }
 
     async create(dto: CreateFilterDto) {
-        return this.filterModel.create(dto);
+            const order = await this.getLastFilterOrder();
+            const songData = { ...dto,  order }; 
+            return this.filterModel.create(songData);
     }
 
     async findById(id: string) {

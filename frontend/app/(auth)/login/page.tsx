@@ -20,10 +20,12 @@ export default  function Login() {
           Cookies.set('isLogged','1')
           Cookies.set('token',resData.access_token) 
         } else {
+          alert(resData.message)
           setError(resData.message)
         }
       } catch (e) {
         if (e instanceof Error) {
+          alert(e.message)
           setError(e.message);
         }
       } 
