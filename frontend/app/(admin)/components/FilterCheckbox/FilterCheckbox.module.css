@@ -1,0 +1,8 @@
+.filter_block {
+    height: 300px;
+    overflow: auto;
+    margin-top: 20px;
+}
+.filter_group {
+    margin-bottom: 15px;
+}

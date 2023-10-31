@@ -116,7 +116,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   return (
     <div {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="file" name="songFile" id="songFile" onChange={handleFileChange} />
+        <input type="file" name="songFile" id="songFile" onChange={handleFileChange} /> {isLoading && <div className={styles.loadingIndicator}> Загрузка файла...</div>}
        <div className={styles.textarea_wrapper}>
         {textAreaValue.trim() === '' && <span className={styles.errorText}>Это поле обязательное поле</span>}
         <div className={styles.textarea} contentEditable="true" onBlur={(e) => setTextAreaValue(e.currentTarget.innerHTML)}></div>
@@ -130,8 +130,6 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
           {idItem ? 'Изменить' : 'Создать'}
         </Button>
       </form>
-      {/* Добавляем индикатор загрузки */}
-      {isLoading && <div className={styles.loadingIndicator}>Загрузка файла...</div>}
     </div>
   );
 }
