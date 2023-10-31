@@ -16,3 +16,13 @@
     padding: 5px;
     overflow: auto;
 }
+.textarea_wrapper {
+    position: relative;
+}
+
+.errorText {
+    color: red;
+    position: absolute;
+    bottom: -16px;
+    
+}
