@@ -29,6 +29,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
       (async () => {
         const values = await findSongItem(idItem);
         setValueForm(values);
+        setTextAreaValue(values.songsText)
       })();
     }
     
@@ -41,7 +42,6 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   useEffect(() => {
     (async () => {
       const checkboxesObj = await getFilterItemsModify();
-      console.log(checkboxesObj);
       setCheckboxes(checkboxesObj);
     })();
 
@@ -68,31 +68,37 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   const { register, control, handleSubmit } = useForm<ISongForm>();
   const onSubmit: SubmitHandler<ISongForm> = async (data) => {
     removeEmptyFields(data);
-    if (!file) {
-      alert('Пожалуйста выберите файл');
-      return;
-    }
+    const totalData = { ...data, isHidden: isChecked, songsText: textAreaValue };
+
+      if (valueForm) {
+        totalData.title = valueForm.title;
+        totalData.track_link = valueForm.track_link;
+      }else {
+        if (!file) {
+          alert('Пожалуйста выберите файл');
+        }else{
+          try {
+            setIsLoading(true); 
+            const formData = new FormData();
+            const encodeFile = encodeURI(file.name);
+            formData.append('files', file, encodeFile);
+            const resFile = await uploadFile(formData);
+            const resultFile = [...resFile][0];
+            totalData.title = resultFile.name,
+            totalData.track_link = resultFile.url 
+          } catch (error) {
+            alert(error)
+          } finally {
+            setIsLoading(false);
+          }
+        }
+      }
+    
     if (textAreaValue==='') {
       alert('Пожалуйста заполните текст песни');
       return;
     }
-    setIsLoading(true); // Включаем индикатор загрузки.
-
-    const formData = new FormData();
-    const encodeFile = encodeURI(file.name);
-    formData.append('files', file, encodeFile);
-
-    try {
-      const resFile = await uploadFile(formData);
-      const resultFile = [...resFile][0];
-      const totalData = {
-        ...data,
-        title: resultFile.name,
-        track_link: resultFile.url,
-        isHidden: isChecked,
-        songsText: textAreaValue,
-      };
-
+    try { 
       const resData = idItem!=='' ? await patchSongItems(totalData, idItem) : await createSongItems(totalData);
 
       if (resData._id) {
@@ -104,9 +110,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
       if (e instanceof Error) {
         setError(e.message);
       }
-    } finally {
-      setIsLoading(false); // Выключаем индикатор загрузки после загрузки файла и завершения операции.
-    }
+    } 
   };
 
   if (redirectTo) {
@@ -115,15 +119,26 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
 
   return (
     <div {...props}>
+      {valueForm && <h1>{valueForm.title}</h1>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="file" name="songFile" id="songFile" onChange={handleFileChange} /> {isLoading && <div className={styles.loadingIndicator}> Загрузка файла...</div>}
        <div className={styles.textarea_wrapper}>
         {textAreaValue.trim() === '' && <span className={styles.errorText}>Это поле обязательное поле</span>}
-        <div className={styles.textarea} contentEditable="true" onBlur={(e) => setTextAreaValue(e.currentTarget.innerHTML)}></div>
+        <div className={styles.textarea} contentEditable="true" onBlur={(e) => setTextAreaValue(e.currentTarget.innerHTML)} suppressContentEditableWarning={true}>
+        {valueForm ? (
+            <div dangerouslySetInnerHTML={{ __html: valueForm.songsText }} />
+          ) : null}
         </div>
-        <FilterCheckbox {...register('params')} filterItems={checkboxes} />
+        </div>
+        {valueForm ?<FilterCheckbox {...register('params')} filterItems={checkboxes} filterChecked={valueForm.params}/> :<FilterCheckbox {...register('params')} filterItems={checkboxes} filterChecked={[]}/>}
         <label>
-          <input type="checkbox" name="hidden" id="" checked={isChecked} onChange={() => setIsChecked((prev) => !prev)} />
+        <input
+            type="checkbox"
+            name="hidden"
+            id=""
+            checked={isChecked !== undefined ? isChecked : valueForm?.isHidden || false}
+            onChange={() => setIsChecked((prev) => !prev)}
+          />
           <span>скрыть песню</span>
         </label>
         <Button appearance="primary" className={styles.button} type="submit" >

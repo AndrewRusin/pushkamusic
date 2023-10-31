@@ -96,10 +96,11 @@ export const  SongList =() => {
                         {!item.isSelected && <Button  appearance={"primary"} onClick={()=>{
                                                                                             setSelectItem({id:item._id, name:item.title})
                                                                                             item.isSelected = true}}> 
-                                              + select</Button>}
+                                              + </Button>}
                         <span onClick={()=>setTrackID(idx)}>{item.title}</span>
                       </span>
-                      <span> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>)
+
+                      <span><Link href={'/dashboard/edit_song_item/' + item._id}>ред.</Link> <Button appearance="alert" onClick={async ()=>deleteItem(item._id, item.track_link)}>удалить</Button></span></li>)
                 ))}      
             </ul>
            
