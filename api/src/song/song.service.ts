@@ -56,7 +56,7 @@ export class SongService {
         const filter = {
             'params': { $all: param },
           };
-        return this.songModel.find(filter).exec()
+        return this.songModel.find(filter).sort({ order: -1 }).exec()
     }
     async findSongsByIds(idArray: string[]) {
         return this.songModel.find({ _id: { $in: idArray } }).exec();

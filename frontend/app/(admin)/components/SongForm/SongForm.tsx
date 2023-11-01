@@ -121,7 +121,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
     <div {...props}>
       {valueForm && <h1>{valueForm.title}</h1>}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="file" name="songFile" id="songFile" onChange={handleFileChange} /> {isLoading && <div className={styles.loadingIndicator}> Загрузка файла...</div>}
+        {!valueForm && <div><input type="file" name="songFile" id="songFile" onChange={handleFileChange} /> {isLoading && <div className={styles.loadingIndicator}> Загрузка файла...</div>}</div>}
        <div className={styles.textarea_wrapper}>
         {textAreaValue.trim() === '' && <span className={styles.errorText}>Это поле обязательное поле</span>}
         <div className={styles.textarea} contentEditable="true" onBlur={(e) => setTextAreaValue(e.currentTarget.innerHTML)} suppressContentEditableWarning={true}>

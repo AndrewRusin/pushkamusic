@@ -14,7 +14,7 @@ interface Sibling1Props {
 export const Filter = ({ onChange }:Sibling1Props): JSX.Element => {
     const [showFilter, setShowFilter] = useState<boolean>(false)
     const [filterItems, setFilterItems] = useState<IModernFilter | null>(null)
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
   
        
         if (event.target.checked) {
@@ -49,7 +49,7 @@ export const Filter = ({ onChange }:Sibling1Props): JSX.Element => {
                  <li key={key}>
                     <p>{key}</p>
                     {value.map(item=>(
-                        <label key={item._id}><input  type="checkbox" name="params" id={item._id} value={item.filterValue} onChange={handleChange} /> {item.filterItem}</label>
+                        <label key={item._id}><input  type="checkbox" name="params" id={item._id} value={item.filterValue} onChange={handleFilterChange} /> {item.filterItem}</label>
                     ))}
                 </li>   
             ))}  
