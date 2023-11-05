@@ -1,4 +1,5 @@
 mongo-data
 node_modules
 frontend/.next/
-api/uloads/
+api/uploads/
+uploads

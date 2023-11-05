@@ -1,27 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { path } from 'app-root-path';
 import { format } from 'date-fns';
-import {ensureDir, remove, writeFile, unlink, readdir} from 'fs-extra'
+import {ensureDir, remove, writeFile, unlink, readdir, rename} from 'fs-extra'
 import { FileElementResponse } from './dto/file-response-element.response';
+import { transliterate as tr } from 'transliteration';
 
 
 @Injectable()
 export class FilesService {
-    async saveFiles(files: Express.Multer.File[]): Promise<FileElementResponse[]> {
-        const dateFolder = format(new Date(), 'yyyy-MM-dd');
-        const uploadFolder = `${path}/uploads`;
+  async saveFiles(files: Express.Multer.File[]): Promise<FileElementResponse[]> {
+  
+    const uploadFolder = `${path}/uploads`;
 
-        await ensureDir(uploadFolder);
-        const res: FileElementResponse[] = [];
-        for(const file of files) {
-            const decodeName = decodeURI(file.originalname)
-            await writeFile(`${uploadFolder}/${decodeName}`, file.buffer)
-           
-            const fileName = decodeName.split('.')[0]
-            res.push({url: `${decodeName}`, name: fileName})
-        }
-        return res
+
+    const res: FileElementResponse[] = [];
+    for (const file of files) {
+        // Оригинальное имя файла без изменений
+        const originalName = file.originalname;
+        // Транслитерация для использования в URL
+        
+        const decodeName = decodeURI(file.originalname)
+        const transliteratedName = tr(decodeName);
+        // Сохранение файла с транслитерированным именем
+        await writeFile(`${uploadFolder}/${transliteratedName}`, file.buffer);
+       
+        // Получение имени файла без расширения для свойства name
+        const fileName = decodeName.split('.')[0]
+        // Добавление объекта в ответ, с транслитерированным url и оригинальным name
+        res.push({ url: `${transliteratedName}`, name: fileName });
     }
+    return res;
+}
 
     async removeFile(filePath:string){
         try {
@@ -44,5 +53,21 @@ export class FilesService {
           throw new Error('Не удается удалить папку');
         }
       }
+
+      async transliterateFileNames(folderPath: string): Promise<void> {
+        try {
+            const files = await readdir(folderPath);
+            for (const file of files) {
+                const transliteratedName = tr(file);
+                if (transliteratedName !== file) { // Проверяем, нужно ли переименовывать
+                    await rename(`${folderPath}/${file}`, `${folderPath}/${transliteratedName}`);
+                    console.log(`Файл ${file} был переименован в ${transliteratedName}`);
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка при переименовании файлов:', error);
+            throw error;
+        }
+    }
 
 }

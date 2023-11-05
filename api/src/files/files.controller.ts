@@ -1,4 +1,4 @@
-import { Controller, Delete, HttpCode, NotFoundException, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, HttpCode, HttpStatus, NotFoundException, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { FileElementResponse } from './dto/file-response-element.response';
@@ -30,4 +30,13 @@ export class FilesController {
     const folderPath = `./uploads/${folderName}`; // Замените на путь к папке, которую вы хотите удалить, если она пуста
     await this.filesService.deleteFolderIfEmpty(folderName)
   }
+
+  @Post('transliterate-filenames')
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(JwtAuthGuard) // Это если вам нужна аутентификация
+    async transliterateFilenames() {
+        await this.filesService.transliterateFileNames('./uploads/'); // Укажите путь к директории с песнями
+        return { message: 'Имена файлов были успешно транслитерированы.' };
+    }
+
 }

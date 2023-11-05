@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseArrayPipe, Patch, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseArrayPipe, Patch, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { SongModel } from './song.model/song.model';
 import { createProductDto } from './dto/create-product.dto';
 import { SongService } from './song.service';
@@ -76,6 +76,16 @@ export class SongController {
     async updateSongOrder(@Param('id') id: string, @Body('order') newOrder: number) {
         return this.songService.updateSongOrder(id, newOrder);
     }
+
+	@Post('transliterate-track-links')
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(JwtAuthGuard) // Если вы хотите ограничить доступ к этому эндпоинту
+    async transliterateTrackLinks() {
+        await this.songService.transliterateTrackLinks();
+        return { message: 'Ссылки треков были успешно обновлены.' };
+    }
+
+
 }
 
 

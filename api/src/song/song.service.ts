@@ -3,6 +3,7 @@ import { SongDocument, SongModel } from './song.model/song.model';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { createProductDto } from './dto/create-product.dto';
+import { transliterate as tr } from 'transliteration';
 
 @Injectable()
 export class SongService {
@@ -74,5 +75,27 @@ export class SongService {
         ).exec();
         const updatedSong = await this.songModel.findByIdAndUpdate(id, { order: newOrder }, { new: true }).exec();
         return updatedSong;
+    }
+
+    async transliterateTrackLinks(): Promise<void> {
+        try {
+            // Получаем все песни
+            const songs = await this.songModel.find({}).exec();
+            
+            for (const song of songs) {
+                // Транслитерация track_link
+                const transliteratedTrackLink = tr(song.track_link);
+                
+                // Проверяем, нужно ли обновлять track_link
+                if (transliteratedTrackLink !== song.track_link) {
+                    song.track_link = transliteratedTrackLink;
+                    await song.save(); // Сохраняем обновленный документ
+                    console.log(`track_link для песни с ID ${song.id} был обновлен.`);
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка при транслитерации track_link:', error);
+            throw error;
+        }
     }
 }
