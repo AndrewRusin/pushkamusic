@@ -70,4 +70,17 @@ export class FilesService {
         }
     }
 
+    async listFiles(folderPath: string) {
+        try {
+            const files = await readdir(folderPath);
+            const updateFiles = [];
+            files.forEach(el => {
+                updateFiles.push({value:el, label:el})
+               });
+            return updateFiles;
+        } catch (error) {
+            console.error('Ошибка при переименовании файлов:', error);
+            throw error;
+        }
+    }
 }

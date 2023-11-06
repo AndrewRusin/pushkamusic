@@ -1,6 +1,7 @@
 import { IUploadFile } from "@/interfaces/uploadFile.interface";
 import { API } from './api';
 import Cookies from 'js-cookie';
+import { Options } from "@/utils/filterCategory";
 
 const token = `Bearer ${Cookies.get("token")}`;
 const headers = { 
@@ -23,4 +24,11 @@ export async function deleteFile (fileName:string):Promise<void> {
 		method:'DELETE',
 		headers,
 	})
+}
+export async function allFilesName():Promise<Options[]>{
+	const res = await fetch(API.allFilesName, {
+			method:'GET',
+			headers,
+		})
+		return res.json();
 }

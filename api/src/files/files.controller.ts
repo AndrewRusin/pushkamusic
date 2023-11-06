@@ -1,4 +1,4 @@
-import { Controller, Delete, HttpCode, HttpStatus, NotFoundException, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { FileElementResponse } from './dto/file-response-element.response';
@@ -38,5 +38,11 @@ export class FilesController {
         await this.filesService.transliterateFileNames('./uploads/'); // Укажите путь к директории с песнями
         return { message: 'Имена файлов были успешно транслитерированы.' };
     }
-
+    @Get('filenames')
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(JwtAuthGuard) // Это если вам нужна аутентификация
+    async listFilenames() {
+        return await this.filesService.listFiles('./uploads/') // Укажите путь к директории с песнями
+        
+    }
 }

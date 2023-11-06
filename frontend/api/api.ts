@@ -23,6 +23,7 @@ export const API = {
 	uploadFile:process.env.NEXT_PUBLIC_DOMAIN + '/api/files/upload',
 	uploadSrc:process.env.NEXT_PUBLIC_DOMAIN +'/static/',
 	deleteFile: process.env.NEXT_PUBLIC_DOMAIN + '/api/files/',
+	allFilesName:process.env.NEXT_PUBLIC_DOMAIN + '/api/files/filenames',
 	select:{
 		create: process.env.NEXT_PUBLIC_DOMAIN + '/api/select/create',
 		findAll:process.env.NEXT_PUBLIC_DOMAIN + '/api/select/all',

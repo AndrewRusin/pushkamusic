@@ -8,11 +8,12 @@ import Select from 'react-select';
 import { redirect } from 'next/navigation';
 import { createSongItems, findSongItem, patchSongItems } from '@/api/song';
 import { SongFormProps } from './SongForm.props';
-import { uploadFile } from '@/api/file';
+import { allFilesName, uploadFile } from '@/api/file';
 import { IUploadFile } from '@/interfaces/uploadFile.interface';
 import { getFilterItems, getFilterItemsModify } from '@/api/filter';
 import { IFilterCategory, IModernFilter } from '@/interfaces/CreateFilterForm.interface';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
+import { Options } from '@/utils/filterCategory';
 
 export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element {
   const [redirectTo, setRedirectTo] = useState<boolean>(false);
@@ -23,10 +24,16 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   const [textAreaValue, setTextAreaValue] = useState<string>('');
   const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState(false); // Добавили состояние для индикатора загрузки.
+  const [selectFileName, setSelectFileName] = useState<Options[] >([])
 
   useEffect(() => {
     if (idItem!=='') {
       (async () => {
+      
+           
+        
+       
+      
         const values = await findSongItem(idItem);
         setValueForm(values);
         setTextAreaValue(values.songsText)
@@ -44,7 +51,14 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
       const checkboxesObj = await getFilterItemsModify();
       setCheckboxes(checkboxesObj);
     })();
-
+    (async () => {
+      (async () => {
+      const res = await allFilesName()
+      console.log(res)
+        setSelectFileName(res)
+      
+      })();
+    })();
     return () => {
       // This now gets called when the component unmounts.
     };
@@ -69,10 +83,10 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   const onSubmit: SubmitHandler<ISongForm> = async (data) => {
     removeEmptyFields(data);
     const totalData = { ...data, isHidden: isChecked, songsText: textAreaValue };
-
+    console.log(data)
       if (valueForm) {
-        totalData.title = valueForm.title;
-        totalData.track_link = valueForm.track_link;
+        totalData.title = data.title || valueForm.title;
+        totalData.track_link = data.track_link || valueForm.track_link;
       }else {
         if (!file) {
           alert('Пожалуйста выберите файл');
@@ -119,8 +133,31 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
 
   return (
     <div {...props}>
-      {valueForm && <h1>{valueForm.title}</h1>}
+    
       <form onSubmit={handleSubmit(onSubmit)}>
+      {valueForm && selectFileName && <div className='filenames'><h1>{valueForm.title}, {valueForm.track_link}</h1>
+      <Input {...register('title')} placeholder='Имя' type='text' defaultValue={valueForm.title} />
+     <Controller
+     control={control}
+     name="track_link"
+     render={({ field: { onChange,  value, ref} }) => (
+     
+       <Select
+           className={styles.select}
+           value={value}
+           onChange={onChange}
+           placeholder="Выберите параметр..."
+           options={selectFileName as any}
+           isClearable={true}
+           backspaceRemovesValue={true}
+           ref={ref}
+         
+       />
+     )}
+   /></div>
+
+}
+
         {!valueForm && <div><input type="file" name="songFile" id="songFile" onChange={handleFileChange} /> {isLoading && <div className={styles.loadingIndicator}> Загрузка файла...</div>}</div>}
        <div className={styles.textarea_wrapper}>
         {textAreaValue.trim() === '' && <span className={styles.errorText}>Это поле обязательное поле</span>}
