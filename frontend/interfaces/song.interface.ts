@@ -1,9 +1,12 @@
+import { Options } from "@/utils/filterCategory";
+
+
 
 
 export interface ISongForm{
-    title:string;
+    title:string ;
 	songsText:string;
-	track_link:string;
+	track_link:string ;
 	params:string[];
     isHidden:boolean;
 }

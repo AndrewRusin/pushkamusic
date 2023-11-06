@@ -83,10 +83,10 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
   const onSubmit: SubmitHandler<ISongForm> = async (data) => {
     removeEmptyFields(data);
     const totalData = { ...data, isHidden: isChecked, songsText: textAreaValue };
-    console.log(data)
+    console.log({track_link:data.track_link })
       if (valueForm) {
         totalData.title = data.title || valueForm.title;
-        totalData.track_link = data.track_link || valueForm.track_link;
+        totalData.track_link = data.track_link  || valueForm.track_link;
       }else {
         if (!file) {
           alert('Пожалуйста выберите файл');
@@ -144,8 +144,8 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
      
        <Select
            className={styles.select}
-           value={value}
-           onChange={onChange}
+           value={selectFileName.find(option => option.value === value)}
+            onChange={(option) => onChange(option ? option.value : '')}
            placeholder="Выберите параметр..."
            options={selectFileName as any}
            isClearable={true}
