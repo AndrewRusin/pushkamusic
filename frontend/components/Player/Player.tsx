@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import style from './Player.module.css';
 import { PlayerProps } from './Player.props';
 
 export const Player = ({ playlist, current_track, ...props }: PlayerProps) => {
@@ -26,8 +25,6 @@ export const Player = ({ playlist, current_track, ...props }: PlayerProps) => {
     );
   };
   const handleClickPrev = () => {
-    console.log(currentTrack)
-    console.log(playlist.length )
     setTrackIndex((currentTrack) =>
       currentTrack > 0 ? currentTrack - 1 : playlist.length - 1
     );

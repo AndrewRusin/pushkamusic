@@ -104,6 +104,13 @@
 
   /*Mobile*/
   @media only screen and (max-width: 640px) {
+    .info_container {
+        height: calc(100vh - 135px);
+    }
+
+    .up_info.up_info-entered{
+        bottom: 90px;
+    }
     .wrapper {
         width: calc(100% - 8vw);
         margin: 0 4vw;
