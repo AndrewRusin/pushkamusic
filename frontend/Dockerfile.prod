@@ -4,6 +4,8 @@ WORKDIR /app
 ENV NEXT_PUBLIC_DOMAIN http://pushkamusic.online
 COPY package*.json ./
 
+RUN npm install -g npm@10.2.3
+
 RUN npm install
 
 COPY . .
