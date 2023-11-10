@@ -16,22 +16,20 @@ export default function  EditFilterItem({params}:{params:{id:string}}) {
     
     useEffect(() => {
         (async () => {
-
             const songsArr= await findSelectItem(params.id)
             const data = await getSongItemsSelect(songsArr.idArray)
             setSongItems(data)
       
-            console.log(songItems)
+            
         })();
-      return () => {
-        
-      }
+    
     }, [])
     
-
+    console.log(songItems)
 
   return (
       <div >
+        <h1 className="page_title">Подборка</h1>
        <SongList songs={songItems}/>
       </div>
     )

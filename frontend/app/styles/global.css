@@ -1,0 +1,127 @@
+:root {
+    --header:rgb(44,44,46);
+    --body-color:rgb(255,255,255);
+    --secondary-color:#eee;
+    --primary-font:#000;
+    --alert-color:rgb(255,45,85);
+  }
+  
+  
+  
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  body {
+    background: var(--body-color);
+  }
+  main{
+    height: calc(100vh - 150px);
+    overflow: auto;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .container{
+    width: calc(100% - 48vw);
+    margin: 0 auto;
+  }
+  
+  .wrapper{
+    display: grid;
+    align-items: normal;
+    min-height: 100vh;
+    width: calc(100% - 48vw);
+    margin: 0px 24vw;
+  }
+  
+  
+  .bg_red {
+    background: var(--alert-color);
+  }
+  .bg_grey {
+    background: var(--secondary-color);
+  }
+  .close {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  h1.page_title {
+    padding: 31px 0 20px 0;
+  }
+  /*Info song */
+  .info_container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translateY(102%);
+    transition: transform .2s;
+    padding: 5vw 24vw;
+    background: var(--body-color);
+    border-radius: 15px 15px 0 0;
+    box-shadow: -2px -7px 5px 6px rgba(202,189,189,0.59);
+    height: calc(100vh - 174px);
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+    font-size: 16px;
+  
+  }
+  
+  .up_info.up_info-entered{
+    bottom: 154px;
+    transform: translateY(0);
+  }
+  
+  /*End Info song */
+  
+   /*Player*/
+   .custom_player.rhap_container {
+    box-shadow: none;
+    padding: 0;
+    position: relative;
+}
+    .custom_player .rhap_additional-controls {
+     opacity: 0;
+    }
+    /*End Player*/
+
+  /*Mobile*/
+  @media only screen and (max-width: 640px) {
+    .wrapper {
+        width: calc(100% - 8vw);
+        margin: 0 4vw;
+    }
+    .info_container{
+      padding: 5vw 4vw;
+    }
+    /*Player*/
+  
+    .custom_player .rhap_volume-controls {
+        display: none;
+    }
+    .custom_player  .rhap_header{
+        position: absolute;
+        left: 0;
+        top: 53%;
+        margin: 0;
+        width: 50%;
+    }
+    /*End Player*/
+  }

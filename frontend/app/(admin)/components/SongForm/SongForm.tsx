@@ -161,7 +161,6 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
         
         {valueForm ? (
           <div>
-          <h1>Есть</h1>
           <FilterCheckbox {...register('params')} filterItems={checkboxes} filterChecked={valueForm.params}/>
           </div>
         ) : (
