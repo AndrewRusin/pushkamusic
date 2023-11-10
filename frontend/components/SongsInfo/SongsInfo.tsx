@@ -1,6 +1,4 @@
 'use client'
-import Image from 'next/image'
-import listIconSrc from '@/public/icons/list_icon.svg?url'
 import {  useState } from 'react';
 import styles from './SongsInfo.module.css';
 import { SongsInfoProps } from './SongsInfo.props';
@@ -51,7 +49,7 @@ export const SongsInfo = ({closeInfo, name, params,className, text,...props}:Son
                             {currentTab === `${tab.id}` && <div className={styles.tab_content}>
                               <ul>
                                 {tab.content.map((li,i) => 
-                                  <li key={i}><Image src={listIconSrc} alt={'list icon'} /><span>{li}</span></li>
+                                  <li key={i}><img src={'/icons/list_icon.svg'} alt={'list icon'} /><span>{li}</span></li>
                                 )}
                               </ul>
                             </div>}
