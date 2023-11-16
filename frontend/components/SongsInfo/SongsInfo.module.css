@@ -28,20 +28,24 @@
     margin-bottom: 20px;
 }
 .scroll {
-    height: calc(100% - 181px);
+    height: calc(100% - 210px);
     overflow: auto;
 }
-.middle {
-    margin-top: 30px;
+.middle, .bottom  {
+    margin-top: 40px;
 }
 .song_text{
     margin-top: 10px;
 }
+.song_text * {
+    font-family: inherit!important;
+}
 .bottom {
-    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 40px;
 }
 .tabs {
-    margin: 10px 0;
+    margin: 16px 0;
     width: 300px;
     display: flex;
     justify-content: space-between;
@@ -63,12 +67,26 @@
 }
 .tab_content ul {
     list-style-type: none;
+    padding-left: 30px;
 }
 .tab_content li {
     margin-bottom: 10px;
     display: flex;
+    position: relative;
+    line-height: 1.9;
 }
 
 .tab_content li img{
-    margin-right: 12px;
+    position: absolute;
+    left: -30px;
+    top: 6px;
 }
+ /*Mobile*/
+ @media only screen and (max-width: 640px) {
+    .btn_group a {
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+ }

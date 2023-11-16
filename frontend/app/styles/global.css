@@ -22,6 +22,9 @@
   
   body {
     background: var(--body-color);
+    letter-spacing: 0.374px;
+    font-weight: normal;
+    font-style: normal;
   }
   main{
     height: calc(100vh - 150px);
@@ -43,6 +46,7 @@
     min-height: 100vh;
     width: calc(100% - 48vw);
     margin: 0px 24vw;
+    position: relative;
   }
   
   
@@ -57,6 +61,12 @@
     height: 25px;
     display: inline-block;
     cursor: pointer;
+   background: rgb(131, 131, 135);
+   border-radius: 100%;
+   overflow: hidden;
+  }
+  .close svg path{
+    fill: var(--secondary-color);
   }
   h1 {
     font-size: 20px;
@@ -95,10 +105,90 @@
    .custom_player.rhap_container {
     box-shadow: none;
     padding: 0;
+    background-color: initial;
     position: relative;
-}
+  }
+    .rhap_play-status--paused.custom_player .rhap_progress-section{
+      display: none;
+    }
     .custom_player .rhap_additional-controls {
      opacity: 0;
+    }
+    .custom_player .rhap_skip-button svg{
+      transform: scale(1.2);
+    }
+    .custom_player .rhap_skip-button[aria-label="Previous"]{
+        transform: rotateY(180deg);
+      }
+      .custom_player .rhap_play-pause-button[aria-label="Pause"]{
+        transform: translateY(-2px);
+      }
+    .custom_player .rhap_main-controls{
+        align-items: initial;
+      }
+      .custom_player .rhap_header{
+        position: absolute;
+        left: 24vw;
+        bottom: 2vw;
+        margin: 0;
+        width: 50%;
+    }
+    .custom_player .rhap_controls-section {
+      padding: 0 24vw;
+      height: 5vw;
+    }
+    .custom_player .rhap_stacked .rhap_controls-section { 
+      margin-top: 0;
+    }
+    .custom_player .rhap_volume-button {
+        color: #000;
+    }
+    .custom_player .rhap_volume-indicator {
+        background: #000;
+    }
+    .custom_player .rhap_volume-container {
+        flex-direction: row-reverse;
+    }
+    .custom_player .rhap_volume-bar-area{
+      display: none;
+    }
+    .custom_player .rhap_volume-container:hover .rhap_volume-bar-area{
+      display: inherit;
+    }
+    .rhap_main {
+      position: relative;
+    }
+    .custom_player #rhap_current-time {
+      position: absolute;
+      left: 24vw;
+      z-index: 2;
+    }
+    .custom_player .rhap_total-time {
+      position: absolute;
+      right: 24vw;
+      z-index: 2;
+    }
+    .custom_player  .rhap_progress-container {
+      margin: 0;
+    }
+    .custom_player  .rhap_progress-bar {
+      height: 1.3vw;
+      background-color: initial;
+    }
+    .custom_player  .rhap_progress-bar-show-download {
+      background-color: initial;
+    }
+    .custom_player .rhap_progress-indicator {
+      display: none;
+    }
+    .custom_player .rhap_progress-filled {
+      background-color: var( --alert-color);
+    }
+    .custom_player .rhap_download-progress {
+      background-color: #f2e3e3;
+    }
+    .custom_player .rhap_time {
+      font-size: 12px;
     }
     /*End Player*/
 
@@ -109,7 +199,7 @@
     }
 
     .up_info.up_info-entered{
-        bottom: 90px;
+        bottom: 80px;
     }
     .wrapper {
         width: calc(100% - 8vw);
@@ -118,17 +208,27 @@
     .info_container{
       padding: 5vw 4vw;
     }
+
     /*Player*/
-  
+    .custom_player .rhap_total-time {
+      right: 4vw;
+    }
+    .custom_player #rhap_current-time {
+      left: 4vw;
+    }
+    .custom_player .rhap_controls-section {
+      padding: 0 4vw;
+      height: 60px;
+    }    
+    .custom_player .rhap_header {
+      left: 4vw;
+      bottom: 20px;
+    }
     .custom_player .rhap_volume-controls {
         display: none;
     }
-    .custom_player  .rhap_header{
-        position: absolute;
-        left: 0;
-        top: 53%;
-        margin: 0;
-        width: 50%;
+    .custom_player .rhap_progress-bar {
+      height: 100%;
     }
     /*End Player*/
   }

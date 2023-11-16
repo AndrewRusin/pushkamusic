@@ -6,6 +6,9 @@ export interface IPlaylist{
     src:string
   }
 export interface PlayerProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    playlist:IPlaylist[],
-    current_track:number
+    playlist:IPlaylist[];
+    current_track:number;
+    isPlaying:boolean;
+    onPlay?: () => void;
+    onPause?: () => void;
 }
