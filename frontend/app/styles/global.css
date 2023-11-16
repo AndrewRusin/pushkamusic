@@ -82,11 +82,11 @@
     bottom: 0;
     transform: translateY(102%);
     transition: transform .2s;
-    padding: 5vw 24vw;
+    padding: 3vw ;
     background: var(--body-color);
     border-radius: 15px 15px 0 0;
     box-shadow: -2px -7px 5px 6px rgba(202,189,189,0.59);
-    height: calc(100vh - 174px);
+    height: calc(100vh - 115px);
     box-sizing: border-box;
     width: 100%;
     overflow: auto;
@@ -95,7 +95,7 @@
   }
   
   .up_info.up_info-entered{
-    bottom: 154px;
+    bottom: 70px;
     transform: translateY(0);
   }
   

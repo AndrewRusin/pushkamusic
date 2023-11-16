@@ -3,6 +3,8 @@
     padding: 0;
     margin: 0;
     width: 100%;
+    height: calc(100vh - 146px);
+    overflow: auto;
 }
 .song_list li{
     border-bottom: 1px solid #eee;
@@ -55,6 +57,9 @@
     align-items: center;
 }
 @media only screen and (max-width: 640px) {
+    .song_list{
+        height: calc(100vh - 136px);
+    }
     .player {
         width: calc(100% + 8vw);
         left: -4vw;

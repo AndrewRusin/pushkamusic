@@ -18,3 +18,9 @@
     background: #eee;
     
 }
+  /*Mobile*/
+  @media only screen and (max-width: 640px) {
+    .wrapper {
+        display: none;
+    }
+  }

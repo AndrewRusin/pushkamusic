@@ -24,3 +24,9 @@
     color: rgb(255,255,255);
     background-color: rgb(255,45,85);
 }
+@media only screen and (max-width: 640px) {
+    .button  {
+       font-size: 14px;
+       padding: 7px;
+    }
+}
