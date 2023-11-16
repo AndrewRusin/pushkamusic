@@ -23,6 +23,12 @@ export const SongList = () => {
   const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
   const [trackID, setTrackID] = useState(0);
   const [selectItem, setSelectItem] = useState<ISelectItems | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const handlePlay = (trackIndex: number) => {
+    setTrackID(trackIndex);
+    setIsPlaying(true);
+  };
 
   const loadSongItems = async () => {
     try {
@@ -125,7 +131,7 @@ export const SongList = () => {
                     +
                   </Button>)
                 }
-                <span onClick={() => setTrackID(idx)}>{item.title}</span>
+                <span onClick={() => handlePlay(idx)}>{item.title}</span>
               </span>
               <span>
                 <Link href={"/dashboard/edit_song_item/" + item._id}>ред.</Link>{" "}
@@ -142,7 +148,16 @@ export const SongList = () => {
       </ul>
 
       <div className={styles.player}>
-        {playlist && <Player playlist={playlist} current_track={trackID} />}
+        {playlist && <Player
+                playlist={songItems.map((el) => ({
+                    src: API.uploadSrc + el.track_link,
+                    name: el.title,
+                }))}
+                current_track={trackID}
+                isPlaying={isPlaying}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                />}
       </div>
     </div>
   );
