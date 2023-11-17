@@ -65,13 +65,20 @@ export const Player = ({
         ref={audioPlayerRef}
         className="custom_player"
         src={playlist[currentTrack].src}
-        header={playlist[currentTrack].name}
+        customAdditionalControls={
+          [
+            <div>{playlist[currentTrack].name}</div>
+          ]
+        }
         showSkipControls
         onClickNext={handleClickNext}
         onEnded={handleEnd}
         onClickPrevious = {handleClickPrev}
         showJumpControls={false}
         onPlay={ handlePlay}
+        onPause={() => {
+          onPause?.(); 
+        }}
         customIcons={{
           play: <Play/>,
           pause:<Pause/>,

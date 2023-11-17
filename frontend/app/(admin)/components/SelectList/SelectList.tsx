@@ -52,7 +52,7 @@ export  function SelectList({selectItem, deleteSelected, ...props}:selectItemPro
                     <li key ={idx} ><span>{item.name}</span>  <Button appearance="alert" onClick={ ()=>deleteItem(item.id)}>удалить</Button></li>
                 ))}
                  <Button appearance={"primary"} onClick={createSelected}>Создать коллекцию</Button>   
-                 {selectLink && <Link href={`/select/${selectLink}`}>Ссылка на коллекцию {selectLink}</Link>}
+                 {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
             </ul>)}
            
         </div>
