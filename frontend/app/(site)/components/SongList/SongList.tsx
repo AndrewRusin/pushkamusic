@@ -3,7 +3,7 @@
 import { API } from "@/api/api";
 import Info from '@/public/icons/information.svg'
 import { SongsInfo } from "@/components"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SongList.module.css";
 import React from "react";
 import { Player } from "@/components/Player/Player";
@@ -30,10 +30,20 @@ export const  SongList =({songs}:SongsItemProps) => {
         setIsPlaying(true);
       };
     
+      useEffect(() => {
+        if (infoSong ) {
+          document.body.classList.add('no-overflow');
+        } else {
+          document.body.classList.remove('no-overflow');
+        }
+        return () => {
+          document.body.classList.remove('no-overflow');
+        };
+      }, [infoSong]);
         
         if (songs.length) {
             return (
-                <div>        
+                <div style={infoSong ? {overflow:"hidden"} : {}}>        
                      <ul className={styles.song_list}>
                     {songs.map((item,idx) => (
                         <li key ={item._id} >
@@ -63,7 +73,7 @@ export const  SongList =({songs}:SongsItemProps) => {
                 <Transition in={!!infoSong} timeout={300} unmountOnExit={true}>
                 {(state) => (
                     <>
-                    <div className="blured"></div>
+                    <div className={`blured ${state === 'entered' ? 'blur-entered' : 'blur-exit'}`}></div>
                     <SongsInfo
                         closeInfo={() => setInfoSong(null)}
                         name={infoSong && infoSong.name}
