@@ -70,7 +70,7 @@ export const  SongList =({songs}:SongsItemProps) => {
                 />
             </div>
             
-                <Transition in={!!infoSong} timeout={300} unmountOnExit={true}>
+                <Transition in={!!infoSong} timeout={200} unmountOnExit={true}>
                 {(state) => (
                     <>
                     <div className={`blured ${state === 'entered' ? 'blur-entered' : 'blur-exit'}`}></div>

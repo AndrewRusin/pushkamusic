@@ -11,7 +11,9 @@ export interface ICreateFilter{
 
 export  interface IFilterCategoriesResponse extends ICreateFilter {
     _id: string;
+    hidden?:boolean
 }
 export interface IModernFilter{
-    [key:string]:IFilterCategoriesResponse[]
+    [key:string]:IFilterCategoriesResponse[];
+    
 }

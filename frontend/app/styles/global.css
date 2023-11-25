@@ -89,7 +89,10 @@
     overflow: auto;
     font-size: 16px;
   }
-  
+  .close {
+    display: inline-block;
+    transform: scale(1.15);
+}
   .up_info.up_info-entered{
     padding-bottom: 5vw;
     transform: translateY(0);
@@ -212,7 +215,7 @@
       min-height: 100%;
     }
     .info_container {
-        height: calc(100% - 40px);
+        height: calc(100% - 30px);
         padding: 3vw;
     }
 

@@ -2,6 +2,7 @@ import { Sidebar } from "./components"
 import styles from "./layout.module.css"
 import '../styles/global.css';
 import localFont from "next/font/local";
+import '../styles/global.css';
 
 const sfProDisplay = localFont({
   src: [

@@ -6,8 +6,9 @@
 .top_close {
     text-align: right;
 }
+
 .btn_group {
-    margin-top: 25px;
+    margin: 25px 0 15px 0;
 }
 
 .btn_group a {

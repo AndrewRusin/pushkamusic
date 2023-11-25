@@ -1,7 +1,7 @@
 'use client'
 import { API } from "@/api/api";
 
-import { Button, Filter } from "@/components";
+import { Filter } from "@/components";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -16,6 +16,8 @@ import { Player } from "@/components/Player/Player";
 import { ISelectItems } from "../SelectList/SelectList.props";
 import { SelectList } from "../SelectList/SelectList";
 import { IPlaylist } from "@/components/Player/Player.props";
+import Edit from '@/public/icons/edit.svg'
+import AddToSelect from '@/public/icons/add_song.svg'
 
 export const SongList = () => {
   const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
@@ -77,8 +79,12 @@ export const SongList = () => {
           song.isSelected = false;
         }
         return song;
-      })
+      }) 
     );
+    if (!songItems.filter(el => el.isSelected === true).length) {
+      setSelectItem(null)
+    }
+    
   };
 
   const searchSong = (song: string) => {
@@ -99,7 +105,7 @@ export const SongList = () => {
   return (
     <div>
       <div className={styles.top_bar}>
-        <Filter onChange={handleFilterChange} />
+        <Filter onChange={handleFilterChange} totalSong = {songItems.length}/>
         <input
           type="text"
           className={styles.search_input}
@@ -115,32 +121,31 @@ export const SongList = () => {
       </div>
 
       <ul className={styles.song_list}>
+        <span>Песен {songItems.length}</span>
         {songItems.map((item, idx) =>
           !item.isHidden ? (
             <li key={item._id}>
-              <span>
-                <span className={styles.order}>{item.order}</span>
-                {!item.isSelected && (
-                  <Button
-                    appearance="primary"
-                    onClick={() => {
-                      setSelectItem({ id: item._id, name: item.title });
+                <span onClick={() => handlePlay(idx)} className={styles.song_name}>{item.title}</span>
+              <span className={styles.right_side}>
+                <Link href={"/dashboard/edit_song_item/" + item._id}><Edit/></Link>{" "}
+                  <span
+                    className = {item.isSelected ? styles.added : ''}
+                    aria-disabled = {item.isSelected}
+                    onClick = {() => {
+                      if (!item.isSelected) {
+                        setSelectItem({ id: item._id, name: item.title });
+                      }
                       item.isSelected = true;
                     }}
                   >
-                    +
-                  </Button>)
-                }
-                <span onClick={() => handlePlay(idx)}>{item.title}</span>
-              </span>
-              <span>
-                <Link href={"/dashboard/edit_song_item/" + item._id}>ред.</Link>{" "}
-                <Button
+                    <AddToSelect  /> 
+                  </span>
+                {/* <Button
                   appearance="alert"
                   onClick={async () => deleteItem(item._id, item.track_link)}
                 >
                   удалить
-                </Button>
+                </Button> */}
               </span>
             </li>
           ) : null
@@ -148,7 +153,7 @@ export const SongList = () => {
       </ul>
 
       <div className={styles.player}>
-        {playlist && <Player
+        {playlist?.length && <Player
                 playlist={songItems.map((el) => ({
                     src: API.uploadSrc + el.track_link,
                     name: el.title,

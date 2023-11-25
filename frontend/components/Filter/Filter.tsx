@@ -5,61 +5,109 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import styles from './Filter.module.css';
 import { getFilterItemsModify } from '@/api/filter';
 import { Button } from '../Button/Button';
-
+import CloseApple from '@/public/icons/closeApple.svg'
 
 interface Sibling1Props {
     onChange: (value: string[] | null) => void;
+    totalSong:number
   }
-  const arr: string[] | null=[]
-export const Filter = ({ onChange }:Sibling1Props): JSX.Element => {
+
+export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
     const [showFilter, setShowFilter] = useState<boolean>(false)
     const [filterItems, setFilterItems] = useState<IModernFilter | null>(null)
+    const [checkedParams, setCheckedParams] = useState<number | null>(null)
+    const [checkedItems, setCheckedItems] = useState<string[]>([])
+    const [moreOptions, setMoreOptions] = useState<boolean>(false)
+
     const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
-  
-       
+        let newCheckedItems = [...checkedItems]
         if (event.target.checked) {
-            arr.push(event.target.value)
-          } else {
-            const index = arr.indexOf(event.target.value);
+            newCheckedItems.push(event.target.value)
+        } else {
+            const index = newCheckedItems.indexOf(event.target.value);
             if (index !== -1) {
-              arr.splice(index, 1);
+              newCheckedItems.splice(index, 1);
             }
-          }
-      return  onChange(arr.length>0 ? arr : null)
-     
-      }
-   
+        }
+        setCheckedItems(newCheckedItems)
+        setCheckedParams(newCheckedItems.length)
+        return  onChange(newCheckedItems.length > 0 ? newCheckedItems : null)
+    }
+    const clearFilter = () => {
+        onChange(null);
+        setShowFilter(!showFilter)
+        setCheckedItems([]);
+        setCheckedParams(null);
+        document.querySelectorAll('input').forEach(el=>{
+          el.checked = false
+        })
+    }
     useEffect( () => {
         (async () => {
         const checkboxesObj = await getFilterItemsModify()
+        Object.values(checkboxesObj).forEach(el=>{
+          if (el.length>4) {
+            el.forEach((item, idx) => {
+              if(idx>3){
+                item.hidden = true
+              }
+            })
+          }
+        })
         setFilterItems(checkboxesObj)
       })();
        return () => {
          // this now gets called when the component unmounts
        }; 
      }, [])
+
      if (filterItems) {
     return (
       <div>
-        <Button  appearance={"primary"} onClick={()=>setShowFilter(!showFilter)} >Фильтр</Button>
-      
-        {showFilter && (<ul className={styles.filter}>
-          <h3>Фильтр</h3>
+        <Button  appearance={"primary"} onClick={()=>setShowFilter(!showFilter)} style={{ color: checkedParams ? 'red' : '' }}>Фильтр {checkedParams ? checkedParams : ''}</Button>
+       <div className={`${showFilter ? styles.show : ''} ${styles.filter}`}>
+          <div className={styles.header}>
+            <h3>Фильтр</h3>
+            <span className='close' onClick={()=>setShowFilter(!showFilter)}> <CloseApple /></span>
+          </div>
+          <ul className={styles.filter_list}>  
               {Object.entries(filterItems).map(([key, value]) => (
                  <li key={key}>
                     <p>{key}</p>
-                    {value.map(item=>(
-                        <label key={item._id}><input  type="checkbox" name="params" id={item._id} value={item.filterValue} onChange={handleFilterChange} /> {item.filterItem}</label>
+                    {value.map((item)=>(
+                        <label key={item._id} className={`${styles.custom_checkbox} ${item.hidden ? styles.hidden : ''}`}><input  type="checkbox" name="params" id={item._id} value={item.filterValue} onChange={handleFilterChange} /> <div>{item.filterItem}</div></label>
                     ))}
+                    {value.length>4 && <span className={styles.show_options} onClick={() => {
+                      setFilterItems(prev =>{
+                        return {...prev, [key]: prev
+                          ? prev[key].map(item =>
+                              item.hasOwnProperty('hidden')
+                                ? { ...item, hidden: !item.hidden }
+                                : item
+                            )
+                          : [],}
+                      })
+                     setMoreOptions(prev=>!prev)
+                    }}>{!moreOptions ? 'больше +': 'меньше -'}</span>}
                 </li>   
-            ))}  
-        </ul>)}
-
+            ))}
+        </ul>
+        <div className={styles.footer}>
+        {!!checkedParams && ( 
+          <>            
+          <Button  
+          appearance={"primary"} 
+          onClick={clearFilter}>
+            Отмена
+          </Button>
+          <Button  appearance={"alert"} onClick={()=>setShowFilter(!showFilter)} >Показать {totalSong}</Button>
+         </>
+         )}
+        </div>
+        </div>
     </div> 
     )
     } else {
         return  <div>Заполните фильтр</div>         
     }
 }
-
-

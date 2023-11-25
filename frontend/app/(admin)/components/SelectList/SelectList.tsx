@@ -14,15 +14,19 @@ export  function SelectList({selectItem, deleteSelected, ...props}:selectItemPro
 
     const [showList, setShowList] = useState<boolean>(false)
     useEffect(() => {
+        
         setSelectItems([...selectItems, selectItem]);
     }, [selectItem]); 
     
     function deleteItem(id: string): void {
+        
         const arr = [...selectItems]
         const idx = arr.findIndex((el)=> el.id === id)
         arr.splice(idx,1)
        setSelectItems(arr)
        deleteSelected(id)
+      
+       
     }
     async function createSelected() {
        const arrIds =selectItems.flatMap(el=>el.id)
