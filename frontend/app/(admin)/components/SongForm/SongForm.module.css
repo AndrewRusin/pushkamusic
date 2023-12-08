@@ -1,7 +1,4 @@
-.button {
-    width: 250px;
-    margin-top: 15px;
-}
+
 .select {
     margin-top: 10px;
 }
@@ -25,4 +22,11 @@
     position: absolute;
     bottom: -16px;
     
+}
+.footer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
 }

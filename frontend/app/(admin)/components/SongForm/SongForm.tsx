@@ -1,16 +1,16 @@
 'use client'
 import { Button, Input } from '@/components';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller} from 'react-hook-form';
 import { ISongForm, ISongCategoriesResponse } from '@/interfaces/song.interface';
 import styles from './SongForm.module.css';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { redirect } from 'next/navigation';
-import { createSongItems, findSongItem, patchSongItems } from '@/api/song';
+import { createSongItems, deleteSongItem, findSongItem, patchSongItems } from '@/api/song';
 import { SongFormProps } from './SongForm.props';
-import { allFilesName, uploadFile } from '@/api/file';
-import { getFilterItems, getFilterItemsModify } from '@/api/filter';
-import { IFilterCategory, IModernFilter } from '@/interfaces/CreateFilterForm.interface';
+import { allFilesName, deleteFile, uploadFile } from '@/api/file';
+import { getFilterItemsModify } from '@/api/filter';
+import {  IModernFilter } from '@/interfaces/CreateFilterForm.interface';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 import { Options } from '@/utils/filterCategory';
 
@@ -38,7 +38,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
         }
       }
     }
-  
+ 
     // Fetch checkboxes
     async function fetchCheckboxes() {
       try {
@@ -71,7 +71,16 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
     }
   };
 
-  const { register, control, handleSubmit } = useForm<ISongForm>();
+
+
+  const { register, control, handleSubmit, reset} = useForm<ISongForm>();
+
+  const onCancel = () => {
+    
+    reset();
+    // You can add additional logic here if needed
+  };  
+
   const onSubmit: SubmitHandler<ISongForm> = async (data) => {
     removeEmptyFields(data);
     const totalData = { ...data, isHidden: isChecked, songsText: textAreaValue };
@@ -114,11 +123,15 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
       console.log(e)
     }
   };
-
+  const deleteItem = async (id: string, fileName: string) => {
+    await deleteFile(fileName);
+    await deleteSongItem(id);
+    setRedirectTo(true);
+  };
   if (redirectTo) {
     redirect('/dashboard/song_items');
   }
-
+  
   return (
     <div {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -166,6 +179,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
         ) : (
           <FilterCheckbox {...register('params')} filterItems={checkboxes} filterChecked={[]}/>
         )}
+        <div className={styles.footer}>
         <label>
           <input
             type="checkbox"
@@ -173,11 +187,20 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
             checked={isChecked !== undefined ? isChecked : valueForm?.isHidden || false}
             onChange={() => setIsChecked((prev) => !prev)}
           />
-          <span>скрыть песню</span>
+           <span> скрыть песню</span>
         </label>
+           {idItem && valueForm &&  (<Button
+                                      appearance="alert"
+                                      onClick={async () => deleteItem(idItem, valueForm.track_link)}
+                                    >удалить
+                                  </Button>)}
+        <Button appearance='primary' type="button" onClick={onCancel}>Отмена</Button>
+                    
         <Button appearance="primary" className={styles.button} type="submit">
-          {idItem ? 'Изменить' : 'Создать'}
+          {idItem ? 'Сохранить' : 'Создать'}
         </Button>
+        </div>    
+
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
 
 
 export interface IPlaylist{
-    name: ReactNode;
+    name: string;
     src:string
   }
 export interface PlayerProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

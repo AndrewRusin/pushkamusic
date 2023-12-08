@@ -18,25 +18,51 @@ import { SelectList } from "../SelectList/SelectList";
 import { IPlaylist } from "@/components/Player/Player.props";
 import Edit from '@/public/icons/edit.svg'
 import AddToSelect from '@/public/icons/add_song.svg'
+import SongItems from "../../dashboard/song_items/page";
 
 export const SongList = () => {
   const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
   const [selectedFilterValues, setSelectedFilterValues] = useState<string[] | null>(null);
   const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
   const [trackID, setTrackID] = useState(0);
-  const [selectItem, setSelectItem] = useState<ISelectItems | null>(null);
+  const [selectItem, setSelectItem] = useState<string[] | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const handlePlay = (trackIndex: number) => {
     setTrackID(trackIndex);
     setIsPlaying(true);
   };
+ const handleSelect =(itemId: string) => {
+    const updatedSongItems = songItems.map(item =>
+      item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
+    );
+    setSongItems(updatedSongItems);
+    const selectedItems = updatedSongItems.filter(el => el.isSelected === true).map(el => el._id);
+    if (!selectedItems.length) {
+      setSelectItem(null)
+    } else {
+      setSelectItem(selectedItems);
+    }
+};
 
+
+const clear = async () => {
+  try {
+    const response = await getSongItems(); 
+    response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
+    setSongItems(response);
+  } catch (error) {
+    
+  }
+ 
+};
+const  showSelected = () => {
+  setSongItems(prev => prev.filter(el => el.isSelected === true )); 
+};
   const loadSongItems = async () => {
     try {
       const response = await getSongItems(); // Замените на свой эндпоинт
       response.forEach((el) => (el.isSelected = false));
-      console.log(response);
       setSongItems(response);
       const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
       setPlaylist([...playListArr])
@@ -44,13 +70,17 @@ export const SongList = () => {
       console.error("Error loading song items:", error);
     }
   };
-
+  useEffect(() => {
+    console.log(songItems)
+  }, [songItems])
+  
   const filterSongItems = async (filterValues: string[] | null) => {
     try {
       if (filterValues === null) {
         loadSongItems();
       } else {
         const response = await getSongItemsFilter(filterValues);
+        response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
         setSongItems(response);
         const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
         setPlaylist([...playListArr])
@@ -65,33 +95,21 @@ export const SongList = () => {
     filterSongItems(selectedValues);
   };
 
-  const deleteItem = async (id: string, fileName: string) => {
-    await deleteFile(fileName);
-    await deleteSongItem(id);
-    const itemsRefresh = await getSongItems();
-    setSongItems(itemsRefresh);
-  };
 
-  const deleteSelected = (id: string) => {
-    setSongItems(
-      songItems.map((song) => {
-        if (song._id === id) {
-          song.isSelected = false;
-        }
-        return song;
-      }) 
-    );
-    if (!songItems.filter(el => el.isSelected === true).length) {
-      setSelectItem(null)
-    }
-    
-  };
+
 
   const searchSong = (song: string) => {
     if (song.length) {
       const searchArr = songItems.filter((el) =>
         el.title.toLowerCase().includes(song.toLowerCase())
       );
+      if (playlist && playlist.length>0) {
+        const searchPlaylist: IPlaylist[]  = playlist.filter((el) =>
+        el.name.toLowerCase().includes(song.toLowerCase())
+      );
+       setPlaylist([...searchPlaylist])
+      }
+      
       setSongItems(searchArr);
     } else {
       loadSongItems();
@@ -112,10 +130,12 @@ export const SongList = () => {
           placeholder="Поиск"
           onChange={(e) => searchSong(e.target.value)}
         />
+        <h1>{}</h1>
         {selectItem && (
           <SelectList
+            showSelected={ showSelected}
             selectItem={selectItem}
-            deleteSelected={deleteSelected}
+            clear={clear}
           />
         )}
       </div>
@@ -129,23 +149,12 @@ export const SongList = () => {
               <span className={styles.right_side}>
                 <Link href={"/dashboard/edit_song_item/" + item._id}><Edit/></Link>{" "}
                   <span
-                    className = {item.isSelected ? styles.added : ''}
+                    className = {item.isSelected ? styles.added : ' '}
                     aria-disabled = {item.isSelected}
-                    onClick = {() => {
-                      if (!item.isSelected) {
-                        setSelectItem({ id: item._id, name: item.title });
-                      }
-                      item.isSelected = true;
-                    }}
+                    onClick = {() => handleSelect(item._id)}
                   >
                     <AddToSelect  /> 
                   </span>
-                {/* <Button
-                  appearance="alert"
-                  onClick={async () => deleteItem(item._id, item.track_link)}
-                >
-                  удалить
-                </Button> */}
               </span>
             </li>
           ) : null

@@ -25,6 +25,7 @@ export const  SongList =({songs}:SongsItemProps) => {
     const [infoSong, setInfoSong] = useState<InfoSong | null>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     
+    
       const handlePlay = (trackIndex: number) => {
         setTrackID(trackIndex);
         setIsPlaying(true);

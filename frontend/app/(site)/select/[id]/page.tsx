@@ -25,12 +25,11 @@ export default function  EditFilterItem({params}:{params:{id:string}}) {
     
     }, [])
     
-    console.log(songItems)
 
   return (
       <div >
         <h1 className="page_title">Подборка</h1>
-       <SongList songs={songItems}/>
+       <SongList songs={songItems.filter(el=> !el.isHidden )}/>
       </div>
     )
   }

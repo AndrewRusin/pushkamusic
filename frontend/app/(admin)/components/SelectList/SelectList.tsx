@@ -4,62 +4,53 @@ import { useEffect, useState} from "react";
 import styles from "./SelectList.module.css";
 import { ISelectItems, ISelectResponse, selectItemProps } from "./SelectList.props";
 import { createSelect } from "@/api/select";
+import PlayList from '@/public/icons/playlist.svg'
+import CloseApple from '@/public/icons/closeApple.svg'
 import { patchReleaseItems, createReleaseItems } from "@/api/releases";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 
-export  function SelectList({selectItem, deleteSelected, ...props}:selectItemProps):JSX.Element {
+export  function SelectList({selectItem,showSelected, clear, ...props}:selectItemProps):JSX.Element {
     const [selectItems, setSelectItems] = useState<ISelectItems[] >([])
     const [selectLink, setSelectLink] = useState<string | null>(null)
-
-    const [showList, setShowList] = useState<boolean>(false)
-    useEffect(() => {
-        
-        setSelectItems([...selectItems, selectItem]);
-    }, [selectItem]); 
-    
-    function deleteItem(id: string): void {
-        
-        const arr = [...selectItems]
-        const idx = arr.findIndex((el)=> el.id === id)
-        arr.splice(idx,1)
-       setSelectItems(arr)
-       deleteSelected(id)
-      
-       
-    }
+    const [showList, setShowList] = useState<boolean>(true)
+   
     async function createSelected() {
-       const arrIds =selectItems.flatMap(el=>el.id)
         try {
-            const value  =  await createSelect({idArray:arrIds})
+            const value  =  await createSelect({idArray:selectItem})
             setSelectLink(value._id)
         } catch (error) {
             console.log(error)
         }
-     
-     
+    }
+    const showCollection = () => {
+        setShowList(!showList)
+        showSelected();
+    }
+    const cancel    = () => {
+        setShowList(!showList)
+        clear();
     }
 
-        
 
 
 
-
-    if (selectItems.length) {
+    if (selectItem.length) {
         return (
         <div>
-            <Button appearance={"primary"} onClick={()=>setShowList(!showList)} className={styles.select_list_button}>{showList?'скрыть':'показать'} {selectItems.length}</Button>
-            <div className={ showList ? styles.select_list_wrapper:''}>
-            {showList && (<ul className={styles.select_list}>
-                
-                {selectItems.map((item,idx) => (
-                    <li key ={idx} ><span>{item.name}</span>  <Button appearance="alert" onClick={ ()=>deleteItem(item.id)}>удалить</Button></li>
-                ))}
-                 <Button appearance={"primary"} onClick={createSelected}>Создать коллекцию</Button>   
+            {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> {selectItem.length}</span>)}
+            {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}
+          
+            {!showList && (
+                   <div>
+                   <Button appearance={"primary"} onClick={createSelected} className={styles.createSelect}>Создать коллекцию</Button>
+                    
+                 
+                  
                  {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
-            </ul>)}
+                 </div>)}
            
-        </div>
+       
               
         </div>
         )

@@ -83,6 +83,7 @@
     left: -30px;
     top: 6px;
 }
+
  /*Mobile*/
  @media only screen and (max-width: 640px) {
     .btn_group a {
