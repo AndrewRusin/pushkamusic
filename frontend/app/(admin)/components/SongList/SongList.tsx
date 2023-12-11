@@ -1,24 +1,20 @@
 'use client'
 import { API } from "@/api/api";
-
 import { Filter } from "@/components";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import styles from "./SongList.module.css";
 import {
-  deleteSongItem,
   getSongItems,
   getSongItemsFilter,
 } from "@/api/song";
-import { deleteFile } from "@/api/file";
 import { Player } from "@/components/Player/Player";
-import { ISelectItems } from "../SelectList/SelectList.props";
 import { SelectList } from "../SelectList/SelectList";
 import { IPlaylist } from "@/components/Player/Player.props";
 import Edit from '@/public/icons/edit.svg'
 import AddToSelect from '@/public/icons/add_song.svg'
-import SongItems from "../../dashboard/song_items/page";
+import {Preloader} from "@/components"
 
 export const SongList = () => {
   const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
@@ -27,30 +23,45 @@ export const SongList = () => {
   const [trackID, setTrackID] = useState(0);
   const [selectItem, setSelectItem] = useState<string[] | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [originalSelectItem, setOriginalSelectItem] = useState<string[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handlePlay = (trackIndex: number) => {
     setTrackID(trackIndex);
     setIsPlaying(true);
   };
- const handleSelect =(itemId: string) => {
+  const handleSelect = (itemId: string) => {
     const updatedSongItems = songItems.map(item =>
       item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
     );
     setSongItems(updatedSongItems);
     const selectedItems = updatedSongItems.filter(el => el.isSelected === true).map(el => el._id);
+  
     if (!selectedItems.length) {
-      setSelectItem(null)
+      setSelectItem(null);
     } else {
       setSelectItem(selectedItems);
     }
-};
+    
+    setOriginalSelectItem(selectedItems);
+  };
 
 
 const clear = async () => {
   try {
-    const response = await getSongItems(); 
+    setIsLoading(true)
+    let response: ISongCategoriesResponse[];
+    if (selectedFilterValues) {
+      response = await getSongItemsFilter(selectedFilterValues);
+    } else {
+      response = await getSongItems(); 
+    }
+   
     response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
     setSongItems(response);
+    const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
+      setPlaylist([...playListArr])
+      setIsLoading(false)
   } catch (error) {
     
   }
@@ -59,32 +70,42 @@ const clear = async () => {
 const  showSelected = () => {
   setSongItems(prev => prev.filter(el => el.isSelected === true )); 
 };
-  const loadSongItems = async () => {
+  const loadSongItems = async (select:string[] | null = selectItem) => {
+    setIsLoading(true)
     try {
       const response = await getSongItems(); // Замените на свой эндпоинт
       response.forEach((el) => (el.isSelected = false));
+      response.forEach((el) => select?.includes(el._id) ? el.isSelected = true : el);
       setSongItems(response);
       const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
       setPlaylist([...playListArr])
+      setIsLoading(false)
     } catch (error) {
       console.error("Error loading song items:", error);
     }
   };
-  useEffect(() => {
-    console.log(songItems)
-  }, [songItems])
+
   
   const filterSongItems = async (filterValues: string[] | null) => {
     try {
       if (filterValues === null) {
-        loadSongItems();
+        // Возвращаем оригинальное состояние, если фильтр пуст
+        setSelectItem(originalSelectItem);
+        loadSongItems(originalSelectItem);
       } else {
+        setIsLoading(true)
         const response = await getSongItemsFilter(filterValues);
         response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
         setSongItems(response);
-        const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
-        setPlaylist([...playListArr])
+        
+        const filterSelected = response.filter(el => el.isSelected === true ).map(el => el._id);
+        setSelectItem(filterSelected);
+        
+        const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title}));
+        setPlaylist([...playListArr]);
+        setIsLoading(false)
       }
+      
     } catch (error) {
       console.error("Error filtering song items:", error);
     }
@@ -100,6 +121,7 @@ const  showSelected = () => {
 
   const searchSong = (song: string) => {
     if (song.length) {
+      setIsLoading(true)
       const searchArr = songItems.filter((el) =>
         el.title.toLowerCase().includes(song.toLowerCase())
       );
@@ -109,8 +131,8 @@ const  showSelected = () => {
       );
        setPlaylist([...searchPlaylist])
       }
-      
       setSongItems(searchArr);
+      setIsLoading(false)
     } else {
       loadSongItems();
     }
@@ -120,8 +142,10 @@ const  showSelected = () => {
     loadSongItems();
   }, []);
 
+
   return (
     <div>
+      <Preloader isLoading={isLoading} />
       <div className={styles.top_bar}>
         <Filter onChange={handleFilterChange} totalSong = {songItems.length}/>
         <input

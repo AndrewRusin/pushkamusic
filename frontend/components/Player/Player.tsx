@@ -19,10 +19,15 @@ export const Player = ({
   ...props
 }: PlayerProps) => {
   const [currentTrack, setTrackIndex] = useState<number>(0);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
   const audioPlayerRef = useRef<AudioPlayer>(null);
-
+  useEffect(() => {
+    setShouldAutoPlay(isPlaying);
+    
+  }, [playlist]);
   useEffect(() => {
     if (isPlaying && audioPlayerRef.current) {
+      console.log('playing')
       audioPlayerRef.current.audio.current?.play();
       onPlay?.(); // Сигнализируем, что воспроизведение началось
     } else if (!isPlaying && audioPlayerRef.current) {
@@ -32,6 +37,7 @@ export const Player = ({
   }, [isPlaying, onPlay, onPause]);
 
   const handlePlay = () => {
+   
     // Воспроизведение аудио после пользовательского взаимодействия
     if (audioPlayerRef.current) {
       audioPlayerRef.current.audio.current?.play()
@@ -64,10 +70,11 @@ export const Player = ({
       <AudioPlayer
         ref={audioPlayerRef}
         className="custom_player"
-        src={playlist[currentTrack].src}
+        src={playlist[currentTrack]?.src}
+        autoPlay={shouldAutoPlay}
         customAdditionalControls={
           [
-            <div>{playlist[currentTrack].name}</div>
+            <div>{playlist[currentTrack]?.name}</div>
           ]
         }
         showSkipControls
