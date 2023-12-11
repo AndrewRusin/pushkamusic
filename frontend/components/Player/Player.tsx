@@ -23,8 +23,8 @@ export const Player = ({
   const audioPlayerRef = useRef<AudioPlayer>(null);
   useEffect(() => {
     setShouldAutoPlay(isPlaying);
-    
-  }, [playlist]);
+    console.log(isPlaying)
+  }, [isPlaying]);
   useEffect(() => {
     if (isPlaying && audioPlayerRef.current) {
       console.log('playing')

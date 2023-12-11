@@ -48,34 +48,25 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
         clear();
     }
 
-
-
-
-    if (selectItem.length) {
         return (
-        <div>
-            {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> {selectItem.length}</span>)}
-            {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}
-          
-            {!showList && (
-                   <div>
-                   <Button appearance={"primary"} onClick={createSelected} className={styles.createSelect}>Создать коллекцию</Button>
+            <>
+                {!!selectItem.length && (
+                    <div>
+                    {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> {selectItem.length}</span>)}
+                    {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}
+                
+                    {!showList && (
+                        <div>
+                        <Button appearance={"primary"} onClick={createSelected} className={styles.createSelect}>Создать коллекцию</Button>
+                            
+                        
+                        
+                        {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
+                        </div>)}
+                
+            
                     
-                 
-                  
-                 {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
-                 </div>)}
-           
-       
-              
-        </div>
-        )
-    } else {
-        return (<div>
-                    <Button appearance={"primary"} onClick={()=>setShowList(!showList)}>{showList?'скрыть':'показать'}</Button>
-                    <div className={styles.select_list_wrapper}>
-                        {showList && (<div>Здесь еще нет элементов</div>)}
-                    </div>
-                </div>)
-    }
+                </div>)}
+            </>
+            )
   }
