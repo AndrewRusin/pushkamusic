@@ -24,7 +24,7 @@ export const Player = ({
   useEffect(() => {
     setShouldAutoPlay(isPlaying);
     console.log(isPlaying)
-  }, [isPlaying]);
+  }, [shouldAutoPlay]);
   useEffect(() => {
     if (isPlaying && audioPlayerRef.current) {
       console.log('playing')
