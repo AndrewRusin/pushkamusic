@@ -15,7 +15,10 @@
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+
+}
+.select_list svg {
+    cursor: pointer;
 }
 .select_list li a{
     margin-right: 5px;
@@ -30,11 +33,10 @@
     display: flex;
     width: 100%;
     padding: 30px;
-    padding-top: 50px;
+    padding-top: 65px;
     background: #fff;
     box-sizing: border-box;
     height: 100%;
-    max-width: 400px;
 }
 @media only screen and (max-width: 640px) {
     .createSelect {
@@ -42,5 +44,6 @@
     left: 50%;
     position: fixed;
     transform: translateX(-50%);
+    z-index: 5;
     }
 }

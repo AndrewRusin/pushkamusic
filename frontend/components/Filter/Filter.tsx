@@ -96,7 +96,8 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
         {!!checkedParams && ( 
           <>            
           <Button  
-          appearance={"primary"} 
+          appearance={"primary"}
+          className='clearFilter' 
           onClick={clearFilter}>
             Отмена
           </Button>

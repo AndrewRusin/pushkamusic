@@ -23,29 +23,45 @@ export const SongList = () => {
   const [trackID, setTrackID] = useState(0);
   const [selectItem, setSelectItem] = useState<string[] | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [originalSelectItem, setOriginalSelectItem] = useState<string[] | null>(null);
+  const [originalSelectItem, setOriginalSelectItem] = useState<string[] >([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const handlePlay = (trackIndex: number) => {
     setTrackID(trackIndex);
     setIsPlaying(true);
   };
-  const handleSelect = (itemId: string) => {
-    const updatedSongItems = songItems.map(item =>
-      item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
-    );
-    setSongItems(updatedSongItems);
-    const selectedItems = updatedSongItems.filter(el => el.isSelected === true).map(el => el._id);
-  
-    if (!selectedItems.length) {
-      setSelectItem(null);
-    } else {
-      setSelectItem(selectedItems);
-    }
-    
-    setOriginalSelectItem(selectedItems);
-  };
+const handleSelect = (itemId: string) => {
+  const updatedSongItems = songItems.map(item =>
+    item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
+  );
+  setSongItems(updatedSongItems);
 
+  const selectedItems = updatedSongItems
+    .filter(el => el.isSelected)
+    .map(el => el._id);
+
+  // Объединяем selectedItems и originalSelectItem
+  let mergedItems;
+  if (originalSelectItem?.includes(itemId)) {
+    // Если элемент уже выбран, удаляем его из списка
+    mergedItems = originalSelectItem.filter(id => id !== itemId);
+  } else {
+    // Если элемент не выбран, добавляем его в список
+    mergedItems = Array.from(new Set([...selectedItems, ...originalSelectItem]));
+  }
+
+  if (!mergedItems.length) {
+    setSelectItem(null);
+  } else {
+    setSelectItem(mergedItems);
+  }
+
+  setOriginalSelectItem(mergedItems);
+};
+
+const handleDeleteItem = (id: string) => {
+  setSelectItem((prevSelectItem) => prevSelectItem ? prevSelectItem.filter(itemId => itemId !== id) : null);
+};
 
 const clear = async () => {
   try {
@@ -90,6 +106,7 @@ const  showSelected = () => {
     try {
       if (filterValues === null) {
         // Возвращаем оригинальное состояние, если фильтр пуст
+        
         setSelectItem(originalSelectItem);
         loadSongItems(originalSelectItem);
       } else {
@@ -99,7 +116,7 @@ const  showSelected = () => {
         setSongItems(response);
         
         const filterSelected = response.filter(el => el.isSelected === true ).map(el => el._id);
-        setSelectItem(filterSelected);
+      
         
         const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title}));
         setPlaylist([...playListArr]);
@@ -140,6 +157,7 @@ const  showSelected = () => {
 
   useEffect(() => {
     loadSongItems();
+    console.log(selectItem)
   }, []);
 
 
@@ -160,6 +178,7 @@ const  showSelected = () => {
             showSelected={ showSelected}
             selectItem={selectItem}
             clear={clear}
+            onDeleteItem={handleDeleteItem}
           />
         )}
       </div>
