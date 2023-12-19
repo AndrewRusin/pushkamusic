@@ -20,29 +20,11 @@ export const Player = ({
 }: PlayerProps) => {
   const [currentTrack, setTrackIndex] = useState<number>(0);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
-  const audioPlayerRef = useRef<AudioPlayer>(null);
+
   useEffect(() => {
     setShouldAutoPlay(isPlaying);
-    console.log(isPlaying)
   }, [shouldAutoPlay]);
-  useEffect(() => {
-    if (isPlaying && audioPlayerRef.current) {
-      console.log('playing')
-      audioPlayerRef.current.audio.current?.play();
-      onPlay?.(); // Сигнализируем, что воспроизведение началось
-    } else if (!isPlaying && audioPlayerRef.current) {
-      audioPlayerRef.current.audio.current?.pause();
-      onPause?.(); // Сигнализируем, что воспроизведение приостановлено
-    }
-  }, [isPlaying, onPlay, onPause]);
-
-  const handlePlay = () => {
-   
-    // Воспроизведение аудио после пользовательского взаимодействия
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.audio.current?.play()
-    }
-  };
+ 
 
   useEffect(() => {
     setTrackIndex(current_track);
@@ -68,7 +50,6 @@ export const Player = ({
   return (
    
       <AudioPlayer
-        ref={audioPlayerRef}
         className="custom_player"
         src={playlist[currentTrack]?.src}
         autoPlay={shouldAutoPlay}
@@ -82,7 +63,10 @@ export const Player = ({
         onEnded={handleEnd}
         onClickPrevious = {handleClickPrev}
         showJumpControls={false}
-        onPlay={ handlePlay}
+        onPlay={() => {
+          onPlay?.(); 
+        }}
+        autoPlayAfterSrcChange = {isPlaying}
         onPause={() => {
           onPause?.(); 
         }}

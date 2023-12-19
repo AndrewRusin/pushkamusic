@@ -61,8 +61,13 @@ const handleSelect = (itemId: string) => {
 
 const handleDeleteItem = (id: string) => {
   setSelectItem((prevSelectItem) => prevSelectItem ? prevSelectItem.filter(itemId => itemId !== id) : null);
-};
+  setSongItems(prev => prev.filter(el=>el._id !==id))
 
+};
+const handleTrackID = (id: number) => {
+  setTrackID(id);
+  setIsPlaying(true);
+};
 const clear = async () => {
   try {
     setIsLoading(true)
@@ -134,8 +139,6 @@ const  showSelected = () => {
   };
 
 
-
-
   const searchSong = (song: string) => {
     if (song.length) {
       setIsLoading(true)
@@ -157,7 +160,6 @@ const  showSelected = () => {
 
   useEffect(() => {
     loadSongItems();
-    console.log(selectItem)
   }, []);
 
 
@@ -179,6 +181,7 @@ const  showSelected = () => {
             selectItem={selectItem}
             clear={clear}
             onDeleteItem={handleDeleteItem}
+            onTrackId={handleTrackID}
           />
         )}
       </div>

@@ -23,10 +23,7 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
     const [showList, setShowList] = useState<boolean>(true)
 
     useEffect(() => {
-     console.log(selectItem)
      loadSongItems() 
-     console.log(songItems)
-     console.log(playlist)
     }, [selectItem])
     
     const loadSongItems = async (select:string[] | null = selectItem) => {
@@ -80,7 +77,12 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
         setSongItems(prev =>
             prev.filter(el=> el._id !== id)
             );
-            props.onDeleteItem(id);   
+            props.onDeleteItem(id);  
+
+   
+    }
+    function trackId (idx:number) {
+        props.onTrackId(idx)
     }
         return (
             <>
@@ -92,8 +94,8 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
                     {!showList && (
                         <div style={{width:'100%'}}>
                             <ul className={styles.select_list}>
-                                {songItems.map( item =>
-                                <li key={item._id}><span>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
+                                {songItems.map( (item, idx) =>
+                                <li key={item._id}><span onClick={() => trackId(idx)}>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
                                 )
                                 }
                             </ul>

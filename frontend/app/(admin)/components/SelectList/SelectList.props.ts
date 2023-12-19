@@ -12,5 +12,6 @@ export interface selectItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDi
     selectItem:string[]
     clear: () => void;
     showSelected:() => void;
-    onDeleteItem:(id:string) => void;  
+    onDeleteItem:(id:string) => void; 
+    onTrackId:(idx:number) => void;  
 }
