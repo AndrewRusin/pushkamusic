@@ -60,7 +60,7 @@ export class SongService {
         return this.songModel.find(filter).sort({ order: -1 }).exec()
     }
     async findSongsByIds(idArray: string[]) {
-        return this.songModel.find({ _id: { $in: idArray } }).exec();
+        return this.songModel.find({ _id: { $in: idArray } }).sort({ order: -1 }).exec();
       }
 
       async updateSongOrder(id: string, newOrder: number) {

@@ -32,7 +32,8 @@ export const  SongList =({songs}:SongsItemProps) => {
       };
     
       useEffect(() => {
-        if (infoSong ) {
+        if (!!infoSong ) {
+          
           document.body.classList.add('no-overflow');
         } else {
           document.body.classList.remove('no-overflow');
@@ -42,6 +43,7 @@ export const  SongList =({songs}:SongsItemProps) => {
         };
       }, [infoSong]);
         
+
         if (songs.length) {
             return (
                 <div style={infoSong ? {overflow:"hidden"} : {}}>        
@@ -71,7 +73,7 @@ export const  SongList =({songs}:SongsItemProps) => {
                 />
             </div>
             
-                <Transition in={!!infoSong} timeout={200} unmountOnExit={true}>
+                <Transition in={!!infoSong} timeout={50} unmountOnExit={true}>
                 {(state) => (
                     <>
                     <div className={`blured ${state === 'entered' ? 'blur-entered' : 'blur-exit'}`}></div>

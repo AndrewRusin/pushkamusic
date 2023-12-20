@@ -9,7 +9,6 @@ import Pause from '@/public/icons/pause.svg';
 import Forward from '@/public/icons/forward.svg'
 
 
-
 export const Player = ({
   playlist,
   current_track,
