@@ -21,16 +21,16 @@ interface InfoSong{
 
 export const  SongList =({songs}:SongsItemProps) => {
 
-    const [trackID, setTrackID] = useState(0)
+    const [trackID, setTrackID] = useState(-1)
     const [infoSong, setInfoSong] = useState<InfoSong | null>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const [playerKey, setPlayerKey] = useState(Date.now());
+
     
     
       const handlePlay = (trackIndex: number) => {
         setTrackID(trackIndex);
         setIsPlaying(true);
-        setPlayerKey(Date.now())
+
       };
     
       useEffect(() => {
@@ -64,7 +64,7 @@ export const  SongList =({songs}:SongsItemProps) => {
             <div className={styles.player}>
                 
             <Player
-                key={playerKey}
+           
                 playlist={songs.map((el) => ({
                     src: API.uploadSrc + el.track_link,
                     name: el.title,
