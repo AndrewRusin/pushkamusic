@@ -22,11 +22,13 @@ export const Player = ({
 
   useEffect(() => {
     setShouldAutoPlay(isPlaying);
-  }, [shouldAutoPlay]);
+    
+  }, [isPlaying]);
  
 
   useEffect(() => {
     setTrackIndex(current_track);
+    console.log(currentTrack)
   }, [current_track]);
 
   const handleClickNext = () => {
@@ -45,12 +47,16 @@ export const Player = ({
       currentTrack > 0 ? currentTrack - 1 : playlist.length - 1
     );
   }
+  // useEffect(() => {
+  //  console.log(isPlaying)
+  // }, [isPlaying])
+  
   
   return (
    
       <AudioPlayer
         className="custom_player"
-        src={playlist[currentTrack]?.src}
+        src={ playlist[currentTrack]?.src}
         autoPlay={shouldAutoPlay}
         customAdditionalControls={
           [
@@ -63,10 +69,12 @@ export const Player = ({
         onClickPrevious = {handleClickPrev}
         showJumpControls={false}
         onPlay={() => {
+      
           onPlay?.(); 
         }}
         autoPlayAfterSrcChange = {isPlaying}
         onPause={() => {
+     
           onPause?.(); 
         }}
         customIcons={{

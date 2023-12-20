@@ -92,4 +92,8 @@
         justify-content: center;
         display: flex;
     }
+    .scroll {
+        height: calc(100% - 230px);
+        overflow: auto;
+    }
  }
