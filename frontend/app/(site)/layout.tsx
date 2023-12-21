@@ -40,7 +40,7 @@ const sfProDisplay = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'PushkaMusic',
+  title: 'Pushka Music',
   description: 'PushkaMusic подборка песен',
 }
 

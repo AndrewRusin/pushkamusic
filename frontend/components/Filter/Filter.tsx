@@ -35,7 +35,6 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
     }
     const clearFilter = () => {
         onChange(null);
-        setShowFilter(!showFilter)
         setCheckedItems([]);
         setCheckedParams(null);
         document.querySelectorAll('input').forEach(el=>{
@@ -99,7 +98,7 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
           appearance={"primary"}
           className='clearFilter' 
           onClick={clearFilter}>
-            Отмена
+            Очистить
           </Button>
           <Button  appearance={"alert"} onClick={()=>setShowFilter(!showFilter)} >Показать {totalSong}</Button>
          </>

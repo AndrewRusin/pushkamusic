@@ -55,7 +55,8 @@ export async function getSongItems(): Promise<ISongCategoriesResponse[]> {
 	return res.json();
 }
 export async function getSongItemsFilter(arr:string[] ): Promise<ISongCategoriesResponse[]> {
-	const res = await fetch(API.song.filter + arr.toString(), {
+	const params = arr.map(item => encodeURIComponent(item)).join(',');
+	const res = await fetch(API.song.filter + params, {
 		method: 'GET',
 		headers: new Headers({ 'content-type': 'application/json' }),
 		
