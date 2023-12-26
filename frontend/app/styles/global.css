@@ -24,9 +24,16 @@
     letter-spacing: 0.374px;
     font-weight: normal;
     font-style: normal;
+    position: relative;
+    z-index: 1;
   }
   body.no-overflow {
     overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    position: sticky;
   }
   main{
     height: calc(100vh - 150px);
@@ -102,7 +109,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 1;
+    z-index: 2;
   }
   .blured.blur-entered{
     background-color: rgba(0,0,0,.3);
@@ -205,11 +212,20 @@
     }
     /*End Player*/
 
+    .filterButton {
+      font-size: 16px;
+      height: 40px;
+      width: 80x;
+    }
+
   /*Mobile*/
   @media only screen and (max-width: 640px) {
     html, body{
       min-height: 100%;
     }
+    input, textarea {
+      font-size: 16px;
+  }
     .info_container {
         height: calc(100% - 20px);
         padding: 3vw;

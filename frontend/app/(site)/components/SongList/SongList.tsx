@@ -48,7 +48,7 @@ export const  SongList =({songs}:SongsItemProps) => {
 
         if (songs.length) {
             return (
-                <div style={infoSong ? {overflow:"hidden"} : {}}>        
+                <div>        
                      <ul className={styles.song_list}>
                     {songs.map((item,idx) => (
                         <li key ={item._id} >

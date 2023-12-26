@@ -17,7 +17,6 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
     const [filterItems, setFilterItems] = useState<IModernFilter | null>(null)
     const [checkedParams, setCheckedParams] = useState<number | null>(null)
     const [checkedItems, setCheckedItems] = useState<string[]>([])
-    const [moreOptions, setMoreOptions] = useState<boolean>(false)
 
     const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
         let newCheckedItems = [...checkedItems]
@@ -63,7 +62,7 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
      if (filterItems) {
     return (
       <div>
-        <Button  appearance={"primary"} onClick={()=>setShowFilter(!showFilter)} style={{ color: checkedParams ? 'red' : '' }}>Фильтр {checkedParams ? checkedParams : ''}</Button>
+        <Button  appearance={"primary"} className="filterButton" onClick={()=>setShowFilter(!showFilter)} style={{ color: checkedParams ? 'red' : '' }}>Фильтр {checkedParams ? checkedParams : ''}</Button>
        <div className={`${showFilter ? styles.show : ''} ${styles.filter}`}>
           <div className={styles.header}>
             <h3>Фильтр</h3>
@@ -86,8 +85,7 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
                             )
                           : [],}
                       })
-                     setMoreOptions(prev=>!prev)
-                    }}>{!moreOptions ? 'больше +': 'меньше -'}</span>}
+                    }}>{filterItems[key].findIndex(el=>el.hidden)>0 ? 'больше +': 'меньше -'}</span>}
                 </li>   
             ))}
         </ul>

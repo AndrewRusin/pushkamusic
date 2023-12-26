@@ -13,18 +13,20 @@ import { Player } from "@/components/Player/Player";
 import { SelectList } from "../SelectList/SelectList";
 import { IPlaylist } from "@/components/Player/Player.props";
 import Edit from '@/public/icons/edit.svg'
-import AddToSelect from '@/public/icons/add_song.svg'
 import {Preloader} from "@/components"
 
 export const SongList = () => {
   const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
   const [selectedFilterValues, setSelectedFilterValues] = useState<string[] | null>(null);
   const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
-  const [trackID, setTrackID] = useState(0);
+  const [trackID, setTrackID] = useState(-1);
   const [selectItem, setSelectItem] = useState<string[] | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [originalSelectItem, setOriginalSelectItem] = useState<string[] >([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [originalSongItems, setOriginalSongItems] = useState<ISongCategoriesResponse[]>([]);
+  const [originalPlaylist, setOriginalPlaylist] = useState<IPlaylist[]>([]);
+
 
   const handlePlay = (trackIndex: number) => {
     setTrackID(trackIndex);
@@ -97,8 +99,10 @@ const  showSelected = () => {
       const response = await getSongItems(); // Замените на свой эндпоинт
       response.forEach((el) => (el.isSelected = false));
       response.forEach((el) => select?.includes(el._id) ? el.isSelected = true : el);
+      setOriginalSongItems(response) 
       setSongItems(response);
       const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
+      setOriginalPlaylist([...playListArr])
       setPlaylist([...playListArr])
       setIsLoading(false)
     } catch (error) {
@@ -139,23 +143,24 @@ const  showSelected = () => {
     filterSongItems(selectedValues);
   };
 
-
   const searchSong = (song: string) => {
     if (song.length) {
-      setIsLoading(true)
-      const searchArr = songItems.filter((el) =>
+      const searchArr = originalSongItems.filter((el) =>
         el.title.toLowerCase().includes(song.toLowerCase())
       );
-      if (playlist && playlist.length>0) {
-        const searchPlaylist: IPlaylist[]  = playlist.filter((el) =>
+      searchArr.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
+      const searchPlaylist = originalPlaylist?.filter((el) =>
         el.name.toLowerCase().includes(song.toLowerCase())
       );
-       setPlaylist([...searchPlaylist])
-      }
+  
       setSongItems(searchArr);
-      setIsLoading(false)
+      if (searchPlaylist) {
+        setPlaylist(searchPlaylist);
+      }
+     
     } else {
-      loadSongItems();
+      // Возвращаем исходное состояние, когда строка поиска пуста
+     setSongItems(originalSongItems)
     }
   };
 
@@ -175,6 +180,9 @@ const  showSelected = () => {
           placeholder="Поиск"
           onChange={(e) => searchSong(e.target.value)}
         />
+        <label  className={styles.hiddenSong} ><input type="checkbox" onChange={
+          (e)=>setSongItems(prev=> e.target.checked ? [...prev.map(el=>({...el, isHidden: !e.target.checked}))] : originalSongItems)
+          }/>скрытые</label>
         <h1>{}</h1>
         {selectItem && (
           <SelectList
@@ -188,7 +196,7 @@ const  showSelected = () => {
       </div>
 
       <ul className={styles.song_list}>
-        <span>Песен {songItems.length}</span>
+        <span>Песен {songItems?songItems.filter(el=>el.isHidden===false).length:''} из {originalSongItems.length}</span>
         {songItems.map((item, idx) =>
           !item.isHidden ? (
             <li key={item._id}>
@@ -196,11 +204,11 @@ const  showSelected = () => {
               <span className={styles.right_side}>
                 <Link href={"/dashboard/edit_song_item/" + item._id}><Edit/></Link>{" "}
                   <span
-                    className = {item.isSelected ? styles.added : ' '}
+                    className = {item.isSelected ? styles.active : styles.not_active}
                     aria-disabled = {item.isSelected}
                     onClick = {() => handleSelect(item._id)}
                   >
-                    <AddToSelect  /> 
+                
                   </span>
               </span>
             </li>

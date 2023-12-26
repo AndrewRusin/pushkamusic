@@ -25,7 +25,17 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
     useEffect(() => {
      loadSongItems() 
     }, [selectItem])
-    
+    useEffect(() => {
+        if (!showList ) {
+          
+          document.body.classList.add('no-overflow');
+        } else {
+          document.body.classList.remove('no-overflow');
+        }
+        return () => {
+          document.body.classList.remove('no-overflow');
+        };
+      }, [showList]);
     const loadSongItems = async (select:string[] | null = selectItem) => {
         try {
           const response = await getSongItems(); // Замените на свой эндпоинт
@@ -88,7 +98,7 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
             <>
                 {!!selectItem.length && (
                     <div>
-                    {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> {selectItem.length}</span>)}
+                    {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> <span className={styles.quantity}>{selectItem.length}</span></span>)}
                     {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}
                     <div className={ !showList ? styles.select_list_wrapper:''}>
                     {!showList && (

@@ -5,10 +5,14 @@
     width: 100%;
 }
 .select_list_button{
-    position: absolute;
+    position: fixed;
     right: 12px;
     z-index: 2;
-    top: 27px;
+    top:6px;
+    color:#eee;
+}
+.select_list_button svg g {
+    stroke: #eee;
 }
 .select_list li{
     border-bottom: 1px solid #eee;
@@ -38,6 +42,20 @@
     box-sizing: border-box;
     height: 100%;
 }
+.quantity {
+    display: flex;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px px;
+    border: 1px solid;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    position: absolute;
+    bottom: -4px;
+    right: -7px;
+}
+
 @media only screen and (max-width: 640px) {
     .createSelect {
     bottom: 76px;
