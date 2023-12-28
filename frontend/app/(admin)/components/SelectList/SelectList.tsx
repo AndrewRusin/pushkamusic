@@ -116,8 +116,8 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
                                 }
                             </ul>
                          <div className={styles.footer}>
-                            <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
                             <Button appearance={"primary"} onClick={clearAll} >Очистить</Button>  
+                            <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
                         </div>   
                         {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
                         </div>)}

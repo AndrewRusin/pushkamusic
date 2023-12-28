@@ -54,8 +54,7 @@
     z-index: 3;
     display: flex;
     width: 100%;
-    padding: 0 4vw;
-    padding-top: 65px;
+    padding:20px;
     background: #fff;
     box-sizing: border-box;
     height: 100%;
@@ -94,5 +93,11 @@
    .footer > button {
         width: 45vw;
 
+    }
+    .select_list_wrapper {
+        padding: 0 4vw;
+        padding-top: 65px;
+        overflow: hidden;
+        height: calc(100% - 65px);
     }
 }

@@ -5,7 +5,7 @@
     left: 0;
     top: 0;
     background: #fff;
-    z-index: 4;
+    z-index: 6;
     padding: 20px;
     max-width: 400px;
     width: 100%;
@@ -87,7 +87,15 @@
         padding:  0 4vw;
         padding-top: 20px;
     }
- 
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        padding: 0 4vw;
+        left: 0;
+    }
     .footer > button:last-child {
         display: initial;
     }
