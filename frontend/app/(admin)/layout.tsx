@@ -1,6 +1,4 @@
 import { Sidebar } from "./components"
-import styles from "./layout.module.css"
-import '../styles/global.css';
 import localFont from "next/font/local";
 import '../styles/global.css';
 
@@ -53,9 +51,9 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={sfProDisplay.className}>
-        <div className={styles.container}>
+        <div className="container">
         <Sidebar />
-        <div className={styles.content}>
+        <div className="content">
           {children}
         </div>
         </div>

@@ -1,25 +1,43 @@
 .select_list{
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
     width: 100%;
+    height: calc(100vh - 185px);
+    overflow: auto;
+    counter-reset: section;
+    padding-bottom: 86px;
+    margin-top: 10px;
 }
 .select_list_button{
     position: fixed;
     right: 12px;
-    z-index: 2;
+    z-index: 4;
     top:6px;
     color:#eee;
 }
 .select_list_button svg g {
     stroke: #eee;
 }
-.select_list li{
+.select_list li {
     border-bottom: 1px solid #eee;
-    margin-bottom: 5px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    counter-increment: section;
+    width: 100%;
+}
+.select_list li :before {
+    content: counter(section) " ";
+    margin-right: 17px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(24 21 21 / 30%);
 }
 .select_list svg {
     cursor: pointer;
@@ -33,10 +51,10 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1;
+    z-index: 3;
     display: flex;
     width: 100%;
-    padding: 30px;
+    padding: 0 4vw;
     padding-top: 65px;
     background: #fff;
     box-sizing: border-box;
@@ -46,22 +64,35 @@
     display: flex;
     border-radius: 100%;
     width: 15px;
-    height: 15px px;
+    height: 15px;
     border: 1px solid;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 10px;
     position: absolute;
     bottom: -4px;
     right: -7px;
+    background: #eee;
+    color: rgb(44, 44, 46);
 }
-
+.footer > button {
+    height: 40px;
+}
 @media only screen and (max-width: 640px) {
-    .createSelect {
-    bottom: 76px;
-    left: 50%;
+   .footer {
+    bottom: 86px;
+    left: 0;
     position: fixed;
-    transform: translateX(-50%);
     z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 4vw;
+    background: #fff;
+    padding-bottom: 15px;
+}
+   .footer > button {
+        width: 45vw;
+
     }
 }

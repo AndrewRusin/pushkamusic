@@ -15,25 +15,28 @@ import { API } from "@/api/api";
 import { IPlaylist } from "@/components/Player/Player.props";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 
-export  function SelectList({selectItem,showSelected, clear, ...props}:selectItemProps):JSX.Element {
+export  function SelectList({selectItem,showSelected, clear, clearAllSelected,...props}:selectItemProps):JSX.Element {
    
     const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
     const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
     const [selectLink, setSelectLink] = useState<string | null>(null)
     const [showList, setShowList] = useState<boolean>(true)
+  
 
     useEffect(() => {
      loadSongItems() 
     }, [selectItem])
     useEffect(() => {
+       
         if (!showList ) {
-          
-          document.body.classList.add('no-overflow');
+          document.body.classList.add('modal-open');
+
         } else {
-          document.body.classList.remove('no-overflow');
+          document.body.classList.remove('modal-open');
+
         }
         return () => {
-          document.body.classList.remove('no-overflow');
+          document.body.classList.remove('modal-open');
         };
       }, [showList]);
     const loadSongItems = async (select:string[] | null = selectItem) => {
@@ -83,13 +86,15 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
         setShowList(!showList)
         clear();
     }
+    const clearAll = () => {
+        setShowList(!showList);
+        clearAllSelected();
+    }
     function deleteItem(id:string){
         setSongItems(prev =>
             prev.filter(el=> el._id !== id)
             );
             props.onDeleteItem(id);  
-
-   
     }
     function trackId (idx:number) {
         props.onTrackId(idx)
@@ -103,13 +108,17 @@ export  function SelectList({selectItem,showSelected, clear, ...props}:selectIte
                     <div className={ !showList ? styles.select_list_wrapper:''}>
                     {!showList && (
                         <div style={{width:'100%'}}>
-                            <ul className={styles.select_list}>
+                             <h3>Подборка ( {selectItem.length} )</h3>
+                            <ul className={styles.select_list} id="songs">
                                 {songItems.map( (item, idx) =>
                                 <li key={item._id}><span onClick={() => trackId(idx)}>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
                                 )
                                 }
                             </ul>
-                        <Button appearance={"primary"} onClick={createSelected} className={styles.createSelect}>Создать коллекцию</Button>
+                         <div className={styles.footer}>
+                            <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
+                            <Button appearance={"primary"} onClick={clearAll} >Очистить</Button>  
+                        </div>   
                         {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
                         </div>)}
                     </div>

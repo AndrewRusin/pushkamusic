@@ -32,8 +32,7 @@
     width: 100vw;
     height: 100vh;
     left: 0;
-    top: 0;
-    position: sticky;
+    position: fixed;
   }
   main{
     height: calc(100vh - 150px);
@@ -45,7 +44,6 @@
   }
   
   .container{
-    width: calc(100% - 48vw);
     margin: 0 auto;
   }
   
@@ -215,11 +213,14 @@
     .filterButton {
       font-size: 16px;
       height: 40px;
-      width: 80x;
+      width: 130px;
     }
 
   /*Mobile*/
   @media only screen and (max-width: 640px) {
+    .filterButton {
+      width: 45vw;
+    }
     html, body{
       min-height: 100%;
     }
@@ -287,3 +288,26 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 40px;
+}
+
+.content {
+    width: calc(100% - 380px);
+}
+
+@media only screen and (max-width: 640px) {
+    .content {
+       width: 100%;
+    }
+    .container {
+        padding: 0 4vw;
+        padding-top: 55px;
+    }
+    .modal-open .container {
+      padding-top: 0;
+    }
+}

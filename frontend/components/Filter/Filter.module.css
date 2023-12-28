@@ -5,13 +5,12 @@
     left: 0;
     top: 0;
     background: #fff;
-    z-index: 1;
+    z-index: 4;
     padding: 20px;
     max-width: 400px;
     width: 100%;
     height: 100vh;
     overflow: auto;
-    z-index: 3;
     transform: translateX(-100%);
     transition: transform .5s;
     overflow: hidden;
@@ -88,9 +87,7 @@
         padding:  0 4vw;
         padding-top: 20px;
     }
-    .footer {
-        padding-bottom: 85px;
-    }
+ 
     .footer > button:last-child {
         display: initial;
     }

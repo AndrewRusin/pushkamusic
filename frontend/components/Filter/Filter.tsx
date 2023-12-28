@@ -17,6 +17,7 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
     const [filterItems, setFilterItems] = useState<IModernFilter | null>(null)
     const [checkedParams, setCheckedParams] = useState<number | null>(null)
     const [checkedItems, setCheckedItems] = useState<string[]>([])
+    const [top, setTop] = useState<number>()
 
     const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
         let newCheckedItems = [...checkedItems]
@@ -40,6 +41,22 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
           el.checked = false
         })
     }
+    useEffect(() => {
+    
+      if (showFilter) {
+        setTop(window.scrollY)
+        document.body.style.top = `-${top}px`
+        document.body.classList.add('no-overflow');
+      } else {
+        document.body.classList.remove('no-overflow');
+        window.scroll({top:top});
+      }
+      return () => {
+        document.body.classList.remove('no-overflow');
+        document.body.style.top = `initial`
+        window.scroll({top:top});
+      };
+    }, [showFilter]);
     useEffect( () => {
         (async () => {
         const checkboxesObj = await getFilterItemsModify()

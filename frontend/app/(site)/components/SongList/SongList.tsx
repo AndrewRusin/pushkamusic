@@ -24,7 +24,7 @@ export const  SongList =({songs}:SongsItemProps) => {
     const [trackID, setTrackID] = useState(-1)
     const [infoSong, setInfoSong] = useState<InfoSong | null>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
+    const [top, setTop] = useState<number>()
     
     
       const handlePlay = (trackIndex: number) => {
@@ -34,14 +34,19 @@ export const  SongList =({songs}:SongsItemProps) => {
       };
     
       useEffect(() => {
+    
         if (!!infoSong ) {
-          
+          setTop(window.scrollY)
+          document.body.style.top = `-${top}px`
           document.body.classList.add('no-overflow');
         } else {
           document.body.classList.remove('no-overflow');
+          window.scroll({top:top});
         }
         return () => {
           document.body.classList.remove('no-overflow');
+          document.body.style.top = `initial`
+          window.scroll({top:top});
         };
       }, [infoSong]);
         

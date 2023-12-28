@@ -103,8 +103,10 @@
         margin-bottom: 33px;
         height: 42px;
         align-items: center;
-        position: relative;
-        z-index: 2;
+        position: fixed;
+        z-index: 4;
+        top: 0;
+        width: calc(100% - 8vw);
     }
     .topbar::after {
         position: absolute;
@@ -117,6 +119,6 @@
         background-color: rgb(44, 44, 46);
         width: calc(100% + 8vw);
         z-index: 1;
-
     }
+   
 }

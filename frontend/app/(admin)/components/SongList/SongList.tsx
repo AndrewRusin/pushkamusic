@@ -59,6 +59,7 @@ const handleSelect = (itemId: string) => {
   }
 
   setOriginalSelectItem(mergedItems);
+  setIsPlaying(false);
 };
 
 const handleDeleteItem = (id: string) => {
@@ -79,7 +80,7 @@ const clear = async () => {
     } else {
       response = await getSongItems(); 
     }
-   
+
     response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
     setSongItems(response);
     const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
@@ -89,6 +90,21 @@ const clear = async () => {
     
   }
  
+};
+const clearAllSelected= async () => {
+  try {
+    if (selectedFilterValues) {
+      setIsLoading(true)
+      let response: ISongCategoriesResponse[] = await getSongItemsFilter(selectedFilterValues);
+      setSongItems(response);
+      setIsLoading(false)
+    } else {
+      setSongItems(originalSongItems)
+      setSelectItem(null)
+    }     
+  } catch (error) {
+    
+  }
 };
 const  showSelected = () => {
   setSongItems(prev => prev.filter(el => el.isSelected === true )); 
@@ -173,16 +189,21 @@ const  showSelected = () => {
     <div>
       <Preloader isLoading={isLoading} />
       <div className={styles.top_bar}>
-        <Filter onChange={handleFilterChange} totalSong = {songItems.length}/>
-        <input
-          type="text"
-          className={styles.search_input}
-          placeholder="Поиск"
-          onChange={(e) => searchSong(e.target.value)}
-        />
-        <label  className={styles.hiddenSong} ><input type="checkbox" onChange={
-          (e)=>setSongItems(prev=> e.target.checked ? [...prev.map(el=>({...el, isHidden: !e.target.checked}))] : originalSongItems)
-          }/>скрытые</label>
+        <div style={{marginBottom:'15px'}}>
+          <Filter onChange={handleFilterChange} totalSong = {songItems.length}/>
+          <label  className={styles.hiddenSong} ><input type="checkbox" onChange={
+            (e)=>setSongItems(prev=> [...prev.map(el=>({...el, isHidden: !el.isHidden}))])
+            }/><div className="btn">Скрытые песни</div></label>
+        </div>  
+        <div>
+          <span><b>{ selectedFilterValues && selectedFilterValues?.length > 0 ? 'Найдено песен: ' : 'Всего песен: '}</b> {songItems?songItems.filter(el=>el.isHidden===false).length:''} </span>
+          <input
+            type="text"
+            className={styles.search_input}
+            placeholder="Поиск"
+            onChange={(e) => searchSong(e.target.value)}
+          />  
+          </div> 
         <h1>{}</h1>
         {selectItem && (
           <SelectList
@@ -191,12 +212,13 @@ const  showSelected = () => {
             clear={clear}
             onDeleteItem={handleDeleteItem}
             onTrackId={handleTrackID}
+            clearAllSelected={clearAllSelected}
           />
         )}
       </div>
 
       <ul className={styles.song_list}>
-        <span>Песен {songItems?songItems.filter(el=>el.isHidden===false).length:''} из {originalSongItems.length}</span>
+        
         {songItems.map((item, idx) =>
           !item.isHidden ? (
             <li key={item._id}>
@@ -216,7 +238,7 @@ const  showSelected = () => {
         )}
       </ul>
 
-      <div className={styles.player}>
+      <div className={styles.player_admin}>
         {playlist?.length && <Player
                 playlist={songItems.map((el) => ({
                     src: API.uploadSrc + el.track_link,
