@@ -304,10 +304,12 @@
        width: 100%;
     }
     .container {
-        padding: 0 4vw;
-        padding-top: 55px;
-        overflow: hidden;
-        height: calc(100vh - 55px);
+      padding: 0 4vw;
+      padding-top: 55px;
+      overflow: hidden;
+      height: calc(100vh - 55px);
+      position: fixed;
+      width: 100%;
     }
     .modal-open .container {
       padding-top: 0;

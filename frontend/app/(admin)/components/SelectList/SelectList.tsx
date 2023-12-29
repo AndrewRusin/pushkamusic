@@ -60,16 +60,26 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
             const value  =  await createSelect({idArray:selectItem})
             setSelectLink(value._id)
             const url = `${process.env.NEXT_PUBLIC_DOMAIN}/select/${value._id}`;
-            console.log(url)
+            console.log(navigator.clipboard)
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(url);
             } else {
                 // Fallback for unsupported browsers
-                const textArea = document.createElement("textarea");
-                textArea.value = url;
+                
+                const textArea = document.createElement('textarea')
+                textArea.innerText = url;
                 document.body.appendChild(textArea);
                 textArea.select();
-                document.execCommand("copy");
+                console.log(textArea.value)
+                try {
+                    const successful = document.execCommand('copy')
+                    console.log('suc:' + successful )
+                    const msg = successful ? 'успешно' : 'неудачно';
+                    console.log(`Копирование текста ${msg}`);
+                } catch (err) {
+                    console.error('Ошибка при копировании текста', err);
+                }
+            
                 document.body.removeChild(textArea);
             }
             window.open(`/select/${value._id}`, '_blank');
@@ -115,11 +125,13 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
                                 )
                                 }
                             </ul>
+
                          <div className={styles.footer}>
+                         {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
                             <Button appearance={"primary"} onClick={clearAll} >Очистить</Button>  
                             <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
                         </div>   
-                        {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
+                        
                         </div>)}
                     </div>
                 </div>)}

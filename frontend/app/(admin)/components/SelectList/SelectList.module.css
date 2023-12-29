@@ -99,5 +99,6 @@
         padding-top: 65px;
         overflow: hidden;
         height: calc(100% - 65px);
+        position: fixed;
     }
 }
