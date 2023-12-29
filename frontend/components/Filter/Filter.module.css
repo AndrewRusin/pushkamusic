@@ -49,7 +49,7 @@
 }
 .filter_list {
     overflow:auto;
-    height: 80%;
+   padding-bottom: 55px;
 }
 .footer {
     display: flex;
@@ -95,7 +95,8 @@
         width: 100%;
         padding: 0 4vw;
         left: 0;
-        z-index: 6;
+        background: #fff;
+        z-index: 7;
         padding-bottom: 10px;
     }
     .footer > button:last-child {
