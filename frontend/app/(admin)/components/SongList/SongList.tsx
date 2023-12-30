@@ -161,24 +161,27 @@ const  showSelected = () => {
 
   const searchSong = (song: string) => {
     if (song.length) {
-      const searchArr = originalSongItems.filter((el) =>
-        el.title.toLowerCase().includes(song.toLowerCase())
-      );
-      searchArr.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
-      const searchPlaylist = originalPlaylist?.filter((el) =>
-        el.name.toLowerCase().includes(song.toLowerCase())
-      );
-  
-      setSongItems(searchArr);
-      if (searchPlaylist) {
-        setPlaylist(searchPlaylist);
-      }
-     
+        const lowercasedInput = song.toLowerCase();
+
+        const searchArr = originalSongItems.filter((el) =>
+            el.title.toLowerCase().startsWith(lowercasedInput)
+        );
+        searchArr.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
+
+        const searchPlaylist = originalPlaylist?.filter((el) =>
+            el.name.toLowerCase().startsWith(lowercasedInput)
+        );
+
+        setSongItems(searchArr);
+        if (searchPlaylist) {
+            setPlaylist(searchPlaylist);
+        }
+
     } else {
-      // Возвращаем исходное состояние, когда строка поиска пуста
-     setSongItems(originalSongItems)
+        // Возвращаем исходное состояние, когда строка поиска пуста
+        setSongItems(originalSongItems);
     }
-  };
+};
 
   useEffect(() => {
     loadSongItems();

@@ -90,13 +90,13 @@
         display: flex;
         justify-content: space-between;
         position: sticky;
-        bottom: 0;
+        bottom: 10px;
         width: 100%;
         padding: 0 4vw;
         left: 0;
         background: #fff;
         z-index: 7;
-        padding-bottom: 10px;
+        padding-bottom: 70px;
     }
     .footer > button:last-child {
         display: initial;
