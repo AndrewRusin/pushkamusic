@@ -18,4 +18,5 @@ export  interface ISongCategoriesResponse extends ISongForm {
 	updatedAt: Date;
 	order:number;
 	isSelected?:boolean;
+	isArchive?: boolean;
 }

@@ -16,13 +16,13 @@ import { Options } from '@/utils/filterCategory';
 
 export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element {
   const [redirectTo, setRedirectTo] = useState<boolean>(false);
-  const [valueForm, setValueForm] = useState<ISongCategoriesResponse>();
+  const [valueForm, setValueForm] = useState<ISongCategoriesResponse | undefined>(undefined);
   const [checkboxes, setCheckboxes] = useState<IModernFilter | null>(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
-  const [error, setError] = useState<string>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectFileName, setSelectFileName] = useState<Options[]>([]);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
           const values = await findSongItem(idItem);
           setValueForm(values);
           setTextAreaValue(values.songsText);
+          setIsChecked(values.isHidden)
         } catch (error) {
           console.error('Error fetching song item:', error);
         }
@@ -64,14 +65,14 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
     fetchCheckboxes();
     fetchFileNames();
   }, [idItem]);
+
+  
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFile = event.target.files[0];
       setFile(selectedFile);
     }
   };
-
-
 
   const { register, control, handleSubmit, reset} = useForm<ISongForm>();
 
@@ -184,7 +185,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
           <input
             type="checkbox"
             name="hidden"
-            checked={isChecked !== undefined ? isChecked : valueForm?.isHidden || false}
+            checked={isChecked }
             onChange={() => setIsChecked((prev) => !prev)}
           />
            <span> скрыть песню</span>

@@ -121,10 +121,13 @@
     font-size: 16px;
 }  
 @media only screen and (max-width: 640px) {
-.top_bar {
-    margin-bottom: 0;
+    .top_bar {
+        margin-bottom: 0;
     }
     .hiddenSong > div, .search_input {
         width: 45vw;
     }
+    .song_list {
+        padding-bottom: 110px;
+    }     
 }

@@ -115,6 +115,7 @@ const  showSelected = () => {
       const response = await getSongItems(); // Замените на свой эндпоинт
       response.forEach((el) => (el.isSelected = false));
       response.forEach((el) => select?.includes(el._id) ? el.isSelected = true : el);
+      response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true )
       setOriginalSongItems(response) 
       setSongItems(response);
       const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
@@ -138,7 +139,11 @@ const  showSelected = () => {
       } else {
         setIsLoading(true)
         const response = await getSongItemsFilter(filterValues);
-        response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
+        response.forEach((el) => {selectItem?.includes(el._id) ? el.isSelected = true : el});
+        if (!filterValues.includes('archive')) {
+          response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true )
+        } 
+        
         setSongItems(response);
         
         const filterSelected = response.filter(el => el.isSelected === true ).map(el => el._id);
@@ -186,7 +191,13 @@ const  showSelected = () => {
   useEffect(() => {
     loadSongItems();
   }, []);
-
+  useEffect(() => {
+    // Находим элемент списка по классу и сбрасываем его позицию скролла
+    const songListElement = document.querySelector('#songs');
+    if (songListElement) {
+      songListElement.scrollTop = 0;
+    }
+  }, [songItems]); 
 
   return (
     <div>
@@ -199,7 +210,7 @@ const  showSelected = () => {
             }/><div className="btn">Скрытые песни</div></label>
         </div>  
         <div>
-          <span><b>{ selectedFilterValues && selectedFilterValues?.length > 0 ? 'Найдено песен: ' : 'Всего песен: '}</b> {songItems?songItems.filter(el=>el.isHidden===false).length:''} </span>
+          <span><b>{ selectedFilterValues && selectedFilterValues?.length > 0 ? 'Найдено песен: ' : 'Всего песен: '}</b> {songItems?songItems.filter(el=>el.isHidden===false && !el.isArchive).length :''} </span>
           <input
             type="text"
             className={styles.search_input}
@@ -220,10 +231,10 @@ const  showSelected = () => {
         )}
       </div>
 
-      <ul className={styles.song_list}>
+      <ul className={styles.song_list} id="songs">
         
         {songItems.map((item, idx) =>
-          !item.isHidden ? (
+          !item.isHidden && !item.isArchive ? (
             <li key={item._id}>
                 <span onClick={() => handlePlay(idx)} className={styles.song_name}>{item.title}</span>
               <span className={styles.right_side}>

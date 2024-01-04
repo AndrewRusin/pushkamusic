@@ -2,14 +2,12 @@
 import { Button } from "@/components"
 import { useEffect, useState} from "react";
 import styles from "./SelectList.module.css";
-import { ISelectItems, ISelectResponse, selectItemProps } from "./SelectList.props";
+import {  selectItemProps } from "./SelectList.props";
 import { createSelect } from "@/api/select";
 import PlayList from '@/public/icons/playlist.svg'
 import CloseApple from '@/public/icons/closeApple.svg'
-import { patchReleaseItems, createReleaseItems } from "@/api/releases";
-import { useForm, SubmitHandler } from "react-hook-form";
+import useClipboard from "react-use-clipboard";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { getSongItems } from "@/api/song";
 import { API } from "@/api/api";
 import { IPlaylist } from "@/components/Player/Player.props";
@@ -21,6 +19,9 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
     const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
     const [selectLink, setSelectLink] = useState<string | null>(null)
     const [showList, setShowList] = useState<boolean>(true)
+    const [url, setUrl] = useState<string>('default_text')
+    const [isCopied, setCopied] = useClipboard(url);
+   
   
 
     useEffect(() => {
@@ -60,29 +61,8 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
             const value  =  await createSelect({idArray:selectItem})
             setSelectLink(value._id)
             const url = `${process.env.NEXT_PUBLIC_DOMAIN}/select/${value._id}`;
-            console.log(navigator.clipboard)
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url);
-            } else {
-                // Fallback for unsupported browsers
-                
-                const textArea = document.createElement('textarea')
-                textArea.innerText = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                console.log(textArea.value)
-                try {
-                    const successful = document.execCommand('copy')
-                    console.log('suc:' + successful )
-                    const msg = successful ? 'успешно' : 'неудачно';
-                    console.log(`Копирование текста ${msg}`);
-                } catch (err) {
-                    console.error('Ошибка при копировании текста', err);
-                }
-            
-                document.body.removeChild(textArea);
-            }
-            window.open(`/select/${value._id}`, '_blank');
+            setUrl(url)
+            // window.open(`/select/${value._id}`, '_blank');
         } catch (error) {
             console.log(error)
         }
@@ -127,7 +107,7 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
                             </ul>
 
                          <div className={styles.footer}>
-                         {selectLink && <Link href={`/select/${selectLink}`} target="_blank">Ссылка на коллекцию {selectLink}</Link>}
+                         {selectLink && <Button appearance={"alert"} onClick={setCopied}> {isCopied ? "Скопировано!👍" : "Скопировать"}</Button>}
                             <Button appearance={"primary"} onClick={clearAll} >Очистить</Button>  
                             <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
                         </div>   
