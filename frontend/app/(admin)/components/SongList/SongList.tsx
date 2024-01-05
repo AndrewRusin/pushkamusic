@@ -26,6 +26,7 @@ export const SongList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [originalSongItems, setOriginalSongItems] = useState<ISongCategoriesResponse[]>([]);
   const [originalPlaylist, setOriginalPlaylist] = useState<IPlaylist[]>([]);
+  const [hiddenChecked, setHiddenChecked] = useState<boolean>(false)
 
 
   const handlePlay = (trackIndex: number) => {
@@ -101,6 +102,7 @@ const clearAllSelected= async () => {
     } else {
       setSongItems(originalSongItems)
       setSelectItem(null)
+      console.log(selectItem)
     }     
   } catch (error) {
     
@@ -197,7 +199,7 @@ const  showSelected = () => {
     if (songListElement) {
       songListElement.scrollTop = 0;
     }
-  }, [songItems]); 
+  }, [hiddenChecked]); 
 
   return (
     <div>
@@ -205,8 +207,11 @@ const  showSelected = () => {
       <div className={styles.top_bar}>
         <div style={{marginBottom:'15px'}}>
           <Filter onChange={handleFilterChange} totalSong = {songItems.length}/>
-          <label  className={styles.hiddenSong} ><input type="checkbox" onChange={
-            (e)=>setSongItems(prev=> [...prev.map(el=>({...el, isHidden: !el.isHidden}))])
+          <label  className={styles.hiddenSong} ><input type="checkbox" checked={hiddenChecked} onChange={
+            (e)=>{
+              setSongItems(prev=> [...prev.map(el=>({...el, isHidden: !el.isHidden}))]);
+              setHiddenChecked(prev=>prev=!hiddenChecked)
+            }
             }/><div className="btn">Скрытые песни</div></label>
         </div>  
         <div>
@@ -222,7 +227,7 @@ const  showSelected = () => {
         {selectItem && (
           <SelectList
             showSelected={ showSelected}
-            selectItem={selectItem}
+            onSelectItem={selectItem}
             clear={clear}
             onDeleteItem={handleDeleteItem}
             onTrackId={handleTrackID}

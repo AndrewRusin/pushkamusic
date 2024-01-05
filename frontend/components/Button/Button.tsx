@@ -9,6 +9,7 @@ export const Button = ({appearance, children, className, ...props}: ButtonProps)
                 [styles.primary]: appearance == 'primary',
                 [styles.ghost]: appearance == 'ghost',
                 [styles.alert]: appearance == 'alert',
+                [styles.green]: appearance == 'green',
             })}
             {...props}
         >

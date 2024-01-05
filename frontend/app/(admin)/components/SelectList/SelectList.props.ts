@@ -9,7 +9,7 @@ export interface ISelectResponse {
     _id:string
 }
 export interface selectItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    selectItem:string[]
+    onSelectItem:string[]
     clear: () => void;
     showSelected:() => void;
     onDeleteItem:(id:string) => void; 

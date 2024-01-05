@@ -24,6 +24,10 @@
     color: rgb(255,255,255);
     background-color: rgb(255,45,85);
 }
+.green {
+    color: rgb(255,255,255);
+    background-color: rgb( 82, 205, 153);
+}
 @media only screen and (max-width: 640px) {
     .button  {
        font-size: 16px;

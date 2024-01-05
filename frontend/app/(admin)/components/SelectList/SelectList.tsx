@@ -13,7 +13,7 @@ import { API } from "@/api/api";
 import { IPlaylist } from "@/components/Player/Player.props";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 
-export  function SelectList({selectItem,showSelected, clear, clearAllSelected,...props}:selectItemProps):JSX.Element {
+export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,...props}:selectItemProps):JSX.Element {
    
     const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
     const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
@@ -26,7 +26,8 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
 
     useEffect(() => {
      loadSongItems() 
-    }, [selectItem])
+     console.log('selectItem в SelectList:', onSelectItem);
+    }, [onSelectItem])
     useEffect(() => {
        
         if (!showList ) {
@@ -40,7 +41,7 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
           document.body.classList.remove('modal-open');
         };
       }, [showList]);
-    const loadSongItems = async (select:string[] | null = selectItem) => {
+    const loadSongItems = async (select:string[] | null = onSelectItem) => {
         try {
           const response = await getSongItems(); // Замените на свой эндпоинт
           response.forEach((el) => (el.isSelected = false));
@@ -58,7 +59,7 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
 
     async function createSelected() {
         try {
-            const value  =  await createSelect({idArray:selectItem})
+            const value  =  await createSelect({idArray:onSelectItem})
             setSelectLink(value._id)
             const url = `${process.env.NEXT_PUBLIC_DOMAIN}/select/${value._id}`;
             setUrl(url)
@@ -78,7 +79,8 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
     }
     const clearAll = () => {
         setShowList(!showList);
-        clearAllSelected();
+       clearAllSelected();
+        
     }
     function deleteItem(id:string){
         setSongItems(prev =>
@@ -91,14 +93,14 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
     }
         return (
             <>
-                {!!selectItem.length && (
+                {!!onSelectItem.length && (
                     <div>
-                    {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> <span className={styles.quantity}>{selectItem.length}</span></span>)}
+                    {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> <span className={styles.quantity}>{onSelectItem.length}</span></span>)}
                     {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}
                     <div className={ !showList ? styles.select_list_wrapper:''}>
                     {!showList && (
                         <div style={{width:'100%'}}>
-                             <h3>Подборка ( {selectItem.length} )</h3>
+                             <h3>Подборка ( {onSelectItem.length} )</h3>
                             <ul className={styles.select_list} id="songs">
                                 {songItems.map( (item, idx) =>
                                 <li key={item._id}><span onClick={() => trackId(idx)}>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
@@ -107,9 +109,9 @@ export  function SelectList({selectItem,showSelected, clear, clearAllSelected,..
                             </ul>
 
                          <div className={styles.footer}>
-                         {selectLink && <Button appearance={"alert"} onClick={setCopied}> {isCopied ? "Скопировано!👍" : "Скопировать"}</Button>}
+                         
                             <Button appearance={"primary"} onClick={clearAll} >Очистить</Button>  
-                            <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>
+                          {selectLink ? <Button appearance={isCopied ? "green" : "alert"} onClick={setCopied}> {isCopied ? "Скопировано!👍" : "Скопировать"}</Button> : <Button appearance={"alert"} onClick={createSelected} className={styles.createSelect}>Создать</Button>}
                         </div>   
                         
                         </div>)}
