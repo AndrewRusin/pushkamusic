@@ -26,8 +26,11 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
 
     useEffect(() => {
      loadSongItems() 
-     console.log('selectItem в SelectList:', onSelectItem);
-    }, [onSelectItem])
+     
+    }, [onSelectItem]);
+
+
+
     useEffect(() => {
        
         if (!showList ) {
@@ -58,6 +61,7 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
       };
 
     async function createSelected() {
+        if(onSelectItem){
         try {
             const value  =  await createSelect({idArray:onSelectItem})
             setSelectLink(value._id)
@@ -67,6 +71,7 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
         } catch (error) {
             console.log(error)
         }
+    }
     }
     const showCollection = () => {
         setShowList(!showList)
@@ -86,14 +91,15 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
         setSongItems(prev =>
             prev.filter(el=> el._id !== id)
             );
-            props.onDeleteItem(id);  
+            props.onDeleteItem(id);
+           
     }
     function trackId (idx:number) {
         props.onTrackId(idx)
     }
         return (
             <>
-                {!!onSelectItem.length && (
+                {onSelectItem && (
                     <div>
                     {showList && (<span className={styles.select_list_button}  onClick={showCollection}><PlayList/> <span className={styles.quantity}>{onSelectItem.length}</span></span>)}
                     {!showList && (<span className={styles.select_list_button}  onClick={cancel}><CloseApple/></span>)}

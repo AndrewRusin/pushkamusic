@@ -26,7 +26,8 @@ export const SongList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [originalSongItems, setOriginalSongItems] = useState<ISongCategoriesResponse[]>([]);
   const [originalPlaylist, setOriginalPlaylist] = useState<IPlaylist[]>([]);
-  const [hiddenChecked, setHiddenChecked] = useState<boolean>(false)
+  const [hiddenChecked, setHiddenChecked] = useState<boolean>(false);
+
 
 
   const handlePlay = (trackIndex: number) => {
@@ -38,12 +39,13 @@ const handleSelect = (itemId: string) => {
     item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
   );
   setSongItems(updatedSongItems);
-
+  
   const selectedItems = updatedSongItems
     .filter(el => el.isSelected)
     .map(el => el._id);
 
   // Объединяем selectedItems и originalSelectItem
+
   let mergedItems;
   if (originalSelectItem?.includes(itemId)) {
     // Если элемент уже выбран, удаляем его из списка
@@ -52,14 +54,15 @@ const handleSelect = (itemId: string) => {
     // Если элемент не выбран, добавляем его в список
     mergedItems = Array.from(new Set([...selectedItems, ...originalSelectItem]));
   }
+  
 
-  if (!mergedItems.length) {
+  if (!mergedItems.length ) {
     setSelectItem(null);
   } else {
     setSelectItem(mergedItems);
   }
 
-  setOriginalSelectItem(mergedItems);
+  // setOriginalSelectItem(mergedItems);
   setIsPlaying(false);
 };
 
@@ -68,6 +71,14 @@ const handleDeleteItem = (id: string) => {
   setSongItems(prev => prev.filter(el=>el._id !==id))
 
 };
+
+useEffect(() => {
+  if (!!!songItems.length && !!!selectedFilterValues) {
+    setSongItems(originalSongItems)
+  }
+}, [songItems])
+
+
 const handleTrackID = (id: number) => {
   setTrackID(id);
   setIsPlaying(true);
@@ -101,9 +112,8 @@ const clearAllSelected= async () => {
       setIsLoading(false)
     } else {
       setSongItems(originalSongItems)
-      setSelectItem(null)
-      console.log(selectItem)
-    }     
+    }   
+    setSelectItem(null) 
   } catch (error) {
     
   }
@@ -224,7 +234,7 @@ const  showSelected = () => {
           />  
           </div> 
         <h1>{}</h1>
-        {selectItem && (
+        {!!selectItem?.length && (
           <SelectList
             showSelected={ showSelected}
             onSelectItem={selectItem}
