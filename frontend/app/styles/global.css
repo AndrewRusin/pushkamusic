@@ -310,4 +310,7 @@
     .modal-open .container {
       padding-top: 0;
     }
+    .modal-open{
+      position: fixed;
+    }
 }

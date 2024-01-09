@@ -78,9 +78,7 @@
     height: 40px;
 }
 @media only screen and (max-width: 640px) {
-    .select_list{
-        height: initial;
-    }
+
     .select_list li span:first-child {
         width: inherit;
     }
