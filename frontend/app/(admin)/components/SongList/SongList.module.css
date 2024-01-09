@@ -123,11 +123,19 @@
 @media only screen and (max-width: 640px) {
     .top_bar {
         margin-bottom: 0;
+        background: #fff;
+        position: fixed;
+        z-index: 4;
+        top: 42px;
+        width: 100%;
+        padding: 15px;
+        left: 0;
     }
     .hiddenSong > div, .search_input {
         width: 45vw;
     }
     .song_list {
-        padding-bottom: 135px;
+        padding: 135px 0;
+        height: initial;
     }     
 }

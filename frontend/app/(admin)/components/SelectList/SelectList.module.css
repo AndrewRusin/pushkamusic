@@ -62,12 +62,12 @@
 .quantity {
     display: flex;
     border-radius: 100%;
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     border: 1px solid;
     justify-content: center;
     align-items: center;
-    font-size: 10px;
+    font-size: 11px;
     position: absolute;
     bottom: -4px;
     right: -7px;
@@ -78,17 +78,22 @@
     height: 40px;
 }
 @media only screen and (max-width: 640px) {
+    .select_list{
+        height: initial;
+    }
+    .select_list li span:first-child {
+        width: inherit;
+    }
    .footer {
-    bottom: 86px;
+    bottom: 57px;
     left: 0;
     position: fixed;
     z-index: 5;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0 4vw;
     background: #fff;
-    padding-bottom: 15px;
+    padding: 30px 15px;
 }
    .footer > button {
         width: 45vw;
