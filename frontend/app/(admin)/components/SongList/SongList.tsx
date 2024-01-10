@@ -267,7 +267,7 @@ const  showSelected = () => {
         )}
       </ul>
 
-      <div className={styles.player_admin}>
+      <div className={styles.player}>
         {playlist?.length && <Player
                 playlist={songItems.map((el) => ({
                     src: API.uploadSrc + el.track_link,

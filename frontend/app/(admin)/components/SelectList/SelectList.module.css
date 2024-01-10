@@ -6,7 +6,7 @@
     height: calc(100vh - 185px);
     overflow: auto;
     counter-reset: section;
-    padding-bottom: 86px;
+    padding-bottom: 140px;
     margin-top: 10px;
 }
 .select_list_button{
