@@ -44,7 +44,7 @@
     left:0;
     width:100%;
     box-sizing: border-box;
-    background-color: rgb(239 239 239 / 80%);
+    background-color: rgba(239,239,239, 0.8);
     z-index: 5;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -127,14 +127,14 @@
         z-index: 4;
         top: 42px;
         width: 100%;
-        padding: 15px;
+        padding: 15px 15px 25px 15px;
         left: 0;
     }
     .hiddenSong > div, .search_input {
         width: 45vw;
     }
     .song_list {
-        padding: 145px 0 135 0;
+        padding: 145px 0 135px 0;
         height: initial;
     }     
 }
