@@ -44,7 +44,7 @@
     left:0;
     width:100%;
     box-sizing: border-box;
-    background-color: rgba(239,239,239, 0.8);
+    /* background-color: rgba(239,239,239, 0.8); */
     z-index: 5;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);

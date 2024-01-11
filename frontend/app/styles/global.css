@@ -313,4 +313,7 @@
     .modal-open{
       position: fixed;
     }
+    .modal-open #songs {
+      opacity: 0;
+    }
 }

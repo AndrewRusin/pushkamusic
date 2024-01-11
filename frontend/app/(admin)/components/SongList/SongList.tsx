@@ -64,6 +64,10 @@ const handleSelect = (itemId: string) => {
 
   // setOriginalSelectItem(mergedItems);
   setIsPlaying(false);
+  const pauseBtn = document.querySelector('.rhap_play-pause-button') as HTMLButtonElement;
+  if (pauseBtn) {
+    pauseBtn.click();
+  }
 };
 
 const handleDeleteItem = (id: string) => {
@@ -113,7 +117,8 @@ const clearAllSelected= async () => {
     } else {
       setSongItems(originalSongItems)
     }   
-    setSelectItem(null) 
+    setSelectItem(null);
+    setHiddenChecked(false); 
   } catch (error) {
     
   }

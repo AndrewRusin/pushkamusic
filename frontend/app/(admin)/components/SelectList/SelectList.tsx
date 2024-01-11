@@ -107,7 +107,7 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
                     {!showList && (
                         <div style={{width:'100%'}}>
                              <h3>Подборка ( {onSelectItem.length} )</h3>
-                            <ul className={styles.select_list} id="songs">
+                            <ul className={styles.select_list}>
                                 {songItems.map( (item, idx) =>
                                 <li key={item._id}><span onClick={() => trackId(idx)}>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
                                 )
