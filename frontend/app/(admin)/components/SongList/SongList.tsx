@@ -64,10 +64,10 @@ const handleSelect = (itemId: string) => {
 
   // setOriginalSelectItem(mergedItems);
   setIsPlaying(false);
-  const pauseBtn = document.querySelector('.rhap_play-pause-button') as HTMLButtonElement;
-  if (pauseBtn) {
-    pauseBtn.click();
-  }
+  // const pauseBtn = document.querySelector('.rhap_play-pause-button') as HTMLButtonElement;
+  // if (pauseBtn) {
+  //   pauseBtn.click();
+  // }
 };
 
 const handleDeleteItem = (id: string) => {
@@ -150,9 +150,9 @@ const  showSelected = () => {
     try {
       if (filterValues === null) {
         // Возвращаем оригинальное состояние, если фильтр пуст
-        
-        setSelectItem(originalSelectItem);
-        loadSongItems(originalSelectItem);
+       
+        setSelectItem(selectItem);
+        loadSongItems(selectItem);
       } else {
         setIsLoading(true)
         const response = await getSongItemsFilter(filterValues);
