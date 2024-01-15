@@ -43,7 +43,7 @@ const handleSelect = (itemId: string) => {
   const selectedItems = updatedSongItems
     .filter(el => el.isSelected)
     .map(el => el._id);
-
+    setOriginalSelectItem(selectedItems)
   // Объединяем selectedItems и originalSelectItem
 
   let mergedItems;
@@ -54,7 +54,7 @@ const handleSelect = (itemId: string) => {
     // Если элемент не выбран, добавляем его в список
     mergedItems = Array.from(new Set([...selectedItems, ...originalSelectItem]));
   }
-  
+
 
   if (!mergedItems.length ) {
     setSelectItem(null);
@@ -119,6 +119,7 @@ const clearAllSelected= async () => {
     }   
     setSelectItem(null);
     setHiddenChecked(false); 
+    setOriginalSelectItem([])
   } catch (error) {
     
   }
