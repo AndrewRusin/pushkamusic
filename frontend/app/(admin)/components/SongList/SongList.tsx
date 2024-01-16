@@ -27,6 +27,7 @@ export const SongList = () => {
   const [originalSongItems, setOriginalSongItems] = useState<ISongCategoriesResponse[]>([]);
   const [originalPlaylist, setOriginalPlaylist] = useState<IPlaylist[]>([]);
   const [hiddenChecked, setHiddenChecked] = useState<boolean>(false);
+  const [search, setSearch] = useState<boolean>(false)
 
 
 
@@ -80,7 +81,7 @@ const handleDeleteItem = (id: string) => {
 };
 
 useEffect(() => {
-  if (!!!songItems.length && !!!selectedFilterValues) {
+  if (!!!songItems.length && !!!selectedFilterValues && !search) {
     setSongItems(originalSongItems)
   }
 }, [songItems])
@@ -101,10 +102,11 @@ const clear = async () => {
     }
 
     response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
+    response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true );
     setSongItems(response);
-    const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
-      setPlaylist([...playListArr])
-      setIsLoading(false)
+    const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})); 
+      setPlaylist([...playListArr]);
+      setIsLoading(false);
   } catch (error) {
     
   }
@@ -188,29 +190,31 @@ const  showSelected = () => {
   const handleFilterChange = (selectedValues: string[] | null) => {
     setSelectedFilterValues(selectedValues);
     filterSongItems(selectedValues);
+    const songListElement = document.querySelector('#songs');
+    if (songListElement) {
+      songListElement.scrollTop = 0;
+    }
   };
 
   const searchSong = (song: string) => {
-    if (song.length) {
-        const lowercasedInput = song.toLowerCase();
-
+    if (!!song.length) {
+        const lowercasedInput = song.toLowerCase().split(' ')
         const searchArr = originalSongItems.filter((el) =>
-            el.title.toLowerCase().startsWith(lowercasedInput)
+            lowercasedInput.every(inputWord => el.title.toLowerCase().includes(inputWord))
         );
+        console.log()
+        setSearch(true)
         searchArr.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
-
-        const searchPlaylist = originalPlaylist?.filter((el) =>
-            el.name.toLowerCase().startsWith(lowercasedInput)
-        );
-
-        setSongItems(searchArr);
-        if (searchPlaylist) {
-            setPlaylist(searchPlaylist);
+        if (searchArr.length > 0) {
+          setSongItems(searchArr);
+        } else {
+          setSongItems([]); // Set to empty array when no search results are found
         }
-
+        
     } else {
         // Возвращаем исходное состояние, когда строка поиска пуста
         setSongItems(originalSongItems);
+        setSearch(false)
     }
 };
 
@@ -218,7 +222,6 @@ const  showSelected = () => {
     loadSongItems();
   }, []);
   useEffect(() => {
-    // Находим элемент списка по классу и сбрасываем его позицию скролла
     const songListElement = document.querySelector('#songs');
     if (songListElement) {
       songListElement.scrollTop = 0;
