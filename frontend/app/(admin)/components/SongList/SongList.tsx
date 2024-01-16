@@ -35,10 +35,13 @@ export const SongList = () => {
     setIsPlaying(true);
   };
 const handleSelect = (itemId: string) => {
-  const updatedSongItems = songItems.map(item =>
+  const updatedSongItems = originalSongItems.map(item =>
     item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
   );
-  setSongItems(updatedSongItems);
+  setOriginalSongItems(updatedSongItems)
+  setSongItems(prev=>prev.map(item =>
+    item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
+  ));
   
   const selectedItems = updatedSongItems
     .filter(el => el.isSelected)
@@ -115,7 +118,12 @@ const clearAllSelected= async () => {
       setSongItems(response);
       setIsLoading(false)
     } else {
-      setSongItems(originalSongItems)
+      let updatedOriginalSongItems = [...originalSongItems];
+      updatedOriginalSongItems.forEach(element => {
+        element.isSelected = false
+      });
+      setOriginalSongItems(updatedOriginalSongItems);
+      setSongItems(updatedOriginalSongItems);
     }   
     setSelectItem(null);
     setHiddenChecked(false); 
