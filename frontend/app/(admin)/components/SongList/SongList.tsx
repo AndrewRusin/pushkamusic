@@ -80,13 +80,6 @@ const handleDeleteItem = (id: string) => {
 
 };
 
-useEffect(() => {
-  if (!!!songItems.length && !!!selectedFilterValues && !search) {
-    setSongItems(originalSongItems)
-  }
-}, [songItems])
-
-
 const handleTrackID = (id: number) => {
   setTrackID(id);
   setIsPlaying(true);
@@ -100,9 +93,10 @@ const clear = async () => {
     } else {
       response = await getSongItems(); 
     }
-
     response.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
-    response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true );
+    if (!selectedFilterValues?.includes('archive')) {
+      response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true );
+    }
     setSongItems(response);
     const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})); 
       setPlaylist([...playListArr]);
@@ -190,10 +184,6 @@ const  showSelected = () => {
   const handleFilterChange = (selectedValues: string[] | null) => {
     setSelectedFilterValues(selectedValues);
     filterSongItems(selectedValues);
-    const songListElement = document.querySelector('#songs');
-    if (songListElement) {
-      songListElement.scrollTop = 0;
-    }
   };
 
   const searchSong = (song: string) => {
@@ -221,12 +211,17 @@ const  showSelected = () => {
   useEffect(() => {
     loadSongItems();
   }, []);
+
   useEffect(() => {
+    if (!!!songItems.length && !!!selectedFilterValues && !search) {
+      setSongItems(originalSongItems)
+    }
     const songListElement = document.querySelector('#songs');
     if (songListElement) {
       songListElement.scrollTop = 0;
     }
-  }, [hiddenChecked]); 
+  }, [songItems])
+
 
   return (
     <div>
