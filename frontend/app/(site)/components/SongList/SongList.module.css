@@ -37,10 +37,11 @@
 }
 
 .icons {
+    display: inline-block;
+    display: none;
     width: 27px;
     height: 27px;
     cursor: pointer;
-    display: inline-block;
     vertical-align: middle;
 }
 .price_btn{
