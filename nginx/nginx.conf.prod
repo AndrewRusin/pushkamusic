@@ -15,7 +15,7 @@ server {
 
 server {
   listen 443 ssl http2;
-  server_name pushkamusic.online www.pushkamusic.online;;
+  server_name pushkamusic.online www.pushkamusic.online;
 
   ssl_certificate /etc/letsencrypt/live/pushkamusic.online/fullchain.pem; # Путь к сертификату
   ssl_certificate_key /etc/letsencrypt/live/pushkamusic.online/privkey.pem; # Путь к приватному ключу
