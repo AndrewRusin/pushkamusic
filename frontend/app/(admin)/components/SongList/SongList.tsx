@@ -36,48 +36,21 @@ export const SongList = () => {
     setIsPlaying(true);
   };
 const handleSelect = (itemId: string) => {
-  const updatedSongItems = originalSongItems.map(item =>
-    item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
-  );
-  setOriginalSongItems(updatedSongItems)
+  setSelectItem(prev => prev ? [...prev, itemId] : [itemId]);
+ 
   setSongItems(prev=>prev.map(item =>
     item._id === itemId ? { ...item, isSelected: !item.isSelected } : item
   ));
   
-  const selectedItems = updatedSongItems
-    .filter(el => el.isSelected)
-    .map(el => el._id);
-    setOriginalSelectItem(selectedItems)
-  // Объединяем selectedItems и originalSelectItem
-
-  let mergedItems;
-  if (originalSelectItem?.includes(itemId)) {
-    // Если элемент уже выбран, удаляем его из списка
-    mergedItems = originalSelectItem.filter(id => id !== itemId);
-  } else {
-    // Если элемент не выбран, добавляем его в список
-    mergedItems = Array.from(new Set([...selectedItems, ...originalSelectItem]));
-  }
-
-
-  if (!mergedItems.length ) {
-    setSelectItem(null);
-  } else {
-    setSelectItem(mergedItems);
-  }
-
-  // setOriginalSelectItem(mergedItems);
   setIsPlaying(false);
-  // const pauseBtn = document.querySelector('.rhap_play-pause-button') as HTMLButtonElement;
-  // if (pauseBtn) {
-  //   pauseBtn.click();
-  // }
 };
 
 const handleDeleteItem = (id: string) => {
-  setSelectItem((prevSelectItem) => prevSelectItem ? prevSelectItem.filter(itemId => itemId !== id) : null);
-  setSongItems(prev => prev.filter(el=>el._id !==id))
+  setSelectItem(prevSelectItem => prevSelectItem ? prevSelectItem.filter(itemId => itemId !== id) : null);
 
+  setSongItems(prev=>prev.map(item =>
+    item._id === id ? { ...item, isSelected: !item.isSelected } : item
+  ));
 };
 
 const handleTrackID = (id: number) => {
@@ -101,6 +74,7 @@ const clear = async () => {
     const playListArr = response.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})); 
       setPlaylist([...playListArr]);
       setIsLoading(false);
+      setHiddenChecked(false);
   } catch (error) {
     
   }
@@ -150,6 +124,14 @@ const  showSelected = () => {
     
   };
 
+  const filterRequest = async (filterValues: string[] ) => {
+    const response = await getSongItemsFilter(filterValues);
+    response.forEach((el) => {selectItem?.includes(el._id) ? el.isSelected = true : el});
+    if (!filterValues.includes('archive')) {
+      response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true )
+    } 
+    return response
+  }
   
   const filterSongItems = async (filterValues: string[] | null) => {
     try {
@@ -160,11 +142,7 @@ const  showSelected = () => {
         loadSongItems(selectItem);
       } else {
         setIsLoading(true)
-        const response = await getSongItemsFilter(filterValues);
-        response.forEach((el) => {selectItem?.includes(el._id) ? el.isSelected = true : el});
-        if (!filterValues.includes('archive')) {
-          response.filter(el=>el.params.includes('archive')).forEach(item => item.isArchive = true )
-        } 
+        const response = await filterRequest(filterValues)
         
         setSongItems(response);
         
@@ -186,13 +164,20 @@ const  showSelected = () => {
     filterSongItems(selectedValues);
   };
 
-  const searchSong = (song: string) => {
-    if (!!song.length) {
+  const searchSong = async (song: string) => {
+    let songs:ISongCategoriesResponse[];
+    if (selectedFilterValues) {
+      songs = await filterRequest(selectedFilterValues)
+    } else {
+      songs = originalSongItems;
+    }
+    // console.log(songs)
+    if (song.length > 0) {
         const lowercasedInput = song.toLowerCase().split(' ')
-        const searchArr = originalSongItems.filter((el) =>
+        const searchArr = songs.filter((el) =>
             lowercasedInput.every(inputWord => el.title.toLowerCase().includes(inputWord))
         );
-        console.log()
+        
         setSearch(true)
         searchArr.forEach((el) => selectItem?.includes(el._id) ? el.isSelected = true : el);
         if (searchArr.length > 0) {
@@ -203,7 +188,7 @@ const  showSelected = () => {
         
     } else {
         // Возвращаем исходное состояние, когда строка поиска пуста
-        setSongItems(originalSongItems);
+        setSongItems(songs);
         setSearch(false)
     }
 };
@@ -245,7 +230,6 @@ const  showSelected = () => {
             onChange={(e) => searchSong(e.target.value)}
           />  
           </div> 
-        <h1>{}</h1>
         {!!selectItem?.length && (
           <SelectList
             showSelected={ showSelected}
@@ -269,7 +253,7 @@ const  showSelected = () => {
                   <span
                     className = {item.isSelected ? styles.active : styles.not_active}
                     aria-disabled = {item.isSelected}
-                    onClick = {() => handleSelect(item._id)}
+                    onClick = {!item.isSelected ? () => handleSelect(item._id) : () => handleDeleteItem(item._id)}
                   >
                 
                   </span>

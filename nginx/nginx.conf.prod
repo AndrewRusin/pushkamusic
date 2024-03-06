@@ -1,18 +1,45 @@
+
 server {
   listen 80;
+  server_name pushkamusic.online www.pushkamusic.online;
 
-  server_name pushkamusic.online;
+  location ~ /.well-known/acme-challenge {
+    allow all;
+    root /etc/letsencrypt; 
+  }
+
+  location / {
+    return 301 https://$host$request_uri; # Перенаправляем весь HTTP трафик на HTTPS
+  }
+}
+
+server {
+  listen 443 ssl http2;
+  server_name pushkamusic.online www.pushkamusic.online;;
+
+  ssl_certificate /etc/letsencrypt/live/pushkamusic.online/fullchain.pem; # Путь к сертификату
+  ssl_certificate_key /etc/letsencrypt/live/pushkamusic.online/privkey.pem; # Путь к приватному ключу
+
+
 
   location / {
     proxy_pass http://frontend:3000;
-     client_max_body_size 28M; # Максимальный размер тела запроса для корневой директории.
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    client_max_body_size 28M;
   }
 
   location /api {
     proxy_pass http://api:3001;
-     client_max_body_size 28M; # Максимальный размер тела запроса для корневой директории.
+    client_max_body_size 28M;
   }
+
   location /static/ {
-    proxy_pass http://pushkamusic-api:3001/static/;    
+    proxy_pass http://api:3001/static/;
   }
 }

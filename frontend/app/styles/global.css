@@ -293,6 +293,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 20px 40px;
+    overflow: auto;
+    padding-bottom: 0px;
 }
 
 .content {

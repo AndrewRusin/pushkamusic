@@ -49,7 +49,7 @@ export const Filter = ({ onChange,totalSong}:Sibling1Props): JSX.Element => {
         document.body.classList.add('no-overflow');
       } else {
         document.body.classList.remove('no-overflow');
-        window.scroll({top:top});
+        !!checkedItems.length ? window.scroll({top:0}) :window.scroll({top:top});
       }
       return () => {
         document.body.classList.remove('no-overflow');

@@ -47,16 +47,27 @@ services:
     container_name: pushkamusic-docker-nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+      - ./etc-letsencrypt:/etc/letsencrypt
     depends_on:
       - frontend
       - api
     networks:
-      - pushkamusic-docker-network   
+      - pushkamusic-docker-network
+    certbot:
+      image: certbot/certbot
+      depends_on:
+        - nginx
+      container_name: certbot
+      volumes:
+        - ./etc-letsencrypt:/etc/letsencrypt
+      command: certonly --webroot --webroot-path=/etc/letsencrypt -m valentin.voyedilo@icloud.com --agree-tos --no-eff-email -d pushkamusic.online
 
 volumes:
   mongo-data:
+  etc-letsencrypt:
 
 networks:
   pushkamusic-docker-network:

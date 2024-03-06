@@ -16,7 +16,7 @@ import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,...props}:selectItemProps):JSX.Element {
    
     const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
-    const [playlist, setPlaylist] = useState<IPlaylist[] | null>(null);
+    const [orderedSongs , setOrderedSongs ] = useState<ISongCategoriesResponse[]>([]);
     const [selectLink, setSelectLink] = useState<string | null>(null)
     const [showList, setShowList] = useState<boolean>(true)
     const [url, setUrl] = useState<string>('default_text')
@@ -25,11 +25,26 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
   
 
     useEffect(() => {
-     loadSongItems() 
-     
-    }, [onSelectItem]);
-
-
+        // Асинхронно загружаем элементы песен
+        const loadSongItems = async (select:string[] | null = onSelectItem) => {
+            try {
+                const response = await getSongItems(); 
+                // Обновляем состояние для каждого элемента, определяя, выбран он или нет
+                response.forEach((el) => (el.isSelected = select?.includes(el._id) ?? false));
+                
+                // Только после загрузки и обновления songItems обновляем orderedSongs
+                const ordered = select?.map(id => response.find(song => song._id === id)).filter(song => song !== undefined) as ISongCategoriesResponse[];
+                setOrderedSongs(ordered);
+                setSongItems(response); // Предполагается, что вы хотите отобразить все песни, а не только выбранные
+            } catch (error) {
+                console.error("Error loading song items:", error);
+            }
+        };
+    
+        if (showList) {
+            loadSongItems();
+        }
+    }, [onSelectItem, showList]);
 
     useEffect(() => {
        
@@ -46,14 +61,14 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
       }, [showList]);
     const loadSongItems = async (select:string[] | null = onSelectItem) => {
         try {
-          const response = await getSongItems(); // Замените на свой эндпоинт
+          const response = await getSongItems(); 
           response.forEach((el) => (el.isSelected = false));
           response.forEach((el) => select?.includes(el._id) ? el.isSelected = true : el);
           const selected  = response.filter(el => select?.includes(el._id))
           
           setSongItems(selected );
           const playListArr = selected.map(el=>({src:API.uploadSrc+el.track_link, name:el.title})) 
-          setPlaylist([...playListArr])
+       
   
         } catch (error) {
           console.error("Error loading song items:", error);
@@ -88,7 +103,7 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
         
     }
     function deleteItem(id:string){
-        setSongItems(prev =>
+        setOrderedSongs(prev =>
             prev.filter(el=> el._id !== id)
             );
             props.onDeleteItem(id);
@@ -108,7 +123,7 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
                         <div style={{width:'100%'}}>
                              <h3>Подборка ( {onSelectItem.length} )</h3>
                             <ul className={styles.select_list}>
-                                {songItems.map( (item, idx) =>
+                                {orderedSongs.map( (item, idx) =>
                                 <li key={item._id}><span onClick={() => trackId(idx)}>{item.title}</span><span onClick={() => deleteItem(item._id)}><CloseApple/></span></li>
                                 )
                                 }
