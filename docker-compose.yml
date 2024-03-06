@@ -56,14 +56,14 @@ services:
       - api
     networks:
       - pushkamusic-docker-network
-    certbot:
+  certbot:
       image: certbot/certbot
       depends_on:
         - nginx
       container_name: certbot
       volumes:
         - ./etc-letsencrypt:/etc/letsencrypt
-      command: certonly --webroot --webroot-path=/etc/letsencrypt -m valentin.voyedilo@icloud.com --agree-tos --no-eff-email -d pushkamusic.online
+      command: certonly --webroot --webroot-path=/etc/letsencrypt -m valentin.voyedilo@icloud.com --agree-tos --no-eff-email -d pushkamusic.online  
 
 volumes:
   mongo-data:
