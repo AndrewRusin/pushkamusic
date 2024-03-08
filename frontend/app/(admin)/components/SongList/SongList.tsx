@@ -28,6 +28,7 @@ export const SongList = () => {
   const [originalPlaylist, setOriginalPlaylist] = useState<IPlaylist[]>([]);
   const [hiddenChecked, setHiddenChecked] = useState<boolean>(false);
   const [search, setSearch] = useState<boolean>(false)
+  const [top, setTop] = useState<number>()
 
 
 
@@ -103,7 +104,8 @@ const clearAllSelected= async () => {
   }
 };
 const  showSelected = () => {
-  setSongItems(prev => prev.filter(el => el.isSelected === true )); 
+  setSongItems(prev => prev.filter(el => el.isSelected === true ));
+  setTop(window.scrollY)
 };
   const loadSongItems = async (select:string[] | null = selectItem) => {
     setIsLoading(true)
@@ -201,10 +203,6 @@ const  showSelected = () => {
     if (!!!songItems.length && !!!selectedFilterValues && !search) {
       setSongItems(originalSongItems)
     }
-    const songListElement = document.querySelector('#songs');
-    if (songListElement) {
-      songListElement.scrollTop = 0;
-    }
   }, [songItems])
 
 
@@ -238,10 +236,10 @@ const  showSelected = () => {
             onDeleteItem={handleDeleteItem}
             onTrackId={handleTrackID}
             clearAllSelected={clearAllSelected}
+            windowTop={top || 0}
           />
         )}
       </div>
-
       <ul className={styles.song_list} id="songs">
         
         {songItems.map((item, idx) =>

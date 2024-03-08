@@ -13,7 +13,7 @@ import { API } from "@/api/api";
 import { IPlaylist } from "@/components/Player/Player.props";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 
-export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,...props}:selectItemProps):JSX.Element {
+export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearAllSelected,...props}:selectItemProps):JSX.Element {
    
     const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
     const [orderedSongs , setOrderedSongs ] = useState<ISongCategoriesResponse[]>([]);
@@ -44,19 +44,23 @@ export  function SelectList({onSelectItem,showSelected, clear, clearAllSelected,
         if (showList) {
             loadSongItems();
         }
+      console.log(onSelectItem)
     }, [onSelectItem, showList]);
 
     useEffect(() => {
        
         if (!showList ) {
           document.body.classList.add('modal-open');
-
         } else {
           document.body.classList.remove('modal-open');
-
+          if (windowTop) {
+            window.scrollTo({ top: windowTop, behavior: 'smooth' }); 
+          }
+          
         }
         return () => {
           document.body.classList.remove('modal-open');
+          
         };
       }, [showList]);
     const loadSongItems = async (select:string[] | null = onSelectItem) => {
