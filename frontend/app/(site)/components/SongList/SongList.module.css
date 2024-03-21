@@ -4,6 +4,7 @@
     margin: 0;
     width: 100%;
    padding-bottom: 6vw;
+   counter-reset: section;
 }
 .song_list li {
     border-bottom: 1px solid #eee;
@@ -13,7 +14,20 @@
     padding: 20px 0;
     font-weight: 600;
     font-size: 16px;
+    position: relative;
+    padding-left: 25px;
+    counter-increment: section;
 }
+.song_list li::before {
+   
+    content: counter(section) " ";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(24 21 21 / 30%);
+} 
+
 .song_list li>span{
     display: inline-block;
     width: -webkit-fill-available;
@@ -59,8 +73,27 @@
     align-items: center;
 }
 @media only screen and (max-width: 640px) {
-    .song_list{
+    .song_list {
         padding-bottom: 85px;
+        overflow: auto;
+        height: calc(100vh - 145px);
+        overflow-y: scroll;
+        scrollbar-width: none; /* Для Firefox */
     }
-  
+    .song_list::-webkit-scrollbar {
+        display: none; /* Для Chrome, Safari и Opera */
+    }
+    .song_list li {
+        border-bottom: none;
+    } 
+ 
+    .song_list li::after {
+        content: '';
+        position: absolute;
+        width: calc(100% - 25px);
+        left: 25px;
+        bottom: 0;
+        height: 1px;
+        background: #eee;
+    } 
 }

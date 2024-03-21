@@ -1,5 +1,5 @@
 'use client'
-import { Button } from "@/components"
+import { Button, Input } from "@/components"
 import { useEffect, useState} from "react";
 import styles from "./SelectList.module.css";
 import {  selectItemProps } from "./SelectList.props";
@@ -7,11 +7,14 @@ import { createSelect } from "@/api/select";
 import PlayList from '@/public/icons/playlist.svg'
 import CloseApple from '@/public/icons/closeApple.svg'
 import useClipboard from "react-use-clipboard";
-import Link from "next/link";
 import { getSongItems } from "@/api/song";
 import { API } from "@/api/api";
-import { IPlaylist } from "@/components/Player/Player.props";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
+import { ISelectCategories, ISelectCategoriesResponse } from '@/interfaces/Selects.interface';
+import Select, { ActionMeta, MultiValue, OptionProps, SingleValue, SingleValueProps, components } from 'react-select';
+import { Options, messengers } from '@/utils/messengers'
+
+
 
 export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearAllSelected,...props}:selectItemProps):JSX.Element {
    
@@ -21,7 +24,26 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
     const [showList, setShowList] = useState<boolean>(true)
     const [url, setUrl] = useState<string>('default_text')
     const [isCopied, setCopied] = useClipboard(url);
-   
+    const [clientName, setClientName] = useState<string>();
+    const [selectedOption, setSelectedOption] = useState<Options | null>(null)
+
+    const CustomOption: React.FC<OptionProps<Options, boolean>> = (props) => {
+        return (
+            <components.Option {...props}>
+                <img src={props.data.icon} alt={props.data.label} style={{ width: 30, height: 30 }} />
+                {props.data.label}
+            </components.Option>
+        );
+    };
+    
+    const CustomSingleValue: React.FC<SingleValueProps<Options>> = ({ data }) => {
+        return (
+            <div style={{width:50}}>
+                <img src={data.icon} alt={data.label} style={{ width: 30}} />
+            </div>
+        );
+    };
+       
   
 
     useEffect(() => {
@@ -44,7 +66,7 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
         if (showList) {
             loadSongItems();
         }
-      console.log(onSelectItem)
+    
     }, [onSelectItem, showList]);
 
     useEffect(() => {
@@ -82,7 +104,13 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
     async function createSelected() {
         if(onSelectItem){
         try {
-            const value  =  await createSelect({idArray:onSelectItem})
+            const data:ISelectCategories ={
+                idArray: onSelectItem,
+                isHidden: false,
+                clientName: clientName,
+                messenger: selectedOption?.value
+            }
+            const value =  await createSelect(data)
             setSelectLink(value._id)
             const url = `${process.env.NEXT_PUBLIC_DOMAIN}/select/${value._id}`;
             setUrl(url)
@@ -111,11 +139,25 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
             prev.filter(el=> el._id !== id)
             );
             props.onDeleteItem(id);
+
            
     }
     function trackId (idx:number) {
         props.onTrackId(idx)
     }
+    const handleClientNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setClientName(event.target.value);
+    };
+    const handleChange = (newValue: SingleValue<Options> | MultiValue<Options>) => {
+        if (Array.isArray(newValue)) {
+          // Если требуется обработать множественный выбор, нужно решить, как это делать
+          // Например, установить первый элемент массива или обновить другое состояние
+          console.log('Выбрано несколько значений:', newValue);
+        } else {
+          // Устанавливаем одиночное значение
+          setSelectedOption(newValue as Options);
+        }
+      };
         return (
             <>
                 {onSelectItem && (
@@ -125,6 +167,19 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
                     <div className={ !showList ? styles.select_list_wrapper:''}>
                     {!showList && (
                         <div style={{width:'100%'}}>
+                            <div className={styles.clients_info}>
+                            <Input name="clientName" placeholder='ИФ клиента' type='text' onChange={handleClientNameChange} className={styles.client_input}required/>
+                            <Select
+                                 value={selectedOption}
+                                 onChange={handleChange}
+                                 options={messengers}
+                                 placeholder="параметр..."
+                                 components={{SingleValue: CustomSingleValue, Option: CustomOption }}
+                                 styles={{
+                                    input: (base) => ({ ...base, display: 'none' })
+                                  }}
+                            />
+                            </div>
                              <h3>Подборка ( {onSelectItem.length} )</h3>
                             <ul className={styles.select_list}>
                                 {orderedSongs.map( (item, idx) =>

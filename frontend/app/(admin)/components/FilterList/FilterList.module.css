@@ -1,19 +1,20 @@
-.filter_list{
+.filter_list {
     list-style-type: none;
     padding: 0;
     margin: 0;
     width: 100%;
     padding: 20px;
 }
-.filter_list li{
+.filter_list li {
     border-bottom: 1px solid #eee;
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.filter_list li a{
+.filter_list li a {
     margin-right: 5px;
     text-decoration: none;
     color: #a1a1a1;
 }
+

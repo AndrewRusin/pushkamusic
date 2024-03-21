@@ -26,12 +26,13 @@ export const items: IAdminNav[] = [
     {  id: 4,
       title: 'Создать песню',
       href: '/dashboard/create_song',
-  
+      class:'red_btn_nav'
     },
     {
       id: 5,
       title: 'Создать фильтр ',
       href: '/dashboard/create_filter',
+      class:'grey_btn_nav'
     },
     // {
     //   id: 4,

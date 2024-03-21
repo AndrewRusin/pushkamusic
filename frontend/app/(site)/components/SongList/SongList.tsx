@@ -30,7 +30,8 @@ export const  SongList =({songs}:SongsItemProps) => {
       const handlePlay = (trackIndex: number) => {
         setTrackID(trackIndex);
         setIsPlaying(true);
-
+        console.log(trackIndex)
+        console.log(songs)
       };
     
       useEffect(() => {
@@ -57,6 +58,15 @@ export const  SongList =({songs}:SongsItemProps) => {
                      <ul className={styles.song_list}>
                     {songs.map((item,idx) => (
                         <li key ={item._id} >
+                          <div className="equalizer" >
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                            <div className="bar"></div>
+                          </div>
                             <span onClick={() => handlePlay(idx)}>{item.title}</span>
                             <div className={styles.right_side}>
                                     {/* <span className={styles.icons} onClick={()=>setInfoSong({name:item.title,text:item.songsText, params:item.params})} ><Info/></span> */}

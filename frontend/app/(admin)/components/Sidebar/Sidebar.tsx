@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { items } from '@/utils/admin_nav'
 import { useEffect, useState } from 'react';
 import { Transition } from 'react-transition-group';
-
+import CloseApple from '@/public/icons/closeApple.svg'
 
 
 
@@ -13,7 +13,7 @@ export function Sidebar() {
     const path = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-
+    
     const handleMenuClick = () => {
         setIsOpen(!isOpen);
     };
@@ -55,8 +55,9 @@ export function Sidebar() {
                          <Transition in={isOpen} timeout={200} unmountOnExit={true}>
                             {(state) => (
                                 <ul className={`${styles.mobile_menu} ${state === 'entered' ? styles.active : ''}`}>
+                                    <span className={styles.close_sidebar}  onClick={()=>setIsOpen(!isOpen)}><CloseApple/></span>
                                     {items.map((item) => (
-                                        <li key={item.id} className={path === item.href ? styles.active : ''}>
+                                        <li key={item.id} className={`${path === item.href ? styles.active : ''} ${item?.class}`}>
                                             <Link href={item.href} className={styles.link}>
                                                 {item.title}
                                             </Link>

@@ -17,8 +17,8 @@ export default  function Login() {
       try {
         const  resData   = await login(data)
         if (resData.access_token) {
-          Cookies.set('isLogged','1')
-          Cookies.set('token',resData.access_token)
+          Cookies.set('isLogged', '1', {expires: 30, sameSite: 'None', secure: true });
+          Cookies.set('token', resData.access_token, {expires: 30, sameSite: 'None', secure: true });
           window.location.href='/dashboard/song_items' 
         } else {
           alert(resData.message)

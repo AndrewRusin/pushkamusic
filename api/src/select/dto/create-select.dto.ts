@@ -1,6 +1,20 @@
-import {  IsString } from "class-validator";
+import { IsArray, ArrayNotEmpty, IsBoolean, IsString } from "class-validator";
 
 export class CreateSelectDto {
-    @IsString({each:true})
+    @IsArray()
+    @ArrayNotEmpty()
+    @IsString({ each: true })
     idArray: string[];
+
+    @IsBoolean()
+    isHidden: boolean;
+
+    @IsString()
+    // @Length(min, max) // Если нужно, добавьте ограничения
+    clientName: string;
+
+    @IsString()
+    // @Matches(pattern) // Если есть специфический паттерн для валидации
+    messenger: string;
+
 }

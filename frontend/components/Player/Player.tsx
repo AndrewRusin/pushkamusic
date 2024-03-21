@@ -27,8 +27,22 @@ export const Player = ({
  
 
   useEffect(() => {
+    if (isPlaying) {
+      const song = document.querySelectorAll('li')
+      if (song && song[currentTrack].querySelector('span')?.textContent === playlist[currentTrack].name) {
+        song.forEach(el => {
+          el.classList.remove('isPlaying')
+        })
+        song[currentTrack].classList.add('isPlaying');
+      }
+    }
+    
+  }, [currentTrack])
+  
+
+  useEffect(() => {
     setTrackIndex(current_track);
-    console.log(currentTrack)
+    
   }, [current_track]);
 
   const handleClickNext = () => {
@@ -69,12 +83,14 @@ export const Player = ({
         onClickPrevious = {handleClickPrev}
         showJumpControls={false}
         onPlay={() => {
-      
+          document.querySelectorAll('.pause').forEach(element => {
+            element.classList.remove('pause')
+          });
           onPlay?.(); 
         }}
         autoPlayAfterSrcChange = {isPlaying}
         onPause={() => {
-     
+          document.querySelector('.isPlaying')?.classList.add('pause')
           onPause?.(); 
         }}
         customIcons={{

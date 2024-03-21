@@ -2,12 +2,13 @@
 .select {
     margin-top: 10px;
 }
-.textarea{
+
+.textarea {
     display: block;
     margin-top: 10px;
     width: 100%;
     max-width: 600px;
-    height: 230px;
+    height: 120px;
     border-radius: 5px;
     border: 1px solid #e3e3e3;
     padding: 5px;
@@ -15,6 +16,7 @@
 }
 .textarea_wrapper {
     position: relative;
+    margin-bottom: 10px;
 }
 
 .errorText {
@@ -29,4 +31,35 @@
     width: 100%;
     flex-wrap: wrap;
     align-items: center;
+}
+.red_btn {
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 45, 85);
+    font-size: 16px;
+    padding: 7px;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    text-align: center;
+}
+@media only screen and (max-width: 640px) {
+    .song_form {
+    
+        box-sizing: border-box;
+    }
+    .footer {
+        margin-top: 10px;
+    }
+    .footer > div {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        height: 70px;
+        justify-content: space-between;
+    }
+    
 }

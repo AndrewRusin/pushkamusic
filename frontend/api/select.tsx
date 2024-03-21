@@ -1,4 +1,4 @@
-import { ISelectCategoriesResponse } from '@/interfaces/Selects.interface';
+import { ISelectCategories, ISelectCategoriesResponse } from '@/interfaces/Selects.interface';
 import { API } from './api';
 import Cookies from 'js-cookie';
 const token = `Bearer ${Cookies.get("token")}`;
@@ -7,7 +7,7 @@ const headers = {
 	'Authorization' : token
 }
 
-export async function createSelect (data:{idArray:string[]}):Promise<ISelectCategoriesResponse> {
+export async function createSelect (data:ISelectCategories):Promise<ISelectCategoriesResponse> {
     const res = await fetch(API.select.create, {
 		method: 'POST',
 		headers,
@@ -31,6 +31,16 @@ export async function deleteSelect (id:string){
 	});
 	return ;
 }
+
+export async function toggleSelect (id:string, data:{isHidden:boolean} ):Promise<ISelectCategoriesResponse> {
+    const res = await fetch(API.select.deleteOrPatch + id, {
+		method: 'PATCH',
+		headers,
+		body:JSON.stringify(data)
+	});
+	return res.json();
+}
+
 export async function getSelectItems(): Promise<ISelectCategoriesResponse[]> {
 	const res = await fetch(API.select.findAll, {
 		method: 'GET',

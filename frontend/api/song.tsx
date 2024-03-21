@@ -65,7 +65,6 @@ export async function getSongItemsFilter(arr:string[] ): Promise<ISongCategories
 	return res.json();
 }
 export async function getSongItemsSelect(arr:string[] ): Promise<ISongCategoriesResponse[]> {
-	
 	const res = await fetch(API.song.select + arr.toString(), {
 		method: 'GET',
 		headers: new Headers({ 'content-type': 'application/json' }),

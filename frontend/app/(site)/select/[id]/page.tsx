@@ -6,20 +6,23 @@ import { ISongCategoriesResponse } from "@/interfaces/song.interface"
 import { useEffect, useState } from "react"
 import { SongList } from "../../components"
 import { Preloader } from "@/components"
+import { IsHidden } from "../../components/IsHidden/IsHidden"
 
 
 
 
 
-export default function  EditFilterItem({params}:{params:{id:string}}) {  
+export default function  SelectItem({params}:{params:{id:string}}) {  
     const [songItems, setSongItems] = useState<ISongCategoriesResponse[] >([]) 
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isHidden, setIsHidden] = useState<boolean>(false)
     
     useEffect(() => {
         (async () => {
 
-            const songsArr= await findSelectItem(params.id)
-            const data = await getSongItemsSelect(songsArr.idArray)
+            const songsInfo= await findSelectItem(params.id)
+            const data = await getSongItemsSelect(songsInfo.idArray)
+            setIsHidden(songsInfo.isHidden)
             setSongItems(data)
             setIsLoading(false)
             
@@ -32,7 +35,8 @@ export default function  EditFilterItem({params}:{params:{id:string}}) {
       <div >
         <Preloader isLoading={isLoading} />
         <h1 className="page_title">Подборка</h1>
-       <SongList songs={songItems.filter(el=> !el.isHidden )}/>
+        {isHidden ? <IsHidden id={params.id}/> : <SongList songs={songItems.filter(el => !el.isHidden)} />}
+       
       </div>
     )
   }

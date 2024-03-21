@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { selectController } from './select.controller';
-import { selectService } from './select.service';
+import { SelectController } from './select.controller';
+import { SelectService } from './select.service';
+import { ScheduleModule } from '@nestjs/schedule';
 import { MongooseModule } from '@nestjs/mongoose';
-import { selectModel, selectShema } from './select.model/select.model';
+import { SelectModel, SelectSchema } from './select.model/select.model';
 
 @Module({
-  controllers: [selectController],
-  imports: [MongooseModule.forFeature([{name:selectModel.name, schema:selectShema}])],
-  providers: [selectService]
+  controllers: [SelectController],
+  imports: [
+    MongooseModule.forFeature([{name:SelectModel.name, schema:SelectSchema}]),
+    ScheduleModule.forRoot(),
+  ],
+  providers: [SelectService]
 })
 export class SelectModule {}

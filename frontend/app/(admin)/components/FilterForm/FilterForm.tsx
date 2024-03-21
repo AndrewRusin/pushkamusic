@@ -1,14 +1,14 @@
 'use client'
 import { Button, Input } from '@/components'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { ICreateFilter, IFilterCategoriesResponse} from '@/interfaces/CreateFilterForm.interface'
-import styles from './FIlterForm.module.css'
-import { useEffect, useState } from 'react'
-import Select from 'react-select'
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { ICreateFilter, IFilterCategoriesResponse} from '@/interfaces/CreateFilterForm.interface';
+import styles from './FIlterForm.module.css';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 import { redirect } from 'next/navigation';
-import { filterCategories } from '@/utils/filterCategory'
-import { createFilterItems, findFilterItem, patchFilterItems } from '@/api/filter'
-import { FilterFormProps } from './FilterForm.props'
+import { filterCategories } from '@/utils/filterCategory';
+import { createFilterItems, findFilterItem, patchFilterItems } from '@/api/filter';
+import { FilterFormProps } from './FilterForm.props';
 
 export  function FilterForm({idItem = '', ...props}:FilterFormProps ):JSX.Element {
     const [redirectTo, setRedirectTo] = useState<boolean>(false);
@@ -17,8 +17,11 @@ export  function FilterForm({idItem = '', ...props}:FilterFormProps ):JSX.Elemen
  
          useEffect( () => {
            (async () => {
-            const values = await findFilterItem(idItem);
-            setValueForm(values)
+            if (idItem.length>0) {
+              const values = await findFilterItem(idItem);
+              setValueForm(values)
+            }
+            
           })();
         
           return () => {

@@ -14,6 +14,7 @@ import { SelectList } from "../SelectList/SelectList";
 import { IPlaylist } from "@/components/Player/Player.props";
 import Edit from '@/public/icons/edit.svg'
 import {Preloader} from "@/components"
+import CloseApple from '@/public/icons/closeApple.svg'
 
 export const SongList = () => {
   const [songItems, setSongItems] = useState<ISongCategoriesResponse[]>([]);
@@ -29,7 +30,7 @@ export const SongList = () => {
   const [hiddenChecked, setHiddenChecked] = useState<boolean>(false);
   const [search, setSearch] = useState<boolean>(false)
   const [top, setTop] = useState<number>()
-
+  const [searchValue, setSearchValue] = useState<string>('')
 
 
   const handlePlay = (trackIndex: number) => {
@@ -52,6 +53,7 @@ const handleDeleteItem = (id: string) => {
   setSongItems(prev=>prev.map(item =>
     item._id === id ? { ...item, isSelected: !item.isSelected } : item
   ));
+
 };
 
 const handleTrackID = (id: number) => {
@@ -83,6 +85,7 @@ const clear = async () => {
 };
 const clearAllSelected= async () => {
   try {
+    
     if (selectedFilterValues) {
       setIsLoading(true)
       let response: ISongCategoriesResponse[] = await getSongItemsFilter(selectedFilterValues);
@@ -164,9 +167,11 @@ const  showSelected = () => {
   const handleFilterChange = (selectedValues: string[] | null) => {
     setSelectedFilterValues(selectedValues);
     filterSongItems(selectedValues);
+    setIsPlaying(false)
   };
 
   const searchSong = async (song: string) => {
+    setSearchValue(song)
     let songs:ISongCategoriesResponse[];
     if (selectedFilterValues) {
       songs = await filterRequest(selectedFilterValues)
@@ -193,11 +198,28 @@ const  showSelected = () => {
         setSongItems(songs);
         setSearch(false)
     }
+    setIsPlaying(false)
 };
+const clearSearchValue = async () => {
+  let songs:ISongCategoriesResponse[];
+  if (selectedFilterValues) {
+    songs = await filterRequest(selectedFilterValues)
+  } else {
+    songs = originalSongItems;
+  }
+  setSearchValue('')
+  setSongItems(songs);
+  setSearch(false);
+
+}
 
   useEffect(() => {
-    loadSongItems();
-  }, []);
+    if (!selectItem?.length) {
+      loadSongItems();
+    }
+    
+  
+  }, [selectItem]);
 
   useEffect(() => {
     if (!!!songItems.length && !!!selectedFilterValues && !search) {
@@ -221,12 +243,16 @@ const  showSelected = () => {
         </div>  
         <div>
           <span><b>{ selectedFilterValues && selectedFilterValues?.length > 0 ? 'Найдено песен: ' : 'Всего песен: '}</b> {songItems?songItems.filter(el=>el.isHidden===false && !el.isArchive).length :''} </span>
-          <input
-            type="text"
-            className={styles.search_input}
-            placeholder="Поиск"
-            onChange={(e) => searchSong(e.target.value)}
-          />  
+          <div className={styles.search_input_wrapper}>
+            <input
+              type="text"
+              className={styles.search_input}
+              placeholder="Поиск"
+              onChange={(e) => searchSong(e.target.value)}
+              value={searchValue}
+            />
+            {searchValue.length>0 && (<span className={styles.search_clear_button}  onClick={clearSearchValue}><CloseApple/></span>)}
+          </div>  
           </div> 
         {!!selectItem?.length && (
           <SelectList
@@ -247,7 +273,7 @@ const  showSelected = () => {
             <li key={item._id}>
                 <span onClick={() => handlePlay(idx)} className={styles.song_name}>{item.title}</span>
               <span className={styles.right_side}>
-                <Link href={"/dashboard/edit_song_item/" + item._id}><Edit/></Link>{" "}
+                <Link href={"/dashboard/edit_song_item/" + item._id} ><Edit/></Link>{" "}
                   <span
                     className = {item.isSelected ? styles.active : styles.not_active}
                     aria-disabled = {item.isSelected}

@@ -1,7 +1,9 @@
 .filter_block {
-    height: 300px;
+    height: 280px;
     overflow: auto;
-    margin-top: 20px;
+    margin-top: 25px;
+    border-radius: 5px;
+    border: 1px solid #e3e3e3;
 }
 .filter_group {
     margin-bottom: 15px;

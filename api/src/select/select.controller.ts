@@ -1,22 +1,20 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { selectModel } from './select.model/select.model';
-import { selectService } from './select.service';
+import { SelectService } from './select.service';
 import { CreateSelectDto } from './dto/create-select.dto';
+import { UpdateSelectDto } from './dto/update-select.dto'; 
 import { SELECT_NOT_FOUND_ERROR } from './select.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('select')
-export class selectController {
+export class SelectController {
 
-    constructor(private readonly selectService: selectService){
-
-    }
+    constructor(private readonly selectService: SelectService) {}
 
     @UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())
     @Post('create')
-    async create(@Body() dto:CreateSelectDto) {
-        return this.selectService.create(dto)
+    async create(@Body() dto: CreateSelectDto) {
+        return this.selectService.create(dto);
     }
 
     @UsePipes(new ValidationPipe())
@@ -26,31 +24,31 @@ export class selectController {
     }
 
     @Get(':id')
-    async  get(@Param('id') id: string) {
+    async get(@Param('id') id: string) {
         const select = await this.selectService.findById(id);
-		if (!select) {
-			throw new NotFoundException(SELECT_NOT_FOUND_ERROR)
-		}
-		return select;
+        if (!select) {
+            throw new NotFoundException(SELECT_NOT_FOUND_ERROR);
+        }
+        return select;
     }
 
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
-    async delete(@Param('id') id: string){
+    async delete(@Param('id') id: string) {
         const deletedSelect = await this.selectService.deleteById(id);
-		if (!deletedSelect) {
-			throw new NotFoundException(SELECT_NOT_FOUND_ERROR)
-		}
+        if (!deletedSelect) {
+            throw new NotFoundException(SELECT_NOT_FOUND_ERROR);
+        }
     }
 
     @UseGuards(JwtAuthGuard)
     @UsePipes(new ValidationPipe())
     @Patch(':id')
-	async patch(@Param('id') id: string, @Body() dto: selectModel) {
-        const updateSelect = await this.selectService.updateById(id,dto);
-		if (!updateSelect) {
-			throw new NotFoundException(SELECT_NOT_FOUND_ERROR)
-		}
-		return updateSelect;
+    async patch(@Param('id') id: string, @Body() dto: UpdateSelectDto) { 
+        const updatedSelect = await this.selectService.updateById(id, dto);
+        if (!updatedSelect) {
+            throw new NotFoundException(SELECT_NOT_FOUND_ERROR);
+        }
+        return updatedSelect;
     }
 }

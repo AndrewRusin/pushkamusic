@@ -24,9 +24,13 @@ export  function FilterList() {
     }, [])
     
     async function  deleteItem(id:string){
-        await deleteFilterItem(id);
-        const itemsRefresh = await getFilterItems()
-        setFilterItems(itemsRefresh)
+        if (window.confirm("Вы уверены, что хотите удалить этот параметр?")) {
+            await deleteFilterItem(id);
+            const itemsRefresh = await getFilterItems()
+            setFilterItems(itemsRefresh)
+        }else{
+            console.log('отмена')
+        }
     }
     
     if (filterItems.length) {

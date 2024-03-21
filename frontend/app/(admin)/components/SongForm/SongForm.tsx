@@ -125,20 +125,30 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
     }
   };
   const deleteItem = async (id: string, fileName: string) => {
-    await deleteFile(fileName);
-    await deleteSongItem(id);
-    setRedirectTo(true);
+    if (window.confirm("Вы уверены, что хотите удалить эту песню?")) {
+        await deleteFile(fileName);
+        await deleteSongItem(id);
+        setRedirectTo(true);
+    } else {
+      console.log("Удаление отменено");
+    }
   };
-  if (redirectTo) {
-    redirect('/dashboard/song_items');
-  }
+
+  useEffect(() => {
+    console.log(redirectTo);
+    if (redirectTo) {
+      redirect('/dashboard/song_items');
+    }
+  }, [redirectTo])
+  
+  
   
   return (
-    <div {...props}>
+    <div {...props} className={styles.song_form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {valueForm && selectFileName && (
           <div className='filenames'>
-            <h1>{valueForm.title}, {valueForm.track_link}</h1>
+            {/* <h1>{valueForm.title}, {valueForm.track_link}</h1> */}
             <Input {...register('title')} placeholder='Имя' type='text' defaultValue={valueForm.title} />
             <Controller
               control={control}
@@ -165,7 +175,7 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
           </div>
         )}
         <div className={styles.textarea_wrapper}>
-          {textAreaValue.trim() === '' && <span className={styles.errorText}>Это поле обязательное поле</span>}
+          {textAreaValue.trim() === '' && <span className={styles.errorText}>Это  обязательное поле</span>}
           <div className={styles.textarea} contentEditable="true" onBlur={(e) => setTextAreaValue(e.currentTarget.innerHTML)} suppressContentEditableWarning={true}>
             {valueForm ? (
               <div dangerouslySetInnerHTML={{ __html: valueForm.songsText }} />
@@ -181,27 +191,28 @@ export function SongForm({ idItem = '', ...props }: SongFormProps): JSX.Element 
           <FilterCheckbox {...register('params')} filterItems={checkboxes} filterChecked={[]}/>
         )}
         <div className={styles.footer}>
-        <label>
-          <input
-            type="checkbox"
-            name="hidden"
-            checked={isChecked }
-            onChange={() => setIsChecked((prev) => !prev)}
-          />
-           <span> скрыть песню</span>
-        </label>
-           {idItem && valueForm &&  (<Button
-                                      appearance="alert"
-                                      onClick={async () => deleteItem(idItem, valueForm.track_link)}
-                                    >удалить
-                                  </Button>)}
-        <Button appearance='primary' type="button" onClick={onCancel}>Отмена</Button>
-                    
-        <Button appearance="primary" className={styles.button} type="submit">
-          {idItem ? 'Сохранить' : 'Создать'}
-        </Button>
+        {idItem && valueForm &&  (<div>
+             <div
+                 className={styles.red_btn}
+                 onClick={async () => deleteItem(idItem, valueForm.track_link)}
+               >Удалить
+             </div>                         
+            </div>)}
+            <div style={!valueForm ? {width:'100%'} : {width:'45%'}}>
+              <label>
+                <input
+                  type="checkbox"
+                  name="hidden"
+                  checked={isChecked }
+                  onChange={() => setIsChecked((prev) => !prev)}
+                />
+                <b> Скрыть песню</b>
+              </label>
+              <Button appearance="primary" className={styles.button} type="submit">
+                {idItem ? 'Сохранить' : 'Создать'}
+              </Button>
+            </div>
         </div>    
-
       </form>
     </div>
   );

@@ -96,17 +96,28 @@
         transition: transform 0.3s; 
         z-index: 5;
     }
+    .mobile_menu li {
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 18px;
+    }
     .mobile_menu.active {
         transform: translateY(0);
     }
+    .close_sidebar{
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        scale: 120%;
+    }
     .topbar {
-        margin-bottom: 33px;
         height: 42px;
         align-items: center;
         position: fixed;
         z-index: 4;
         top: 0;
         width: calc(100% - 8vw);
+        margin-bottom: 0;
     }
     .topbar::after {
         position: absolute;

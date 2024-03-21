@@ -44,7 +44,7 @@
     left:0;
     width:100%;
     box-sizing: border-box;
-    background-color: rgba(239,239,239, 0.8);
+    background-color: #e3e3e3;
     z-index: 5;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -119,6 +119,16 @@
     background-color: #eee;
     font-size: 16px;
 }  
+.search_input_wrapper {
+    position: relative;
+}
+.search_clear_button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    scale: 80%;
+}
 @media only screen and (max-width: 640px) {
     .top_bar {
         margin-bottom: 0;
@@ -134,7 +144,7 @@
         width: 45vw;
     }
     .song_list {
-        padding: 145px 0 135px 0;
+        padding: 100px 0 135px 0;
         height: initial;
     }     
 }

@@ -6,8 +6,23 @@
     height: calc(100vh - 185px);
     overflow: auto;
     counter-reset: section;
-    padding-bottom: 180px;
-    margin-top: 10px;
+    padding-bottom: 130px;
+    margin-top: 60px;
+}
+.client_input{
+    font-weight: bold;
+}
+.clients_info{
+    display: flex;
+    align-items: end;
+    position: absolute;
+    top: 30px;
+    z-index: 2;
+    padding: 0 4vw;
+    left: 0;
+    width: 100%;
+    padding-top: 10px;
+    background: #fff;
 }
 .select_list_button{
     position: fixed;
@@ -79,6 +94,7 @@
 }
 @media only screen and (max-width: 640px) {
 
+
     .select_list li span:first-child {
         width: inherit;
     }
@@ -99,9 +115,9 @@
     }
     .select_list_wrapper {
         padding: 0 4vw;
-        padding-top: 65px;
+        padding-top: 10px;
         overflow: hidden;
-        height: calc(100% - 65px);
+        height: calc(100% - 10px);
         position: fixed;
     }
 }

@@ -16,12 +16,14 @@ services:
       - ./frontend/.env.dev:/app/.env
 
   api:
-    build: ./api
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./api
     container_name: pushkamusic-api
     restart: always
     networks:
       - pushkamusic-docker-network
-    command: npm run start:prod
+    command: npm run start:dev  # Изменение команды запуска на режим разработки
     # ports:
     #   - 3001:3001
     depends_on:
@@ -29,6 +31,8 @@ services:
     volumes:
       - ./api/.env:/opt/app/.env # Укажите ту директорию которую вы выбрали в Dockerfile, в данном случае (WORKDIR /app)
       - ./api/uploads:/opt/app/uploads
+      - ./api:/opt/app  # Позволяет изменениям в исходном коде синхронизироваться с контейнером
+      - /opt/app/node_modules  # Используйте слой для node_modules, чтобы не перезаписывать его локальной копией
  
   mongo:
     image:  mongo:4.4.4

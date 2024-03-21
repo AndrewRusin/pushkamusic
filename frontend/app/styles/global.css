@@ -222,7 +222,8 @@
       width: 45vw;
     }
     html, body{
-      min-height: 100%;
+      min-height: 100%vh;
+      overflow: hidden;
     }
     input, textarea {
       font-size: 16px;
@@ -236,8 +237,9 @@
         padding-bottom: 60px;
     }
     .wrapper {
-        width: calc(100% - 8vw);
-        margin: 0 4vw;
+        width: 100%;
+        padding: 0 4vw;
+        margin: auto;
     }
     .info_container{
       padding: 5vw 4vw;
@@ -283,6 +285,8 @@
     height: 40px;
     animation: spin 1s linear infinite;
   }
+
+
   
   @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -295,19 +299,31 @@
     padding: 20px 40px;
     overflow: auto;
     padding-bottom: 0px;
+    min-height: 100vh;
 }
 
 .content {
     width: calc(100% - 380px);
 }
 
+
+
 @media only screen and (max-width: 640px) {
     .content {
        width: 100%;
+       padding-top: 65px;
+       box-sizing: border-box;
+       height: calc(100vh - 65px);
+       overflow: auto;
+       scrollbar-width: none; /* Для Firefox */
     }
+    .content::-webkit-scrollbar {
+      display: none; /* Для Chrome, Safari и Opera */
+  }
     .container {
       padding: 0 4vw;
       width: 100%;
+      overflow: auto;
     }
     .modal-open .container {
       padding-top: 0;
@@ -318,4 +334,124 @@
     .modal-open #songs {
       opacity: 0;
     }
+}
+
+/*Song*/
+.equalizer {
+  display: none;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  
+}
+.isPlaying .equalizer {
+  display: block;
+}
+li.isPlaying::before {
+  opacity: 0 !important;
+} 
+.equalizer .bar {
+  position: relative;
+  float: left;
+  background-color: var(--alert-color);
+  height: 6px;
+  margin-left: 1px;
+  width: 2px;
+  animation: jump 0ms -800ms linear infinite alternate;
+}
+@keyframes jump {
+  0% {
+    height: 4px;
+    top: -3px;
+  }
+  100% {
+    top: -7px;
+    height: 14px;
+  }
+}
+.equalizer .bar:nth-child(1) {
+  animation-duration: 491ms;
+}
+.equalizer .bar:nth-child(2) {
+  animation-duration: 494ms;
+}
+.equalizer .bar:nth-child(3) {
+  animation-duration: 440ms;
+}
+.equalizer .bar:nth-child(4) {
+  animation-duration: 443ms;
+}
+.equalizer .bar:nth-child(5) {
+  animation-duration: 436ms;
+}
+.equalizer .bar:nth-child(6) {
+  animation-duration: 440ms;
+}
+.equalizer .bar:nth-child(7) {
+  animation-duration: 435ms;
+}
+.equalizer .bar:nth-child(8) {
+  animation-duration: 441ms;
+}
+.equalizer .bar:nth-child(9) {
+  animation-duration: 465ms;
+}
+.equalizer .bar:nth-child(10) {
+  animation-duration: 463ms;
+}
+.equalizer .bar:nth-child(11) {
+  animation-duration: 490ms;
+}
+.equalizer .bar:nth-child(12) {
+  animation-duration: 475ms;
+}
+.equalizer .bar:nth-child(13) {
+  animation-duration: 498ms;
+}
+.equalizer .bar:nth-child(14) {
+  animation-duration: 433ms;
+}
+.equalizer .bar:nth-child(15) {
+  animation-duration: 492ms;
+}
+.equalizer .bar:nth-child(16) {
+  animation-duration: 500ms;
+}
+.equalizer .bar:nth-child(17) {
+  animation-duration: 488ms;
+}
+.equalizer .bar:nth-child(18) {
+  animation-duration: 441ms;
+}
+.equalizer .bar:nth-child(19) {
+  animation-duration: 443ms;
+}
+.equalizer .bar:nth-child(20) {
+  animation-duration: 434ms;
+}
+.pause .equalizer .bar {
+  animation-play-state: paused;
+}
+
+
+/*End song*/
+/*Admin nav */
+.red_btn_nav {
+  background-color: var(--alert-color);
+  border-radius: 5px;
+  text-align: center;
+}
+.red_btn_nav a{
+  color: #fff !important;
+}
+.grey_btn_nav {
+  background-color: #d3d3d3;
+  text-align: center;
+  border-radius: 5px;
+}
+/*End admin Nav */
+/*временно*/
+.filenames > div {
+  display: none;
 }

@@ -1,0 +1,29 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+
+.price_btn{
+    display: inline-block;
+    background: var(--alert-color);
+    color:#fff;
+    border-radius: 5px;
+    padding: 10px;
+    min-width:  65px;
+    text-align: center;
+    margin-top: 20px;
+    width: 80%;
+}
+.btn_grp{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.grey {
+    background: var(--secondary-color);
+    color: black;
+}

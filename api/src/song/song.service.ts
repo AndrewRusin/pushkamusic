@@ -60,8 +60,19 @@ export class SongService {
         return this.songModel.find(filter).sort({ order: -1 }).exec()
     }
     async findSongsByIds(idArray: string[]) {
-        return this.songModel.find({ _id: { $in: idArray } }).sort({ order: -1 }).exec();
-      }
+      
+        const songs = await this.songModel.find({ _id: { $in: idArray } }).exec();
+        
+
+        const songsById = {};
+        songs.forEach(song => {
+            songsById[song._id.toString()] = song;
+        });
+    
+        const sortedSongs = idArray.map(id => songsById[id]).filter(song => song !== undefined);
+    
+        return sortedSongs;
+    }
 
       async updateSongOrder(id: string, newOrder: number) {
         const songToUpdate = await this.songModel.findById(id).exec();
