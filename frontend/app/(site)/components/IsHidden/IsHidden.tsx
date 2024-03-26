@@ -13,7 +13,7 @@ export const IsHidden = ({ id }: { id: string }) => {
                     <b>{isLogged ? 'Открыть доступ' : 'Сделать новую'}</b>
                 </a>
                 {!isLogged && (
-                    <a className={`${styles.price_btn} ${styles.grey}`} href={`https://wa.me/905058907481/?text=Здраствуйте!%20Откройте%20пожалуйста%20доступ%20к%20подборке:%20https://rusindev.site/dashboard/edit_select_item/${id}`} target='_blank'>
+                    <a className={`${styles.price_btn} ${styles.grey}`} href={`https://wa.me/905058907481/?text=Здраствуйте!%20Откройте%20пожалуйста%20доступ%20к%20подборке:%20https://pushkamusic.online/dashboard/edit_select_item/${id}`} target='_blank'>
                        <b> Открыть доступ к текущей</b>
                     </a>
                 )}

@@ -58,6 +58,7 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
                 const ordered = select?.map(id => response.find(song => song._id === id)).filter(song => song !== undefined) as ISongCategoriesResponse[];
                 setOrderedSongs(ordered);
                 setSongItems(response); // Предполагается, что вы хотите отобразить все песни, а не только выбранные
+               
             } catch (error) {
                 console.error("Error loading song items:", error);
             }
@@ -65,8 +66,9 @@ export  function SelectList({onSelectItem,showSelected, clear, windowTop, clearA
     
         if (showList) {
             loadSongItems();
+         
         }
-    
+        
     }, [onSelectItem, showList]);
 
     useEffect(() => {

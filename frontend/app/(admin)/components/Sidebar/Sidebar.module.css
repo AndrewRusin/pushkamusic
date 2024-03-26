@@ -75,7 +75,9 @@
         top: 50%;
         transform: translate(-50%, 0%) rotate(-45deg); 
     }
-
+    .scroll_to_top{
+        display: none;
+    }
 
   /*Mobile*/
   @media only screen and (max-width: 640px) {
@@ -131,5 +133,11 @@
         width: calc(100% + 8vw);
         z-index: 1;
     }
-   
+    .scroll_to_top {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        /* Добавьте другие стили для кнопки, например, размер, цвет фона, цвет текста и т.д. */
+    }
 }

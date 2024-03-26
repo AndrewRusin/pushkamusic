@@ -3,7 +3,7 @@ import { API } from "@/api/api";
 import { Filter } from "@/components";
 import { ISongCategoriesResponse } from "@/interfaces/song.interface";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./SongList.module.css";
 import {
   getSongItems,
@@ -31,6 +31,7 @@ export const SongList = () => {
   const [search, setSearch] = useState<boolean>(false)
   const [top, setTop] = useState<number>()
   const [searchValue, setSearchValue] = useState<string>('')
+ 
 
 
   const handlePlay = (trackIndex: number) => {
@@ -85,8 +86,9 @@ const clear = async () => {
 };
 const clearAllSelected= async () => {
   try {
-    
+ 
     if (selectedFilterValues) {
+      
       setIsLoading(true)
       let response: ISongCategoriesResponse[] = await getSongItemsFilter(selectedFilterValues);
       setSongItems(response);
@@ -107,7 +109,17 @@ const clearAllSelected= async () => {
   }
 };
 const  showSelected = () => {
-  setSongItems(prev => prev.filter(el => el.isSelected === true ));
+  const filteredSelectedItems = songItems
+  .filter(item => item.isSelected)
+  .sort((a, b) => {
+    const indexA = selectItem?.indexOf(a._id) ?? -1;
+    const indexB = selectItem?.indexOf(b._id) ?? -1;
+
+    return indexA - indexB;
+  });
+
+setSongItems(filteredSelectedItems);
+setIsPlaying(false)
   setTop(window.scrollY)
 };
   const loadSongItems = async (select:string[] | null = selectItem) => {
@@ -216,6 +228,7 @@ const clearSearchValue = async () => {
   useEffect(() => {
     if (!selectItem?.length) {
       loadSongItems();
+      clearAllSelected()
     }
     
   
@@ -224,8 +237,10 @@ const clearSearchValue = async () => {
   useEffect(() => {
     if (!!!songItems.length && !!!selectedFilterValues && !search) {
       setSongItems(originalSongItems)
+   
     }
-  }, [songItems])
+  }, [songItems]);
+
 
 
   return (
@@ -252,7 +267,7 @@ const clearSearchValue = async () => {
               value={searchValue}
             />
             {searchValue.length>0 && (<span className={styles.search_clear_button}  onClick={clearSearchValue}><CloseApple/></span>)}
-          </div>  
+          </div>
           </div> 
         {!!selectItem?.length && (
           <SelectList
@@ -266,7 +281,7 @@ const clearSearchValue = async () => {
           />
         )}
       </div>
-      <ul className={styles.song_list} id="songs">
+      <ul className={styles.song_list} id="songs" >
         
         {songItems.map((item, idx) =>
           !item.isHidden && !item.isArchive ? (
